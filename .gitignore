@@ -1,0 +1,36 @@
+# === Backend (Express.js) ===
+
+/server/node_modules/
+/server/dist/
+/server/build/
+/server/.DS_Store
+/server/npm-debug.log
+/server/yarn-error.log
+
+# === Frontend (Next.js) ===
+/client/node_modules/
+/client/.next/
+/client/out/
+/client/.DS_Store
+/client/npm-debug.log
+/client/yarn-error.log
+
+# === General OS Files ===
+.DS_Store
+Thumbs.db
+
+# === Logs ===
+*.log
+logs/
+*.log.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+
+# === IDE/Editor files ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
