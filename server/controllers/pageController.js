@@ -14,6 +14,16 @@ exports.getPageByComponent = async (req, res) => {
   }
 };
 
+// [GET] /api/pages
+exports.getAllPages = async (req, res) => {
+  try {
+    const pages = await Page.find();
+    res.status(200).json(pages);
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
+
 // [POST] /api/pages
 exports.createPage = async (req, res) => {
   try {

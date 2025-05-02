@@ -6,6 +6,7 @@
 /server/.DS_Store
 /server/npm-debug.log
 /server/yarn-error.log
+/server/.env
 
 # === Frontend (Next.js) ===
 /client/node_modules/
@@ -34,3 +35,4 @@ yarn-error.log*
 *.swp
 *.swo
 *.swn
+

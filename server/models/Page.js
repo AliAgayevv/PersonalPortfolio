@@ -17,7 +17,14 @@ const pageSchema = new mongoose.Schema(
     // object, each with its own key.
     // The componentName is a unique identifier for the page
     // and is required to be unique in the database.
+
     componentName: { type: String, required: true, unique: true },
+    // Not required
+    photos: {
+      type: [String],
+      default: [],
+      required: false,
+    },
     content: {
       type: Map,
       of: multilingualFieldSchema,
