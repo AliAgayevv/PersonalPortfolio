@@ -92,7 +92,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Əvvəlcə içəridəki hissəni saxlayırıq */}
       <div className=" absolute left-0  w-screen bg-black mt-40 pt-20">
         <section className="text-white w-[90%] mx-auto">
           <div className="flex justify-between items-center mb-10">
@@ -118,6 +117,14 @@ export default async function Home() {
               projectShowenLink="View Project"
               projectId="1"
             />
+          </div>
+        </section>
+        <section className="text-white w-[90%] mx-auto mt-40 h-full">
+          <div className="flex justify-between items-center mb-10">
+            <h2 className="header-text font-[600] uppercase">Services</h2>
+            <div>
+              <SeeMoreButton innerText="Discover" />
+            </div>
           </div>
         </section>
       </div>
