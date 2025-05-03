@@ -1,1 +1,47 @@
 @import "tailwindcss";
+
+.header-text {
+  font-size: clamp(40px, 4.86vw, 70px);
+}
+
+.text-24px {
+  font-size: clamp(16px, 1.67vw, 24px);
+}
+
+.text-20px {
+  font-size: clamp(14px, 1.39vw, 20px);
+}
+
+.text-16px {
+  font-size: clamp(12px, 1.11vw, 16px);
+}
+
+.text-14px {
+  font-size: clamp(12px, 0.97vw, 14px);
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+/* lenis settings */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}

@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import localFont from "next/font/local";
+import { ReactLenis } from "@/utils/smoothScroll";
+
+const interFont = localFont({
+  src: "../public/fonts/Inter.ttf",
+});
 
 export const metadata: Metadata = {
   title: "Ali Aghayev",
@@ -14,7 +20,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={`w-[90%] mx-auto ${interFont.className}`}>
+        <ReactLenis root>
+          <Navbar />
+          {children}
+        </ReactLenis>
+      </body>
     </html>
   );
 }
