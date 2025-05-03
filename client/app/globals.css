@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+.header-text {
+  font-size: clamp(40px, 4.86vw, 70px);
+}
+
+.text-24px {
+  font-size: clamp(16px, 1.67vw, 24px);
+}
+
+.text-20px {
+  font-size: clamp(14px, 1.39vw, 20px);
+}
+
+.text-16px {
+  font-size: clamp(12px, 1.11vw, 16px);
+}
+
+.text-14px {
+  font-size: clamp(12px, 0.97vw, 14px);
+}
+
+button:hover {
+  cursor: pointer;
+}

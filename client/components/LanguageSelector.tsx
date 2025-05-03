@@ -16,11 +16,11 @@ export default function LanguageSelector() {
   };
 
   return (
-    <div className="mb-6">
+    <div className="">
       <select
         onChange={(e) => changeLang(e.target.value as "az" | "en")}
         value={lang}
-        className="border-2 border-black text-black bg-transparent px-4 py-2 rounded-lg font-medium text-[16px] transition-colors duration-300 hover:bg-black hover:text-white"
+        className="border-2 border-[#001011]/10 text-black bg-transparent px-4 py-2 rounded-[10px] font-medium text-[16px] transition-all duration-300 hover:bg-black hover:text-white hover:cursor-pointer"
       >
         <option value="az">AZ</option>
         <option value="en">EN</option>

@@ -1,6 +1,7 @@
 import React from "react";
 import LanguageSelector from "./LanguageSelector";
 import localFont from "next/font/local";
+import NavbarDropdown from "./NavbarDropdown";
 
 const interFont = localFont({
   src: "../public/fonts/Inter.ttf",
@@ -8,7 +9,7 @@ const interFont = localFont({
 
 const Navbar = () => {
   return (
-    <nav className="bg-transparent flex justify-between items-center p-6">
+    <nav className=" flex justify-between items-center pt-16 max-h-14 ">
       <h1
         className={`${interFont.className} font-[500] text-[36px] text-black `}
       >
@@ -16,7 +17,7 @@ const Navbar = () => {
       </h1>
       <div className="flex gap-2 items-center">
         <LanguageSelector />
-        <p>navbarOpenet</p>
+        <NavbarDropdown />
       </div>
     </nav>
   );
