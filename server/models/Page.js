@@ -25,9 +25,14 @@ const pageSchema = new mongoose.Schema(
       default: [],
       required: false,
     },
-    content: {
+    az: {
       type: Map,
-      of: multilingualFieldSchema,
+      of: String,
+      required: true,
+    },
+    en: {
+      type: Map,
+      of: String,
       required: true,
     },
   },

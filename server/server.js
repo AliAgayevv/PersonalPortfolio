@@ -4,6 +4,7 @@ const fs = require("fs");
 const cors = require("cors");
 const connectDB = require("./db");
 const pageRoutes = require("./routes/pageRoutes");
+const techRoutes = require("./routes/techRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 app.use("/api/pages", pageRoutes);
+app.use("/api/tech", techRoutes);
 
 connectDB();
 

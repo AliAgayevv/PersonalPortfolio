@@ -3,22 +3,50 @@ const Page = require("../models/Page");
 // [GET] /api/pages/:componentName
 exports.getPageByComponent = async (req, res) => {
   const { componentName } = req.params;
+  const language = req.headers["accept-language"] || "az";
+
   try {
     const page = await Page.findOne({ componentName });
+
     if (!page) {
       return res.status(404).json({ message: "Component not found" });
     }
-    res.status(200).json(page);
+
+    // Send just with selected language
+    const pageData = {
+      _id: page._id,
+      componentName: page.componentName,
+      photos: page.photos,
+      createdAt: page.createdAt,
+      updatedAt: page.updatedAt,
+      content: page[language] || {},
+    };
+
+    res.status(200).json(pageData);
   } catch (err) {
+    console.error("Error fetching page by component:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
 
 // [GET] /api/pages
 exports.getAllPages = async (req, res) => {
+  // Send the pages data based on the requested language
+  const language = req.headers["accept-language"] || "az";
   try {
     const pages = await Page.find();
-    res.status(200).json(pages);
+    if (!pages || pages.length === 0) {
+      return res.status(404).json({ message: "No components found" });
+    }
+    const pagesData = pages.map((page) => ({
+      _id: page._id,
+      componentName: page.componentName,
+      photos: page.photos,
+      createdAt: page.createdAt,
+      updatedAt: page.updatedAt,
+      content: page[language] || {},
+    }));
+    res.status(200).json(pagesData);
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
   }
