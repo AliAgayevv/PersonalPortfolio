@@ -19,11 +19,12 @@ const TechStackSection = async () => {
 
   const data = await res.json();
 
-  console.log("Tech stack data:", data);
-
   return (
     <section className="w-full h-full   ">
-      <h2 className="text-black header-text font-[600]"> My stacks</h2>
+      <h2 className="text-black header-text font-[600]">
+        {" "}
+        {lang === "en" ? "My stacks" : "Texnologiyalar"}
+      </h2>
       <div className="grid grid-cols-2 gap-4 mt-10 ">
         {data.map((item) => (
           <StackCard
