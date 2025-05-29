@@ -8,5 +8,6 @@ router.get("/", pageController.getAllPages);
 router.post("/", pageController.createPage);
 router.put("/:componentName", pageController.updatePage);
 router.delete("/:componentName", pageController.deletePage);
+router.patch("/:componentName", pageController.updatePagePartial);
 
 module.exports = router;

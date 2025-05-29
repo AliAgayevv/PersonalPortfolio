@@ -4,6 +4,15 @@
   font-size: clamp(40px, 4.86vw, 70px);
 }
 
+.end-text {
+  font-size: clamp(16px, 7.2vw, 108px);
+  white-space: nowrap;
+}
+
+.text-40px {
+  font-size: clamp(24px, 2.78vw, 40px);
+}
+
 .text-24px {
   font-size: clamp(16px, 1.67vw, 24px);
 }

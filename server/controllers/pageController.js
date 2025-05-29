@@ -94,3 +94,29 @@ exports.deletePage = async (req, res) => {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
+
+// [PATCH] /api/pages/:componentName
+exports.updatePagePartial = async (req, res) => {
+  const { componentName } = req.params;
+  const updateFields = req.body;
+
+  try {
+    const updatedProject = await Page.findOneAndUpdate(
+      { projectName: componentName },
+      { $set: updateFields },
+      { new: true }
+    );
+
+    if (!updatedProject) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    res.status(200).json({
+      message: "Project updated successfully",
+      updatedProject,
+    });
+  } catch (err) {
+    console.error("Error updating project partially:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};

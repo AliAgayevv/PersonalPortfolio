@@ -5,10 +5,12 @@ import TechStackSection from "@/sections/TechStackSection";
 import ProjectSection from "@/sections/ProjectSection";
 import SeeMoreButton from "@/components/SeeMoreButton";
 import ServicesCard from "@/components/ServicesCard";
+import EndSection from "@/sections/EndSection";
+import Footer from "@/components/Footer";
 
 export default async function Home() {
   const cookieStore = await cookies();
-  const lang = cookieStore.get("lang")?.value || "az"; // default az
+  const lang = cookieStore.get("lang")?.value || "az";
 
   const res = await fetch("http://localhost:4000/api/pages/hero", {
     cache: "no-store",
@@ -75,7 +77,7 @@ export default async function Home() {
               <SeeMoreButton innerText="Discover" />
             </div>
           </div>
-          <div className="w-1/2  h-[999999px] flex flex-col gap-10 ml-auto">
+          <div className="w-1/2  h-full mb-40 flex flex-col gap-10 ml-auto">
             <ServicesCard
               title="Frontend Development"
               icon="./favicon.ico"
@@ -110,6 +112,9 @@ export default async function Home() {
             />
           </div>
         </section>
+
+        <EndSection />
+        <Footer />
       </div>
     </div>
   );
