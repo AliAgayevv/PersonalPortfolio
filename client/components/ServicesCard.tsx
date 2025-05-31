@@ -28,7 +28,7 @@ const ServicesCard = ({
         <h2>{title}</h2>
         <button className="ml-auto">
           {
-            isOpen ? <p>+</p> : <p>-</p>
+            !isOpen ? <p>+</p> : <p>-</p>
             //     <img
             //       src="/assets/icons/arrow-up.svg"
             //       alt="arrow-up"

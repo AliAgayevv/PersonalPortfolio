@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const ProjectCard = ({
@@ -29,14 +30,7 @@ const ProjectCard = ({
         <p className="text-[clamp(12px,1vw,14px)] text-gray-300">
           {projectDescription}
         </p>
-        <a
-          href={projectLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[clamp(12px,1vw,14px)] text-[#B8FF34] hover:underline"
-        >
-          {projectShowenLink}
-        </a>
+
         <p className="text-[clamp(10px,0.8vw,12px)] text-gray-400">
           Project ID: {projectId}
         </p>

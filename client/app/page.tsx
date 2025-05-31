@@ -47,7 +47,7 @@ export default async function Home() {
           {data.content?.pageDescription}
         </p>
         <div className="flex gap-4 mt-10 ">
-          <CtaButton innerText={data.content?.ctaButton} />
+          <CtaButton innerText={data.content?.ctaButton} mode="start" />
           <button className="px-[clamp(16px,3vw,24px)] py-[clamp(10px,2.5vw,14px)] text-16px border border-neutral-300 text-black bg-white rounded-3xl ">
             {data.content?.contact}
           </button>

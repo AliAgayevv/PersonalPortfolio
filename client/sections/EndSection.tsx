@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { FaInstagram } from "react-icons/fa";
 import { BsArrowUpRight } from "react-icons/bs";
 import { TfiEmail } from "react-icons/tfi";
+import Link from "next/link";
 
 export default async function EndSection() {
   const cookieStore = await cookies();
@@ -22,7 +23,7 @@ export default async function EndSection() {
 
   const data = await res.json();
   return (
-    <section className="w-[90%] mx-auto text-white mt-40 h-full ">
+    <section className="w-[90%] mx-auto text-white my-40 pb-40 h-full ">
       <h1 className="text-center font-bold end-text w-full">
         {data.content.sectionText}
       </h1>
@@ -48,13 +49,19 @@ export default async function EndSection() {
           </p>
         </div>
         <div className="flex justify-center items-center gap-4 pb-4">
-          <button className="rounded-2xl bg-black text-white p-4 flex justify-center items-center gap-1 shadow-2xl shadow-black/30 hover:shadow-black/50 transition-all duration-300">
-            {data.content.followButton}
-            <FaInstagram />
-            <p className="ml-1">
-              <BsArrowUpRight size={14} />
-            </p>
-          </button>
+          <Link
+            href="https://www.instagram.com/ali.agayevh"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <button className="rounded-2xl bg-black text-white p-4 flex justify-center items-center gap-1 shadow-2xl shadow-black/30 hover:shadow-black/70 transition-all duration-300">
+              {data.content.followButton}
+              <FaInstagram />
+              <p className="ml-1">
+                <BsArrowUpRight size={14} />
+              </p>
+            </button>
+          </Link>
           <button className="rounded-2xl text-black bg-white flex justify-center items-center gap-1 border p-4 border-gray-300 shadow-2xl shadow-black/30 hover:shadow-black/50 transition-all duration-300">
             {data.content.emailButton}
             <TfiEmail size={14} className="ml-1" />

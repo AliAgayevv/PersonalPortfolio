@@ -2,6 +2,7 @@ import React from "react";
 import { cookies } from "next/headers";
 import ProjectCard from "../components/ProjectCard";
 import SeeMoreButton from "../components/SeeMoreButton";
+import Link from "next/link";
 
 export default async function ProjectSection() {
   const cookieStore = await cookies();
@@ -22,23 +23,30 @@ export default async function ProjectSection() {
 
   const data = await res.json();
 
+  console.log("Fetched projects:", data);
+
   return (
     <section className="text-white w-[90%] mx-auto">
       <div className="flex justify-between items-center mb-10">
         <h2 className="header-text font-[600] uppercase">Projects</h2>
         <div>
-          <SeeMoreButton innerText="See more" />
+          <Link href="/projects" className="text-white">
+            <SeeMoreButton innerText="See more" />
+          </Link>
         </div>
       </div>
       <div className="grid-cols-2 grid gap-4">
-        {data.map((project) => (
-          <ProjectCard
-            key={project._id}
-            projectId={project.projectId}
-            projectName={project.title}
-            projectDescription={project.description}
-            projectImage={project.image}
-          />
+        {data.map((project: any) => (
+          <Link href={`/projects/${project.projectId}`} key={project._id}>
+            <ProjectCard
+              projectName={project.name}
+              projectDescription={project.description}
+              projectImage={project.image}
+              projectLink={project.link}
+              projectShowenLink={project.showenLink}
+              projectId={project.projectId}
+            />
+          </Link>
         ))}
       </div>
     </section>

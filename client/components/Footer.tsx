@@ -24,8 +24,8 @@ export default async function Footer() {
   const data = await res.json();
 
   return (
-    <footer className="w-full bg-black h-96 text-5xl text-white ">
-      <div className="w-[95%] mx-auto h-96 ">
+    <footer className=" absolute bottom-0 w-full bg-black h-96 text-5xl text-white pt-3">
+      <div className="w-[90%] mx-auto h-96 ">
         <div className="flex items-center justify-end my-5 mr-10">
           <div className="flex gap-5">
             {/* REPLACE WITH SOCAIL MEDIA LOGO IMAGES WHITE COLOR SVG */}
