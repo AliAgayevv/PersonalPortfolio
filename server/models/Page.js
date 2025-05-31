@@ -27,12 +27,12 @@ const pageSchema = new mongoose.Schema(
     },
     az: {
       type: Map,
-      of: String,
+      of: mongoose.Schema.Types.Mixed,
       required: true,
     },
     en: {
       type: Map,
-      of: String,
+      of: mongoose.Schema.Types.Mixed,
       required: true,
     },
   },
