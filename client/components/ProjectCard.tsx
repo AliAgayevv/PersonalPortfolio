@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -18,10 +19,18 @@ const ProjectCard = ({
 }) => {
   return (
     <div className="w-full h-full bg-black overflow-hidden">
-      <img
+      {/* <img
         src={projectImage}
         alt={projectName}
         className="w-full h-[clamp(250px,38.3vw,528px)] object-cover"
+      /> */}
+      <Image
+        src={`http://localhost:4000${projectImage}`}
+        alt={projectName}
+        width={800}
+        height={450}
+        className="w-full h-[clamp(250px,38.3vw,528px)] object-cover"
+        priority
       />
       <div className="flex flex-col justify-between pt-3 h-[clamp(150px,10vw,86px)] text-white">
         <h2 className="text-[clamp(16px,1.3vw,20px)]  font-bold text-white">

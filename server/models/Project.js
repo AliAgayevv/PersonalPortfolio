@@ -21,7 +21,7 @@ const projectSchema = new mongoose.Schema(
         },
       ],
     },
-    image: { type: String, required: true },
+    image: { type: String, required: false },
   },
   { timestamps: true }
 );

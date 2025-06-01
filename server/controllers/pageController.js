@@ -55,7 +55,11 @@ exports.getAllPages = async (req, res) => {
 // [POST] /api/pages
 exports.createPage = async (req, res) => {
   try {
-    const newPage = new Page(req.body);
+    const photos = req.files ? req.files.map((file) => file.path) : [];
+    const newPage = new Page({
+      ...req.body,
+      photos, // Save file paths
+    });
     await newPage.save();
     res.status(201).json(newPage);
   } catch (err) {
@@ -67,9 +71,16 @@ exports.createPage = async (req, res) => {
 exports.updatePage = async (req, res) => {
   const { componentName } = req.params;
   try {
+    const photos = req.files ? req.files.map((file) => file.path) : [];
+
+    const updateData = {
+      ...req.body,
+      ...(photos.length > 0 && { photos }),
+    };
+
     const updated = await Page.findOneAndUpdate(
       { componentName },
-      { $set: req.body },
+      { $set: updateData },
       { new: true, runValidators: true }
     );
     if (!updated) {
@@ -98,25 +109,35 @@ exports.deletePage = async (req, res) => {
 // [PATCH] /api/pages/:componentName
 exports.updatePagePartial = async (req, res) => {
   const { componentName } = req.params;
+  console.log("Partial update request for component:", componentName);
+
   const updateFields = req.body;
 
+  // Handle uploaded photos
+  if (req.files && req.files.length > 0) {
+    const photoPaths = req.files.map((file) => `/uploads/${file.filename}`);
+
+    // Merge with existing photos if needed (optional)
+    updateFields.photos = photoPaths;
+  }
+
   try {
-    const updatedProject = await Page.findOneAndUpdate(
-      { projectName: componentName },
+    const updatedPage = await Page.findOneAndUpdate(
+      { componentName },
       { $set: updateFields },
       { new: true }
     );
 
-    if (!updatedProject) {
-      return res.status(404).json({ message: "Project not found" });
+    if (!updatedPage) {
+      return res.status(404).json({ message: "Page not found" });
     }
 
     res.status(200).json({
-      message: "Project updated successfully",
-      updatedProject,
+      message: "Page updated successfully",
+      updatedPage,
     });
   } catch (err) {
-    console.error("Error updating project partially:", err);
+    console.error("Error updating Page partially:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };

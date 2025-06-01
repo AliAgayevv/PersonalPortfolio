@@ -4,6 +4,7 @@ import { FaInstagram } from "react-icons/fa";
 import { BsArrowUpRight } from "react-icons/bs";
 import { TfiEmail } from "react-icons/tfi";
 import Link from "next/link";
+import Image from "next/image";
 
 export default async function EndSection() {
   const cookieStore = await cookies();
@@ -22,6 +23,8 @@ export default async function EndSection() {
   }
 
   const data = await res.json();
+
+  console.log("EndSection Data:", data);
   return (
     <section className="w-[90%] mx-auto text-white my-40 pb-40 h-full ">
       <h1 className="text-center font-bold end-text w-full">
@@ -29,8 +32,10 @@ export default async function EndSection() {
       </h1>
       <div className="w-full h-full mb-40 bg-[#f5f5f5] rounded-2xl flex justify-center items-center flex-col text-black gap-3 py-14 mt-4">
         <div className="size-28 bg-gray-200 rounded-full flex justify-center items-center border-black border-6  text-black ">
-          <img
-            src={data.photos[0]}
+          <Image
+            width={200}
+            height={200}
+            src={`http://localhost:4000${data.photos}`}
             alt="End Section Image"
             className="w-full h-full object-cover rounded-full"
           />

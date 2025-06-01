@@ -2,6 +2,7 @@ import CtaButton from "@/components/CtaButton";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import StackCard from "@/components/StackCard";
+import Image from "next/image";
 
 export default async function page({ params }: { params: { id: string } }) {
   const projectId = params.id;
@@ -102,11 +103,19 @@ export default async function page({ params }: { params: { id: string } }) {
 
         {/* Right Column - Image */}
         <div className="w-full">
-          <img
+          <Image
+            src={`http://localhost:4000${projectData.image}`}
+            alt={projectData.title}
+            width={800}
+            height={450}
+            className="w-full h-auto object-cover rounded-2xl shadow-lg shadow-black/20"
+            priority
+          />
+          {/* <img
             src={projectData.image || "/placeholder.svg"}
             alt={projectData.title}
             className="w-full h-auto object-cover rounded-2xl shadow-lg shadow-black/20"
-          />
+          /> */}
         </div>
       </div>
     </div>

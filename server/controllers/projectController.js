@@ -60,23 +60,72 @@ exports.getAllProjects = async (req, res) => {
   }
 };
 
+// Helper function to process tech stack with icons
+const processTechStackWithIcons = (techStackData, files) => {
+  let techStack = [];
+
+  try {
+    // Parse techStack if it's a string
+    const parsedTechStack =
+      typeof techStackData === "string"
+        ? JSON.parse(techStackData)
+        : techStackData;
+
+    if (Array.isArray(parsedTechStack)) {
+      techStack = parsedTechStack.map((tech, index) => {
+        const techStackIcon = files.find(
+          (file) =>
+            file.fieldname === `techStackIcon_${index}` ||
+            file.fieldname === `techStackIcon[${index}]`
+        );
+
+        return {
+          name: tech.name,
+          icon: techStackIcon
+            ? `/uploads/${techStackIcon.filename}`
+            : tech.icon || "",
+        };
+      });
+    }
+  } catch (error) {
+    console.error("Error processing tech stack:", error);
+  }
+
+  return techStack;
+};
+
 // [POST] /api/projects
 exports.createProject = async (req, res) => {
   const {
     projectId,
     title,
     description,
-    image,
     timeLine,
     liveLink,
     githubLink,
+    techStack: techStackData,
   } = req.body;
 
   try {
+    // Handle main project image
+    const image =
+      req.files && req.files.find((file) => file.fieldname === "image")
+        ? `/uploads/${
+            req.files.find((file) => file.fieldname === "image").filename
+          }`
+        : null;
+
+    // Process tech stack with icons
+    const techStack = req.files
+      ? processTechStackWithIcons(techStackData, req.files)
+      : typeof techStackData === "string"
+      ? JSON.parse(techStackData)
+      : techStackData;
+
     const newProject = new Project({
       projectId: projectId.toLowerCase(),
       title,
-      techStack: req.body.techStack || [],
+      techStack,
       description,
       timeLine,
       liveLink,
@@ -85,9 +134,10 @@ exports.createProject = async (req, res) => {
     });
 
     await newProject.save();
-    res
-      .status(201)
-      .json({ message: "Project created successfully", newProject });
+    res.status(201).json({
+      message: "Project created successfully",
+      newProject,
+    });
   } catch (err) {
     console.error("Error creating project:", err);
     res.status(500).json({ message: "Server error", error: err.message });
@@ -127,6 +177,7 @@ exports.updateProject = async (req, res) => {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
+
 // [DELETE] /api/projects/:projectId
 exports.deleteProject = async (req, res) => {
   const { projectId } = req.params;
@@ -149,12 +200,33 @@ exports.deleteProject = async (req, res) => {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
+
 // [PATCH] /api/projects/:projectId
 exports.updateProjectPartial = async (req, res) => {
   const { projectId } = req.params;
-  const updateFields = req.body;
+  const updateFields = { ...req.body };
 
   try {
+    // Handle main project image
+    if (req.files && req.files.find((file) => file.fieldname === "image")) {
+      updateFields.image = `/uploads/${
+        req.files.find((file) => file.fieldname === "image").filename
+      }`;
+    }
+
+    // Handle tech stack with icons
+    if (updateFields.techStack && req.files) {
+      updateFields.techStack = processTechStackWithIcons(
+        updateFields.techStack,
+        req.files
+      );
+    } else if (
+      updateFields.techStack &&
+      typeof updateFields.techStack === "string"
+    ) {
+      updateFields.techStack = JSON.parse(updateFields.techStack);
+    }
+
     const updatedProject = await Project.findOneAndUpdate(
       { projectId: projectId.toLowerCase() },
       { $set: updateFields },
