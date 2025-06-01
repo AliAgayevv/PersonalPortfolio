@@ -7,6 +7,20 @@ const projectSchema = new mongoose.Schema(
       az: { type: String, required: true },
       en: { type: String, required: true },
     },
+    liveLink: { type: String, required: false },
+    githubLink: { type: String, required: false },
+    timeLine: {
+      az: { type: String, required: true },
+      en: { type: String, required: true },
+    },
+    techStack: {
+      type: [
+        {
+          name: { type: String, required: true },
+          icon: { type: String, required: true },
+        },
+      ],
+    },
     image: { type: String, required: true },
   },
   { timestamps: true }

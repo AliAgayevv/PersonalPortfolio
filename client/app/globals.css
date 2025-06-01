@@ -17,6 +17,10 @@
   font-size: clamp(24px, 2.78vw, 40px);
 }
 
+.text-36px {
+  font-size: clamp(20px, 2.22vw, 36px);
+}
+
 .text-24px {
   font-size: clamp(16px, 1.67vw, 24px);
 }

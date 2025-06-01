@@ -17,6 +17,10 @@ exports.getProjectById = async (req, res) => {
       title: project.title,
       description: project.description[language] || {},
       image: project.image,
+      techStack: project.techStack || [],
+      liveLink: project.liveLink,
+      githubLink: project.githubLink,
+      timeLine: project.timeLine[language] || {},
       createdAt: project.createdAt,
       updatedAt: project.updatedAt,
     };
@@ -42,6 +46,10 @@ exports.getAllProjects = async (req, res) => {
       title: project.title,
       description: project.description[language] || {},
       image: project.image,
+      techStack: project.techStack || [],
+      liveLink: project.liveLink,
+      githubLink: project.githubLink,
+      timeLine: project.timeLine[language] || {},
       createdAt: project.createdAt,
       updatedAt: project.updatedAt,
     }));
@@ -54,13 +62,25 @@ exports.getAllProjects = async (req, res) => {
 
 // [POST] /api/projects
 exports.createProject = async (req, res) => {
-  const { projectId, title, description, image } = req.body;
+  const {
+    projectId,
+    title,
+    description,
+    image,
+    timeLine,
+    liveLink,
+    githubLink,
+  } = req.body;
 
   try {
     const newProject = new Project({
       projectId: projectId.toLowerCase(),
       title,
+      techStack: req.body.techStack || [],
       description,
+      timeLine,
+      liveLink,
+      githubLink,
       image,
     });
 
@@ -77,12 +97,20 @@ exports.createProject = async (req, res) => {
 // [PUT] /api/projects/:projectId
 exports.updateProject = async (req, res) => {
   const { projectId } = req.params;
-  const { title, description, image } = req.body;
+  const {
+    title,
+    description,
+    image,
+    techStack,
+    timeLine,
+    githubLink,
+    liveLink,
+  } = req.body;
 
   try {
     const updatedProject = await Project.findOneAndUpdate(
       { projectId: projectId.toLowerCase() },
-      { title, description, image },
+      { title, description, image, techStack, timeLine, githubLink, liveLink },
       { new: true }
     );
 

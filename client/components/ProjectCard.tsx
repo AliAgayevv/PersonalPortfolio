@@ -17,14 +17,14 @@ const ProjectCard = ({
   projectId: string;
 }) => {
   return (
-    <div className="w-full h-[clamp(400px,42.6vw,614px)] bg-black overflow-hidden">
+    <div className="w-full h-full bg-black overflow-hidden">
       <img
         src={projectImage}
         alt={projectName}
         className="w-full h-[clamp(250px,38.3vw,528px)] object-cover"
       />
-      <div className="flex flex-col justify-between p-5 h-[clamp(150px,10vw,86px)] text-white">
-        <h2 className="text-[clamp(16px,1.3vw,20px)] font-bold text-white">
+      <div className="flex flex-col justify-between pt-3 h-[clamp(150px,10vw,86px)] text-white">
+        <h2 className="text-[clamp(16px,1.3vw,20px)]  font-bold text-white">
           {projectName}
         </h2>
         <p className="text-[clamp(12px,1vw,14px)] text-gray-300">

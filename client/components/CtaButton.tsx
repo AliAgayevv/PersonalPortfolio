@@ -4,13 +4,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import emailSVG from "@/public/svg/email.svg";
 import Image from "next/image";
+import goBackSVG from "@/public/svg/goBack.svg";
 
 const CtaButton = ({
   innerText,
   mode,
 }: {
   innerText: string;
-  mode: "email" | "start";
+  mode: "email" | "start" | "goBack";
 }) => {
   const [hovered, setHovered] = useState(false);
 
@@ -45,7 +46,7 @@ const CtaButton = ({
               {innerText}
             </motion.span>
           </AnimatePresence>
-        ) : (
+        ) : mode === "email" ? (
           <AnimatePresence mode="wait">
             <motion.span
               key={hovered ? "hovered" : "default"}
@@ -56,6 +57,23 @@ const CtaButton = ({
               className="inline-block"
             >
               {innerText}
+            </motion.span>
+          </AnimatePresence>
+        ) : (
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={hovered ? "hovered" : "default"}
+              initial={{ x: 20, opacity: 0 }}
+              exit={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.45 }}
+              className="inline-block w-full"
+            >
+              <Image
+                alt="goBack Svg"
+                src={goBackSVG}
+                className="w-[clamp(14px,1vw,20px)] h-[clamp(14px,1vw,20px)] flex justify-center items-center"
+              />
             </motion.span>
           </AnimatePresence>
         )}
@@ -79,8 +97,7 @@ const CtaButton = ({
           />
         </motion.svg>
       ) : (
-        // email icon
-        <Image alt="email Svg" src={emailSVG} />
+        mode === "email" && <Image alt="email Svg" src={emailSVG} />
       )}
     </button>
   );

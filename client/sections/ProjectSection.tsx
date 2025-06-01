@@ -39,7 +39,7 @@ export default async function ProjectSection() {
         {data.map((project: any) => (
           <Link href={`/projects/${project.projectId}`} key={project._id}>
             <ProjectCard
-              projectName={project.name}
+              projectName={project.title}
               projectDescription={project.description}
               projectImage={project.image}
               projectLink={project.link}
