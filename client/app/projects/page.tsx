@@ -55,7 +55,7 @@ export default async function page() {
           <ProjectCardGrid {...project} key={project.projectId} />
         ))}
       </div>
-      <div className=" absolute w-full left-0 h-full ">
+      <div className=" absolute w-full left-0  h-full ">
         <Footer />
       </div>
     </div>

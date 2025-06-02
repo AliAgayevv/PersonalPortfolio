@@ -6,6 +6,7 @@ const connectDB = require("./db");
 const pageRoutes = require("./routes/pageRoutes");
 const techRoutes = require("./routes/techRoutes");
 const projectRoutes = require("./routes/projectRoutes");
+const cvRoutes = require("./routes/cv");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,7 +25,7 @@ app.use(cors(corsOptions));
 app.use("/api/pages", pageRoutes);
 app.use("/api/tech", techRoutes);
 app.use("/api/projects", projectRoutes);
-
+app.use("/api", cvRoutes);
 connectDB();
 
 app.listen(PORT, () => {

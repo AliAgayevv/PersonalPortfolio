@@ -2,11 +2,7 @@ const mongoose = require("mongoose");
 const techStackSchema = new mongoose.Schema(
   {
     techName: { type: String, required: true, unique: true },
-    icon: {
-      type: String,
-      default: "",
-      required: true,
-    },
+    icon: { type: String, required: false },
     description: {
       az: { type: String, required: true },
       en: { type: String, required: true },

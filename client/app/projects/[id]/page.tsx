@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import StackCard from "@/components/StackCard";
 import Image from "next/image";
+import Footer from "@/components/Footer";
 
 export default async function page({ params }: { params: { id: string } }) {
   const projectId = params.id;
@@ -50,7 +51,7 @@ export default async function page({ params }: { params: { id: string } }) {
   console.log(projectData);
 
   return (
-    <div className="mt-24 mx-auto px-4">
+    <div className="mt-24 mx-auto px-4 h-full">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-4">
           <Link href="/projects">
@@ -117,6 +118,9 @@ export default async function page({ params }: { params: { id: string } }) {
             className="w-full h-auto object-cover rounded-2xl shadow-lg shadow-black/20"
           /> */}
         </div>
+      </div>
+      <div className=" absolute w-full left-0 h-full ">
+        <Footer />
       </div>
     </div>
   );

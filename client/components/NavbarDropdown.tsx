@@ -1,28 +1,52 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
+import Link from "next/link";
 
-const NavbarDropdown = () => {
+export default function NavbarDropdown() {
   const [isOpen, setIsOpen] = useState(false);
+  const [cvUrl, setCvUrl] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   useOutsideClick(ref, () => setIsOpen(false));
 
+  useEffect(() => {
+    const fetchCV = async () => {
+      try {
+        const res = await fetch("http://localhost:4000/api/cv", {
+          method: "GET",
+        });
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch CV");
+        }
+
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        setCvUrl(url);
+      } catch (error) {
+        console.error("CV fetch error:", error);
+      }
+    };
+
+    fetchCV();
+  }, []);
+
   return (
     <div
+      ref={ref}
       onClick={() => setIsOpen(!isOpen)}
-      className="px-4 py-4  bg-black rounded-[10px] flex items-center justify-center cursor-pointer relative"
+      className="px-4 py-4 bg-black rounded-[10px] flex items-center justify-center cursor-pointer relative"
     >
       <motion.div
         animate={{ scale: isOpen ? 4 : 1 }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        className="w-2 h-2 bg-white rounded-full "
+        className="w-2 h-2 bg-white rounded-full"
       />
       {isOpen && (
         <motion.div
-          ref={ref}
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
@@ -37,16 +61,22 @@ const NavbarDropdown = () => {
             transition={{ duration: 0.2 }}
           >
             <LiWithAnimation>About</LiWithAnimation>
-            <LiWithAnimation>Projects</LiWithAnimation>
+            <Link href="/projects">
+              <LiWithAnimation>Projects</LiWithAnimation>
+            </Link>
             <LiWithAnimation>Contact</LiWithAnimation>
             <LiWithAnimation>Blog</LiWithAnimation>
-            <LiWithAnimation>Resume</LiWithAnimation>
+            {cvUrl && (
+              <a href={cvUrl} target="_blank" rel="noopener noreferrer">
+                <LiWithAnimation>Resume</LiWithAnimation>
+              </a>
+            )}
           </motion.ul>
         </motion.div>
       )}
     </div>
   );
-};
+}
 
 const LiWithAnimation = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -61,5 +91,3 @@ const LiWithAnimation = ({ children }: { children: React.ReactNode }) => {
     </motion.li>
   );
 };
-
-export default NavbarDropdown;
