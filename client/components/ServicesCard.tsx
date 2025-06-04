@@ -4,30 +4,22 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const ServicesCard = ({
-  icon,
   title,
   description,
   list,
-  photo,
 }: {
-  icon: string;
   title: string;
   description: string;
   list: string[];
-  photo: string;
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
     <div className="flex flex-col border-b border-gray-700 py-4">
-      {/* Header */}
       <div
         className="flex items-center gap-4 hover:cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div className="w-12 h-12">
-          <img src={icon} alt="icon" className="w-full h-full object-contain" />
-        </div>
         <h2 className="text-lg font-semibold">{title}</h2>
         <motion.button
           className="ml-auto text-2xl"
@@ -62,7 +54,7 @@ const ServicesCard = ({
                   </h4>
                   <ul className="list-disc list-inside space-y-1 text-gray-200">
                     {list.map((item, index) => (
-                      <li key={index}>{item}</li>
+                      <li key={index}>{item.name}</li>
                     ))}
                   </ul>
                 </div>
@@ -73,13 +65,6 @@ const ServicesCard = ({
               </div>
 
               {/* Right: Image */}
-              <div className="md:flex-1 w-1/2 h-40 md:w-full">
-                <img
-                  src={photo}
-                  alt="photo"
-                  className="w-full h-full object-cover rounded-xl"
-                />
-              </div>
             </div>
           </motion.div>
         )}

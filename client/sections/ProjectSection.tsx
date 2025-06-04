@@ -29,7 +29,9 @@ export default async function ProjectSection() {
   return (
     <section className="text-white w-[90%] mx-auto">
       <div className="flex justify-between items-center mb-10">
-        <h2 className="header-text font-[600] uppercase">Projects</h2>
+        <h2 className="header-text font-[600] uppercase">
+          {lang === "az" ? "Proyektlər" : "Projects"}
+        </h2>
         <div>
           <Link href="/projects" className="text-white">
             <SeeMoreButton innerText="See more" />

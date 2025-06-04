@@ -2,11 +2,13 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { FaInstagram } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
 import { BsArrowUpRight } from "react-icons/bs";
 import { TfiEmail } from "react-icons/tfi";
 import Link from "next/link";
 import Image from "next/image";
+// import json named socialMedia from "@/data/socialMedia.json";
+import socialLinks from "@/data/socialMedia.json";
 
 interface AnimatedEndSection {
   content: {
@@ -14,6 +16,7 @@ interface AnimatedEndSection {
     title: string;
     followButton: string;
     emailButton: string;
+    description: string;
   };
   photos: string;
 }
@@ -252,8 +255,7 @@ export default function AnimatedEndSection({ data }: AnimatedEndSectionProps) {
               wordBreak: "break-all",
             }}
           >
-            loremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem
-            loremloremloremlorem
+            {data.content.description}
           </motion.p>
         </motion.div>
 
@@ -263,7 +265,7 @@ export default function AnimatedEndSection({ data }: AnimatedEndSectionProps) {
         >
           <motion.div variants={buttonVariants}>
             <Link
-              href="https://www.instagram.com/ali.agayevh"
+              href={socialLinks.linkedin}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -284,7 +286,7 @@ export default function AnimatedEndSection({ data }: AnimatedEndSectionProps) {
                 />
                 <span className="relative z-10 flex items-center gap-1">
                   {data.content.followButton}
-                  <FaInstagram />
+                  <FaLinkedin />
                   <motion.p
                     className="ml-1"
                     animate={{ rotate: [0, 15, 0] }}
@@ -317,19 +319,21 @@ export default function AnimatedEndSection({ data }: AnimatedEndSectionProps) {
                 whileHover={{ x: "100%" }}
                 transition={{ duration: 0.5 }}
               />
-              <span className="relative z-10 flex items-center gap-1">
-                {data.content.emailButton}
-                <motion.div
-                  animate={{ rotate: [0, 10, 0] }}
-                  transition={{
-                    duration: 2,
-                    repeat: 3,
-                    delay: 0.5,
-                  }}
-                >
-                  <TfiEmail size={14} className="ml-1" />
-                </motion.div>
-              </span>
+              <a href={`mailto:${socialLinks.gmail}`} className="relative z-10">
+                <span className="relative z-10 flex items-center gap-1">
+                  {data.content.emailButton}
+                  <motion.div
+                    animate={{ rotate: [0, 10, 0] }}
+                    transition={{
+                      duration: 2,
+                      repeat: 3,
+                      delay: 0.5,
+                    }}
+                  >
+                    <TfiEmail size={14} className="ml-1" />
+                  </motion.div>
+                </span>
+              </a>
             </motion.button>
           </motion.div>
         </motion.div>
