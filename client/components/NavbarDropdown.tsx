@@ -60,7 +60,9 @@ export default function NavbarDropdown() {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
           >
-            <LiWithAnimation>About</LiWithAnimation>
+            <a href="/about" onClick={() => setIsOpen(false)}>
+              <LiWithAnimation>About</LiWithAnimation>
+            </a>
             <Link href="/projects">
               <LiWithAnimation>Projects</LiWithAnimation>
             </Link>

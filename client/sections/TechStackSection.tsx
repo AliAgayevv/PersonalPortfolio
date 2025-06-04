@@ -25,7 +25,7 @@ const TechStackSection = async () => {
         {" "}
         {lang === "en" ? "My stacks" : "Texnologiyalar"}
       </h2>
-      <div className="grid grid-cols-2 gap-4 mt-10 ">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10 ">
         {data.map((item: any) => (
           <StackCard
             key={item._id}

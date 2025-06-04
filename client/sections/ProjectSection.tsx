@@ -35,7 +35,7 @@ export default async function ProjectSection() {
           </Link>
         </div>
       </div>
-      <div className="grid-cols-2 grid gap-4">
+      <div className="grid-cols-1 md:grid-cols-2 grid gap-4">
         {data.map((project: any) => (
           <Link href={`/projects/${project.projectId}`} key={project._id}>
             <ProjectCard

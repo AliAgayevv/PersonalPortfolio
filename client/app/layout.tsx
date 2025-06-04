@@ -22,10 +22,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`w-[90%] mx-auto ${interFont.className}`}>
-        <ReactLenis root>
-          <Navbar />
-          {children}
-        </ReactLenis>
+        {/* <ReactLenis root> */}
+        <Navbar />
+        {children}
+        {/* </ReactLenis> */}
       </body>
     </html>
   );

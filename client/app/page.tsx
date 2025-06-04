@@ -34,7 +34,7 @@ export default async function Home() {
   return (
     <div>
       <main className={`flex flex-col  h-screen w-full  justify-center `}>
-        <div className="size-32 rounded-full  border-black border-5 shadow-lg -mt-40 mb-10">
+        <div className="size-32 rounded-full  border-black border-5 shadow-lg -mt-10 md:-mt-40 mb-10">
           {/* ! Change to Image component with image kit */}
           {/* <img
             className="w-full h-full rounded-full"
@@ -53,7 +53,7 @@ export default async function Home() {
             stringsFromBackend={data.content?.heroText.split("_")}
           />
         </h1>
-        <p className="text-[#00000080] w-1/4 text-16px">
+        <p className="text-[#00000080] w-3/4 md:w-1/4 text-16px">
           {data.content?.pageDescription}
         </p>
         <div className="flex gap-4 mt-10 ">
@@ -62,23 +62,41 @@ export default async function Home() {
             {data.content?.contact}
           </button>
         </div>
-        <div className="w-[90%] pt-20 ">
-          <div className=" grid grid-cols-3 gap-4 text-[#00000080]  text-14px">
-            <p className="">{data.content?.experience}</p>
-            <p className="">{data.content?.location}</p>
-            <p className="">{data.content?.freelance}</p>
-          </div>
-          <div className="grid grid-cols-3 gap-4  font-[600] text-24px">
-            <p className="">{data.content?.experienceLength}</p>
-            <p className="">{data.content?.locationData}</p>
-            <p className="">{data.content?.freelanceStatus}</p>
+        <div className="w-[90%] pt-20">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <p className="text-[#00000080] text-sm">
+                {data.content?.experience}
+              </p>
+              <p className="text-black font-semibold text-xl">
+                {data.content?.experienceLength}
+              </p>
+            </div>
+
+            <div>
+              <p className="text-[#00000080] text-sm">
+                {data.content?.location}
+              </p>
+              <p className="text-black font-semibold text-xl">
+                {data.content?.locationData}
+              </p>
+            </div>
+
+            <div>
+              <p className="text-[#00000080] text-sm">
+                {data.content?.freelance}
+              </p>
+              <p className="text-black font-semibold text-xl">
+                {data.content?.freelanceStatus}
+              </p>
+            </div>
           </div>
         </div>
       </main>
 
       <TechStackSection />
 
-      <div className=" absolute left-0  w-screen bg-black mt-40 pt-20">
+      <div className=" absolute left-0  w-full bg-black mt-40 pt-20">
         <ProjectSection />
         <section className="text-white w-[90%] mx-auto mt-40 h-full">
           <div className="flex justify-between items-center mb-10">
@@ -87,7 +105,7 @@ export default async function Home() {
               <SeeMoreButton innerText="Discover" />
             </div>
           </div>
-          <div className="w-1/2  h-full mb-40 flex flex-col gap-10 ml-auto">
+          <div className="w-full md:w-1/2  h-full mb-40 flex flex-col gap-10 md:ml-auto">
             <ServicesCard
               title="Frontend Development"
               icon="./favicon.ico"

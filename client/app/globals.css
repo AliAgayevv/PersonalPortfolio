@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .header-text {
-  font-size: clamp(40px, 4.86vw, 70px);
+  font-size: clamp(30px, 4.86vw, 70px);
 }
 
 .end-text {
@@ -10,7 +10,7 @@
 }
 
 .text-66px {
-  font-size: clamp(16px, 4.6vw, 66px);
+  font-size: clamp(24px, 5vw, 66px);
 }
 
 .text-40px {

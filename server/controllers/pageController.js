@@ -106,38 +106,48 @@ exports.deletePage = async (req, res) => {
   }
 };
 
-// [PATCH] /api/pages/:componentName
 exports.updatePagePartial = async (req, res) => {
   const { componentName } = req.params;
-  console.log("Partial update request for component:", componentName);
-
-  const updateFields = req.body;
-
-  // Handle uploaded photos
-  if (req.files && req.files.length > 0) {
-    const photoPaths = req.files.map((file) => `/uploads/${file.filename}`);
-
-    // Merge with existing photos if needed (optional)
-    updateFields.photos = photoPaths;
-  }
+  console.log("Partial update request for:", componentName);
 
   try {
-    const updatedPage = await Page.findOneAndUpdate(
-      { componentName },
-      { $set: updateFields },
-      { new: true }
-    );
+    const existingPage = await Page.findOne({ componentName });
 
-    if (!updatedPage) {
+    if (!existingPage) {
       return res.status(404).json({ message: "Page not found" });
     }
+
+    const updateFields = req.body;
+
+    // 1. FOTOLAR (əlavə edirsə)
+    if (req.files && req.files.length > 0) {
+      const newPhotos = req.files.map((file) => `/uploads/${file.filename}`);
+      existingPage.photos = [...(existingPage.photos || []), ...newPhotos];
+    }
+
+    // 2. MULTILANGUAGE sahələr üçün merge
+    ["az", "en"].forEach((lang) => {
+      if (updateFields[lang]) {
+        Object.entries(updateFields[lang]).forEach(([key, value]) => {
+          existingPage[lang].set(key, value);
+        });
+      }
+    });
+
+    // 3. Qalan sahələr (əgər photos-dan və multilingual-dan başqa sahə varsa)
+    const { az, en, photos, ...otherFields } = updateFields;
+    Object.entries(otherFields).forEach(([key, value]) => {
+      existingPage[key] = value;
+    });
+
+    const updatedPage = await existingPage.save();
 
     res.status(200).json({
       message: "Page updated successfully",
       updatedPage,
     });
   } catch (err) {
-    console.error("Error updating Page partially:", err);
+    console.error("Error in partial update:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };

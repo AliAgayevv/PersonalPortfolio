@@ -39,9 +39,9 @@ export default async function page() {
   }
 
   return (
-    <div className=" w-full">
+    <div className=" w-full ">
       <h1 className="mt-24 font-[600] text-66px">{pageData.content.title}</h1>
-      <p className="w-[25%] h-full text-[#00000080] font-[500]">
+      <p className="md:w-[25%] w-full h-full text-[#00000080] font-[500]">
         {pageData.content.description}
         <span className="text-black font-[600]">
           {pageData.content.highlightedText}
@@ -55,7 +55,7 @@ export default async function page() {
           <ProjectCardGrid {...project} key={project.projectId} />
         ))}
       </div>
-      <div className=" absolute w-full left-0  h-full ">
+      <div className=" absolute w-full left-0  h-full md:mt-0 mt-40">
         <Footer />
       </div>
     </div>

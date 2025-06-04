@@ -16,55 +16,50 @@ const ServicesCard = ({
   photo: string;
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
+
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col border-b border-gray-700 py-4">
       <div
-        className="gap-4 items-center flex w-full hover:cursor-pointer"
+        className="flex items-center gap-4 hover:cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div className="flex items-center w-12 h-12 justify-center ">
-          <img src={icon} alt="icon" className="w-full h-full  " />
+        <div className="w-12 h-12">
+          <img src={icon} alt="icon" className="w-full h-full object-contain" />
         </div>
-        <h2>{title}</h2>
-        <button className="ml-auto">
-          {
-            !isOpen ? <p>+</p> : <p>-</p>
-            //     <img
-            //       src="/assets/icons/arrow-up.svg"
-            //       alt="arrow-up"
-            //       className="w-4 h-4"
-            //     />
-            //   ) : (
-            //     <img
-            //       src="/assets/icons/arrow-down.svg"
-            //       alt="arrow-down"
-            //       className="w-4 h-4"
-            //     />
-          }
-        </button>
+        <h2 className="text-lg font-semibold">{title}</h2>
+        <button className="ml-auto text-2xl">{isOpen ? "-" : "+"}</button>
       </div>
+
       {isOpen && (
-        <div className="flex flex-col pl-16">
-          <div className="flex justify-between gap-4 mt-4  ">
-            <div className="flex gap-4">
-              <div className="flex flex-col gap-4">
-                <p>{description}</p>
-                <ul className="list-disc pl-4">
-                  {list.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="flex w-1/2 h-full bg-blue-500  justify-end items-center">
-                <img
-                  src={photo}
-                  alt="photo"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+        <div className="flex flex-col md:flex-row mt-4 gap-6">
+          {/* Left: Text content */}
+          <div className="flex-1 space-y-4">
+            <p className="text-gray-300">{description}</p>
+
+            <div>
+              <h4 className="text-white font-semibold mb-2">
+                [ KEY FEATURES ]
+              </h4>
+              <ul className="list-disc list-inside space-y-1 text-gray-200">
+                {list.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
             </div>
+
+            <button className="bg-white text-black px-4 py-2 mt-2 font-semibold w-fit">
+              BOOK A CALL
+            </button>
           </div>
-          <button className="mr-auto mt-5">Hey</button>
+
+          {/* Right: Image */}
+          <div className="md:flex-1 w-1/2 h-40 md:w-full">
+            <img
+              src={photo}
+              alt="photo"
+              className="w-full h-full object-cover rounded-xl"
+            />
+          </div>
         </div>
       )}
     </div>

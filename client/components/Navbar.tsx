@@ -13,7 +13,7 @@ const Navbar = () => {
     <nav className=" flex justify-between items-center pt-16 max-h-14 mb-5">
       <Link href="/">
         <h1
-          className={`${interFont.className} font-[500] text-[36px] text-black `}
+          className={`${interFont.className} font-[500] text-[20px] md:text-[36px] text-black `}
         >
           Ali Aghayev
         </h1>
