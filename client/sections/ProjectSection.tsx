@@ -3,10 +3,11 @@ import { cookies } from "next/headers";
 import ProjectCard from "../components/ProjectCard";
 import SeeMoreButton from "../components/SeeMoreButton";
 import Link from "next/link";
+import AnimationAllChildren from "@/components/animations/AnimationAllChildren";
 
 export default async function ProjectSection() {
   const cookieStore = await cookies();
-  const lang = cookieStore.get("language")?.value || "az";
+  const lang = cookieStore.get("lang")?.value || "az";
 
   const res = await fetch("http://localhost:4000/api/projects", {
     headers: {
@@ -35,7 +36,24 @@ export default async function ProjectSection() {
           </Link>
         </div>
       </div>
-      <div className="grid-cols-1 md:grid-cols-2 grid gap-4">
+      <AnimationAllChildren
+        parentVariant={{
+          hidden: {},
+          visible: {
+            transition: {
+              staggerChildren: 0.2,
+            },
+          },
+        }}
+        childVariant={{
+          hidden: { opacity: 0, y: 50 },
+          visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.5 },
+          },
+        }}
+      >
         {data.map((project: any) => (
           <Link href={`/projects/${project.projectId}`} key={project._id}>
             <ProjectCard
@@ -48,7 +66,7 @@ export default async function ProjectSection() {
             />
           </Link>
         ))}
-      </div>
+      </AnimationAllChildren>
     </section>
   );
 }

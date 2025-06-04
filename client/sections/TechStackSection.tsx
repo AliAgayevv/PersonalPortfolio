@@ -1,5 +1,25 @@
 import { cookies } from "next/headers";
 import StackCard from "../components/StackCard";
+import AnimationWhenElementOnScreen from "@/components/animations/AnimationWhenElementOnScreen";
+import AnimationAllChildren from "@/components/animations/AnimationAllChildren";
+
+const parentVariant = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.2, // delay between children
+    },
+  },
+};
+
+const childVariant = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5 },
+  },
+};
 
 const TechStackSection = async () => {
   const cookieStore = await cookies();
@@ -25,16 +45,20 @@ const TechStackSection = async () => {
         {" "}
         {lang === "en" ? "My stacks" : "Texnologiyalar"}
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10 ">
+      <AnimationAllChildren
+        parentVariant={parentVariant}
+        childVariant={childVariant}
+      >
         {data.map((item: any) => (
-          <StackCard
-            key={item._id}
-            stackTitle={item.techName}
-            stackDescription={item.description}
-            stackIcon={item.icon}
-          />
+          <div key={item._id} className="">
+            <StackCard
+              stackTitle={item.techName}
+              stackDescription={item.description}
+              stackIcon={item.icon}
+            />
+          </div>
         ))}
-      </div>
+      </AnimationAllChildren>
     </section>
   );
 };

@@ -8,6 +8,8 @@ import ServicesCard from "@/components/ServicesCard";
 import EndSection from "@/sections/EndSection";
 import Footer from "@/components/Footer";
 import Image from "next/image";
+import AnimationWhenElementOnScreen from "@/components/animations/AnimationWhenElementOnScreen";
+import TextAnimation from "@/components/animations/TextAnimation";
 
 export default async function Home() {
   const cookieStore = await cookies();
@@ -63,34 +65,42 @@ export default async function Home() {
           </button>
         </div>
         <div className="w-[90%] pt-20">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div>
-              <p className="text-[#00000080] text-sm">
-                {data.content?.experience}
-              </p>
-              <p className="text-black font-semibold text-xl">
-                {data.content?.experienceLength}
-              </p>
-            </div>
+          <TextAnimation
+            animations={{
+              initial: { opacity: 0, y: 20 },
+              animate: { opacity: 1, y: 0 },
+              transition: { duration: 0.5, delay: 0.2 },
+            }}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div>
+                <p className="text-[#00000080] text-sm">
+                  {data.content?.experience}
+                </p>
+                <p className="text-black font-semibold text-xl">
+                  {data.content?.experienceLength}
+                </p>
+              </div>
 
-            <div>
-              <p className="text-[#00000080] text-sm">
-                {data.content?.location}
-              </p>
-              <p className="text-black font-semibold text-xl">
-                {data.content?.locationData}
-              </p>
-            </div>
+              <div>
+                <p className="text-[#00000080] text-sm">
+                  {data.content?.location}
+                </p>
+                <p className="text-black font-semibold text-xl">
+                  {data.content?.locationData}
+                </p>
+              </div>
 
-            <div>
-              <p className="text-[#00000080] text-sm">
-                {data.content?.freelance}
-              </p>
-              <p className="text-black font-semibold text-xl">
-                {data.content?.freelanceStatus}
-              </p>
+              <div>
+                <p className="text-[#00000080] text-sm">
+                  {data.content?.freelance}
+                </p>
+                <p className="text-black font-semibold text-xl">
+                  {data.content?.freelanceStatus}
+                </p>
+              </div>
             </div>
-          </div>
+          </TextAnimation>
         </div>
       </main>
 

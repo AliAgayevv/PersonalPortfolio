@@ -51,7 +51,7 @@ export default async function page() {
         <CtaButton innerText={pageData.content.buttonInner} mode="email" />
       </div>
       <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
-        {projectsData.slice(0, 1).map((project: any) => (
+        {projectsData.map((project: any) => (
           <ProjectCardGrid {...project} key={project.projectId} />
         ))}
       </div>

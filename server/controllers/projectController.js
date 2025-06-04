@@ -33,7 +33,7 @@ exports.getProjectById = async (req, res) => {
 
 // [GET] /api/projects
 exports.getAllProjects = async (req, res) => {
-  const language = req.headers["accept-language"] || "az";
+  const language = req.headers["accept-language"];
 
   try {
     const projects = await Project.find();
