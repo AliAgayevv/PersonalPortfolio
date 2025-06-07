@@ -1,15 +1,25 @@
 "use client";
 
 import React from "react";
+import {
+  motion,
+  TargetAndTransition,
+  Transition,
+  VariantLabels,
+} from "framer-motion";
 
-import { motion } from "framer-motion";
+interface TextAnimationProps {
+  children: React.ReactNode;
+  animations: {
+    initial?: VariantLabels | TargetAndTransition;
+    animate?: VariantLabels | TargetAndTransition;
+    transition?: Transition;
+  };
+}
 
-const TextAnimation = ({
+const TextAnimation: React.FC<TextAnimationProps> = ({
   children,
   animations,
-}: {
-  children: React.ReactNode;
-  animations: any;
 }) => {
   return (
     <>

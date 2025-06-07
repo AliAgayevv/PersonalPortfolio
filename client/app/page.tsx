@@ -1,15 +1,16 @@
-import { cookies } from "next/headers";
-import TypewriterEffect from "@/components/TypewriterEffect";
-import CtaButton from "@/components/CtaButton";
-import TechStackSection from "@/sections/TechStackSection";
-import ProjectSection from "@/sections/ProjectSection";
-import SeeMoreButton from "@/components/SeeMoreButton";
-import ServicesCard from "@/components/ServicesCard";
-import EndSection from "@/sections/EndSection";
-import Footer from "@/components/Footer";
 import Image from "next/image";
-import AnimationWhenElementOnScreen from "@/components/animations/AnimationWhenElementOnScreen";
+import { cookies } from "next/headers";
+import Footer from "@/components/Footer";
+import CtaButton from "@/components/CtaButton";
+import EndSection from "@/sections/EndSection";
+import ServicesCard from "@/components/ServicesCard";
+import SeeMoreButton from "@/components/SeeMoreButton";
 import TextAnimation from "@/components/animations/TextAnimation";
+import ProjectSection from "@/sections/ProjectSection";
+import TechStackSection from "@/sections/TechStackSection";
+import TypewriterEffect from "@/components/TypewriterEffect";
+import AnimationWhenElementOnScreen from "@/components/animations/AnimationWhenElementOnScreen";
+import ServiceInterface from "@/types/ServiceInterface";
 
 export default async function Home() {
   const cookieStore = await cookies();
@@ -136,7 +137,7 @@ export default async function Home() {
             </div>
           </div>
           <div className="w-full md:w-1/2  h-full mb-40 flex flex-col gap-10 md:ml-auto">
-            {servicesData.map((service: any) => (
+            {servicesData.map((service: ServiceInterface) => (
               <ServicesCard
                 key={service._id}
                 title={service.title}
@@ -147,7 +148,15 @@ export default async function Home() {
           </div>
         </section>
 
-        <EndSection />
+        <AnimationWhenElementOnScreen
+          animations={{
+            initial: { opacity: 0, y: 20 },
+            whileInView: { opacity: 1, y: 0 },
+            transition: { duration: 0.5, delay: 0.2 },
+          }}
+        >
+          <EndSection />
+        </AnimationWhenElementOnScreen>
         <Footer />
       </div>
     </div>

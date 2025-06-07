@@ -3,12 +3,13 @@ import {
   FaLinkedinIn,
   FaInstagram,
   FaHome,
-  FaTwitter,
-  FaTiktok,
-  FaYoutube,
+  // FaTwitter,
+  // FaTiktok,
+  // FaYoutube,
 } from "react-icons/fa";
 import dotSVG from "@/public/svg/overlay.svg";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function Footer() {
   const cookieStore = await cookies();
@@ -42,15 +43,23 @@ export default async function Footer() {
           <div className="flex justify-between items-center">
             <div className="flex flex-col">
               <div className="flex gap-5 text-16px font-[600] items-center">
-                <p className="text-[#00FF8C]">{data.content.contactMe}</p>
+                <Link
+                  className="text-[#00FF8C] hover:cursor-pointer"
+                  href="/contact"
+                >
+                  {data.content.contactMe}
+                </Link>
                 <Image
                   alt="dot icon"
                   className="w-1.5 h-1.5 items-center justify-center flex"
                   src={dotSVG || "/placeholder.svg"}
                 />
-                <p className="text-[#FFFFFF80]">
+                <Link
+                  className="text-[#FFFFFF80] hover:cursor-pointer"
+                  href="/projects"
+                >
                   {data.content.visitPortfolio}
-                </p>
+                </Link>
               </div>
               <h1 className="mt-5 text-[#FFFFFF30] text-40px">
                 {data.content.fullName}
@@ -119,11 +128,16 @@ export default async function Footer() {
           </h1>
 
           <div className="flex items-center gap-3 mb-10">
-            <p className="text-[#00FF8C] font-medium">
+            <Link
+              className="text-[#00FF8C] font-medium hover:cursor-pointer"
+              href="/contact"
+            >
               {data.content.contactMe}
-            </p>
+            </Link>
             <span className="text-[#FFFFFF80] text-lg">•</span>
-            <p className="text-[#FFFFFF80]">{data.content.visitPortfolio}</p>
+            <Link href="/projects" className="cursor-pointer text-[#FFFFFF80]">
+              {data.content.visitPortfolio}
+            </Link>
           </div>
 
           <div className="w-full text-center mb-6">
@@ -175,21 +189,21 @@ interface IFooterSocialIconsProps {
 
 export function FooterSocialIcons({
   linekdinURL,
-  mediumURL,
+  // mediumURL,
   instagramURL,
 }: IFooterSocialIconsProps) {
   console.log("linekdinURL", linekdinURL);
   return (
     <div className="flex  justify-around md:justify-end items-center py-4 gap-0 md:gap-12 ">
-      <a className="w-6 h-6" href="/">
+      <Link className="w-6 h-6" href="/">
         <FaHome className="w-full h-full" />
-      </a>
-      <a href={linekdinURL} className="w-6 h-6" target="_blank">
+      </Link>
+      <Link href={linekdinURL as string} className="w-6 h-6" target="_blank">
         <FaLinkedinIn className="w-full h-full" />
-      </a>
-      <a href={instagramURL} target="_blank" className="w-6 h-6">
+      </Link>
+      <Link href={instagramURL as string} target="_blank" className="w-6 h-6">
         <FaInstagram className="w-full h-full" />
-      </a>
+      </Link>
     </div>
   );
 }

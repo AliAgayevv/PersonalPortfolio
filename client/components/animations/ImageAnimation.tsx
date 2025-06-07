@@ -1,29 +1,32 @@
 "use client";
 
 import React from "react";
+import {
+  motion,
+  TargetAndTransition,
+  VariantLabels,
+  Transition,
+} from "framer-motion";
 
-import { motion } from "framer-motion";
-
-const ImageAnimation = ({
-  children,
-  animations,
-}: {
+interface ImageAnimationProps {
   children: React.ReactNode;
-  animations: any;
-}) => {
+  animations: {
+    initial?: TargetAndTransition | VariantLabels;
+    animate?: TargetAndTransition | VariantLabels;
+    transition?: Transition;
+  };
+}
+
+const ImageAnimation = ({ children, animations }: ImageAnimationProps) => {
   return (
-    <>
-      {children && (
-        <motion.div
-          initial={animations.initial}
-          animate={animations.animate}
-          transition={animations.transition}
-          className="w-full h-full"
-        >
-          {children}
-        </motion.div>
-      )}
-    </>
+    <motion.div
+      initial={animations.initial}
+      animate={animations.animate}
+      transition={animations.transition}
+      className="w-full h-full"
+    >
+      {children}
+    </motion.div>
   );
 };
 

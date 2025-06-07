@@ -10,7 +10,11 @@ const ServicesCard = ({
 }: {
   title: string;
   description: string;
-  list: string[];
+  list: [
+    {
+      name: string;
+    }
+  ];
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
 

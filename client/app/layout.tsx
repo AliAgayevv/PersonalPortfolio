@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import localFont from "next/font/local";
-import { ReactLenis } from "@/utils/smoothScroll";
-import Footer from "@/components/Footer";
+// import { ReactLenis } from "@/utils/smoothScroll";
+// import Footer from "@/components/Footer";
 
 const interFont = localFont({
   src: "../public/fonts/Inter.ttf",

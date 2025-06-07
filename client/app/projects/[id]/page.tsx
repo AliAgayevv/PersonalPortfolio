@@ -1,12 +1,22 @@
+// GetServerSideProps cuz we need to fetch data based on the project ID from the URL and its dynamic content (it help with SEO)
+
 import CtaButton from "@/components/CtaButton";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import StackCard from "@/components/StackCard";
 import Image from "next/image";
 import Footer from "@/components/Footer";
+import projectInterface, {
+  projectTechInterface,
+} from "@/types/projectInterface";
 
-export default async function page({ params }: { params: { id: string } }) {
-  const projectId = params.id;
+export default async function page({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  // Await the params Promise in Next.js 15+
+  const { id: projectId } = await params;
 
   const cookieStore = await cookies();
   const lang = cookieStore.get("lang")?.value || "az";
@@ -41,7 +51,7 @@ export default async function page({ params }: { params: { id: string } }) {
     throw new Error("Failed to fetch project data");
   }
 
-  const projectData = await projectResponse.json();
+  const projectData: projectInterface = await projectResponse.json();
   const pageData = await pageResponse.json();
 
   if (!projectData) {
@@ -113,7 +123,7 @@ export default async function page({ params }: { params: { id: string } }) {
             {pageData.content.techStack}
           </h3>
           <div className="grid grid-cols-2 gap-3">
-            {projectData.techStack.map((tech: any) => (
+            {projectData.techStack.map((tech: projectTechInterface) => (
               <StackCard
                 key={tech._id}
                 stackTitle={tech.name}
@@ -140,7 +150,7 @@ export default async function page({ params }: { params: { id: string } }) {
               {pageData.content.techStack}
             </h3>
             <div className="grid grid-cols-2 gap-4">
-              {projectData.techStack.map((tech: any) => (
+              {projectData.techStack.map((tech: projectTechInterface) => (
                 <StackCard
                   key={tech._id}
                   stackTitle={tech.name}

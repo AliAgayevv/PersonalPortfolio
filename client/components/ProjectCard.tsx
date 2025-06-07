@@ -1,24 +1,24 @@
 import Image from "next/image";
-import Link from "next/link";
+// import Link from "next/link";
 import React from "react";
 
 const ProjectCard = ({
   projectName,
   projectDescription,
   projectImage,
-  projectLink,
-  projectShowenLink,
+  // projectLink,
+  // projectShowenLink,
   projectId,
 }: {
   projectName: string;
   projectDescription: string;
   projectImage: string;
-  projectLink: string;
-  projectShowenLink: string;
+  // projectLink: string;
+  // projectShowenLink: string;
   projectId: string;
 }) => {
   return (
-    <div className="w-full h-full bg-black overflow-hidden">
+    <div className="w-full h-full bg-black overflow-hidden ">
       {/* <img
         src={projectImage}
         alt={projectName}

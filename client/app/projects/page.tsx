@@ -1,42 +1,17 @@
 import CtaButton from "@/components/CtaButton";
 import Footer from "@/components/Footer";
-import React from "react";
+import React, { Suspense } from "react";
 import { cookies } from "next/headers";
-import ProjectCardGrid from "@/components/ProjectCardGrid";
+import getPageData from "@/lib/getPageData";
+import AllProjects from "@/components/AllProjects";
+import LoadingAnimation from "@/components/animations/LoadingAnimation";
 
 export default async function page() {
   const cookieStore = await cookies();
   const lang = cookieStore.get("lang")?.value || "az";
+  const pageData = await getPageData("projects", lang as "az" | "en");
 
-  const pageRes = await fetch("http://localhost:4000/api/pages/projects", {
-    cache: "no-store",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept-Language": lang,
-    },
-  });
-
-  const projectsRes = await fetch("http://localhost:4000/api/projects", {
-    cache: "no-store",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept-Language": lang,
-    },
-  });
-  if (!projectsRes.ok) {
-    throw new Error("Failed to fetch projects data");
-  }
-
-  if (!pageRes.ok) {
-    throw new Error("Failed to fetch hero data");
-  }
-
-  const pageData = await pageRes.json();
-  const projectsData = await projectsRes.json();
-
-  if (!projectsData) {
-    throw new Error("No projects data found");
-  }
+  console.log(pageData);
 
   return (
     <div className=" w-full ">
@@ -50,11 +25,10 @@ export default async function page() {
       <div className="mt-6">
         <CtaButton innerText={pageData.content.buttonInner} mode="email" />
       </div>
-      <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
-        {projectsData.map((project: any) => (
-          <ProjectCardGrid {...project} key={project.projectId} />
-        ))}
-      </div>
+      <Suspense fallback={<LoadingAnimation />}>
+        <AllProjects />
+      </Suspense>
+
       <div className=" absolute w-full left-0  h-full md:mt-0 mt-40">
         <Footer />
       </div>

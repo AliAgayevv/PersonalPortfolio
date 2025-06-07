@@ -1,30 +1,40 @@
 "use client";
 
 import React from "react";
+import {
+  motion,
+  TargetAndTransition,
+  VariantLabels,
+  Transition,
+} from "framer-motion";
 
-import { AnimatePresence, motion } from "framer-motion";
+interface AnimationWhenElementOnScreenProps {
+  children: React.ReactNode;
+  animations: {
+    initial?: TargetAndTransition | VariantLabels;
+    whileInView?: TargetAndTransition | VariantLabels;
+    transition?: Transition;
+    viewport?: Partial<{
+      once: boolean;
+      amount: number | "some" | "all";
+    }>;
+  };
+}
 
 const AnimationWhenElementOnScreen = ({
   children,
   animations,
-}: {
-  children: React.ReactNode;
-  animations: any;
-}) => {
+}: AnimationWhenElementOnScreenProps) => {
   return (
-    <>
-      {children && (
-        <motion.div
-          initial={animations.initial}
-          whileInView={animations.whileInView}
-          transition={animations.transition}
-          viewport={animations.viewport}
-          className="w-full h-full"
-        >
-          {children}
-        </motion.div>
-      )}
-    </>
+    <motion.div
+      initial={animations.initial}
+      whileInView={animations.whileInView}
+      transition={animations.transition}
+      viewport={animations.viewport}
+      className="w-full h-full"
+    >
+      {children}
+    </motion.div>
   );
 };
 
