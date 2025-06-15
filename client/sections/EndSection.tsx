@@ -5,6 +5,7 @@ import { BsArrowUpRight } from "react-icons/bs";
 import { TfiEmail } from "react-icons/tfi";
 import Link from "next/link";
 import Image from "next/image";
+import socialMediaDatas from "@/data/socialMedia.json";
 
 export default async function EndSection() {
   const cookieStore = await cookies();
@@ -55,7 +56,7 @@ export default async function EndSection() {
         </div>
         <div className="flex justify-center items-center flex-col md:flex-row gap-4 pb-4 ">
           <Link
-            href="https://www.instagram.com/ali.agayevh"
+            href={socialMediaDatas.linkedin}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -67,10 +68,13 @@ export default async function EndSection() {
               </p>
             </button>
           </Link>
-          <button className="w-60 rounded-2xl text-black bg-white flex justify-center items-center gap-1 border p-4 border-gray-300 shadow-2xl shadow-black/30 hover:shadow-black/50 transition-all duration-300">
+          <a
+            href={`mailto:${socialMediaDatas.gmail}`}
+            className="w-60 rounded-2xl text-black bg-white flex justify-center items-center gap-1 border p-4 border-gray-300 shadow-2xl shadow-black/30 hover:shadow-black/50 transition-all duration-300"
+          >
             {data.content.emailButton}
             <TfiEmail size={14} className="ml-1" />
-          </button>
+          </a>
         </div>
       </div>
     </section>

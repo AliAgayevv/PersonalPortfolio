@@ -1,4 +1,3 @@
-// app/about/page.tsx (server component)
 import React from "react";
 import { cookies } from "next/headers";
 import CtaButton from "@/components/CtaButton";
@@ -7,6 +6,30 @@ import { FooterSocialIcons } from "@/components/Footer";
 
 import ImageAnimation from "@/components/animations/ImageAnimation";
 import TextAnimation from "@/components/animations/TextAnimation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Haqqımda",
+  description:
+    "Ali Aghayev-in developer kimi səyahəti. Next.js, React və TypeScript öyrənmə prosesi. Bakıda frontend developer olmaq və freelance təcrübə.",
+  keywords: [
+    "Ali Aghayev haqqında",
+    "frontend developer səyahəti",
+    "next.js öyrənmək",
+    "react developer təcrübəsi",
+    "bakı developer haqqında",
+    "typescript öyrənmə prosesi",
+    "freelance developer",
+    "self-study developer azerbaijan",
+  ],
+  openGraph: {
+    title: "Ali Aghayev Haqqında - Frontend Developer ",
+    description:
+      "Bakıda yaşayan Ali-nin frontend developer olmaq səyahəti və texniki bilikləri",
+    images: ["/about-ali-developer.jpg"], // TODO: Replace with your actual image path
+    url: "http://localhost:3000/about", // TODO : Replace with your actual URL
+  },
+};
 
 export default async function Page() {
   const cookieStore = await cookies();

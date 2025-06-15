@@ -11,18 +11,14 @@ import TechStackSection from "@/sections/TechStackSection";
 import TypewriterEffect from "@/components/TypewriterEffect";
 import AnimationWhenElementOnScreen from "@/components/animations/AnimationWhenElementOnScreen";
 import ServiceInterface from "@/types/ServiceInterface";
+import getPageData from "@/lib/getPageData";
+import getUrl from "@/lib/getUrl";
+import socialMediaAdress from "@/data/socialMedia.json";
 
 export default async function Home() {
   const cookieStore = await cookies();
   const lang = cookieStore.get("lang")?.value || "az";
-
-  const res = await fetch("http://localhost:4000/api/pages/hero", {
-    cache: "no-store",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept-Language": lang,
-    },
-  });
+  const data = await getPageData("hero", lang as "az" | "en");
 
   const servicesRes = await fetch("http://localhost:4000/api/services", {
     cache: "no-store",
@@ -31,38 +27,68 @@ export default async function Home() {
       "Accept-Language": lang,
     },
   });
-  const servicesData = await servicesRes.json();
   if (!servicesRes.ok) {
     throw new Error("Failed to fetch services data");
   }
+  const servicesData = await servicesRes.json();
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch hero data");
-  }
+  const backendUrl = getUrl();
 
-  console.log("servicesData:", servicesData);
+  const seoData = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Ali",
+    jobTitle: "Front-end Developer",
+    description: data.content?.pageDescription,
+    image: `${backendUrl}${data.photos}`,
+    sameAs: [
+      socialMediaAdress.linkedin,
+      socialMediaAdress.github,
+      socialMediaAdress.instagram,
+    ],
+    address: {
+      addressLocality: "Baku",
+      addressCountry: "AZ",
+    },
 
-  const data = await res.json();
-
-  console.log("Hero Data:", data);
-
-  console.log(`http://localhost:4000${data.photos}`);
+    knowsAbout: [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Node.js",
+      "Web Development",
+      "JavaScript",
+      "NGINX",
+    ],
+    hasOccupation: {
+      "@type": "Person",
+      name: "Web Developer",
+      occupationLocation: {
+        "@type": "City",
+        name: "Baku",
+      },
+    },
+  };
 
   return (
     <div>
-      <main className={`flex flex-col  h-screen w-full  justify-center `}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(seoData),
+        }}
+      />
+      <header className={`flex flex-col  h-screen w-full  justify-center `}>
         <div className="size-32 rounded-full  border-black border-5 shadow-lg -mt-10 md:-mt-40 mb-10">
-          {/* ! Change to Image component with image kit */}
-          {/* <img
-            className="w-full h-full rounded-full"
-            src={data.content.photos && data.content.photos}
-          /> */}
           <Image
-            src={`http://localhost:4000${data.photos}`}
+            src={`${backendUrl}${data.photos}`}
             width={80}
             className="w-full h-full rounded-full object-cover"
             height={80}
-            alt="Profile Picture"
+            priority
+            quality={100}
+            alt={`${lang === "az" ? "Profil şəkli" : "Profile picture"}
+            `}
           />
         </div>
         <h1 className={`header-text font-bold `}>
@@ -119,13 +145,16 @@ export default async function Home() {
             </div>
           </TextAnimation>
         </div>
-      </main>
+      </header>
 
       <TechStackSection />
 
       <div className=" absolute left-0  w-full bg-black mt-40 pt-20">
         <ProjectSection />
-        <section className="text-white w-[90%] mx-auto mt-40 h-full">
+        <section
+          aria-labelledby="services-heading"
+          className="text-white w-[90%] mx-auto mt-40 h-full"
+        >
           <div className="flex justify-between items-center mb-10">
             <h2 className="header-text font-[600] uppercase">
               {lang === "az" ? "Xidmətlər" : "Services"}
