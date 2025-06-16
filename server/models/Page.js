@@ -20,14 +20,16 @@ const pageSchema = new mongoose.Schema(
 
     componentName: { type: String, required: true, unique: true },
     // Not required
-    photos: {
-      type: [String],
-      default: [],
-      required: false,
-    },
-    content: {
+    photos: [{ type: String }],
+
+    az: {
       type: Map,
-      of: multilingualFieldSchema,
+      of: mongoose.Schema.Types.Mixed,
+      required: true,
+    },
+    en: {
+      type: Map,
+      of: mongoose.Schema.Types.Mixed,
       required: true,
     },
   },

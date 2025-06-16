@@ -2,8 +2,17 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import emailSVG from "@/public/svg/email.svg";
+import Image from "next/image";
+import goBackSVG from "@/public/svg/goBack.svg";
 
-const CtaButton = ({ innerText }: { innerText: string }) => {
+const CtaButton = ({
+  innerText,
+  mode,
+}: {
+  innerText: string;
+  mode: "email" | "start" | "goBack";
+}) => {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -24,36 +33,72 @@ const CtaButton = ({ innerText }: { innerText: string }) => {
       "
     >
       <div className="relative overflow-hidden h-[1.5em] w-auto">
-        <AnimatePresence mode="wait">
-          <motion.span
-            key={hovered ? "hovered" : "default"}
-            initial={{ y: -20, opacity: 0 }}
-            exit={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.45 }}
-            className="inline-block"
-          >
-            {innerText}
-          </motion.span>
-        </AnimatePresence>
+        {mode === "start" ? (
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={hovered ? "hovered" : "default"}
+              initial={{ y: -20, opacity: 0 }}
+              exit={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.45 }}
+              className="inline-block"
+            >
+              {innerText}
+            </motion.span>
+          </AnimatePresence>
+        ) : mode === "email" ? (
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={hovered ? "hovered" : "default"}
+              initial={{ y: -20, opacity: 0 }}
+              exit={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.45 }}
+              className="inline-block"
+            >
+              {innerText}
+            </motion.span>
+          </AnimatePresence>
+        ) : (
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={hovered ? "hovered" : "default"}
+              initial={{ x: 20, opacity: 0 }}
+              exit={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.45 }}
+              className="inline-block w-full"
+            >
+              <Image
+                alt="goBack Svg"
+                src={goBackSVG}
+                className="w-[clamp(14px,1vw,20px)] h-[clamp(14px,1vw,20px)] flex justify-center items-center"
+              />
+            </motion.span>
+          </AnimatePresence>
+        )}
       </div>
 
-      <motion.svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={2}
-        stroke="currentColor"
-        className="w-[clamp(14px,1vw,20px)] h-[clamp(14px,1vw,20px)]"
-        animate={{ x: hovered ? 10 : 0 }}
-        transition={{ type: "spring", stiffness: 300 }}
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-        />
-      </motion.svg>
+      {mode === "start" ? (
+        <motion.svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={2}
+          stroke="currentColor"
+          className="w-[clamp(14px,1vw,20px)] h-[clamp(14px,1vw,20px)]"
+          animate={{ x: hovered ? 10 : 0 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+          />
+        </motion.svg>
+      ) : (
+        mode === "email" && <Image alt="email Svg" src={emailSVG} />
+      )}
     </button>
   );
 };
