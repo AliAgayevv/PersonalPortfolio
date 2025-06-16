@@ -13,9 +13,15 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin:
+    process.env.NODE_ENV === "production"
+      ? ["https://yourdomain.com"]
+      : ["http://localhost:3000"],
+  credentials: true,
   optionsSuccessStatus: 200,
 };
+
+console.log(`CORS options: ${JSON.stringify(corsOptions)}`);
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 

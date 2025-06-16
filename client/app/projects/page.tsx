@@ -11,8 +11,6 @@ export default async function page() {
   const lang = cookieStore.get("lang")?.value || "az";
   const pageData = await getPageData("projects", lang as "az" | "en");
 
-  console.log(pageData);
-
   return (
     <div className=" w-full ">
       <h1 className="mt-24 font-[600] text-66px">{pageData.content.title}</h1>

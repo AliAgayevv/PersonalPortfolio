@@ -19,8 +19,9 @@ export default async function Home() {
   const cookieStore = await cookies();
   const lang = cookieStore.get("lang")?.value || "az";
   const data = await getPageData("hero", lang as "az" | "en");
+  const url = getUrl();
 
-  const servicesRes = await fetch("http://localhost:4000/api/services", {
+  const servicesRes = await fetch(`${url}/api/services`, {
     cache: "no-store",
     headers: {
       "Content-Type": "application/json",

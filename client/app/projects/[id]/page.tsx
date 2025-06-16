@@ -1,5 +1,3 @@
-// GetServerSideProps cuz we need to fetch data based on the project ID from the URL and its dynamic content (it help with SEO)
-
 import CtaButton from "@/components/CtaButton";
 import { cookies } from "next/headers";
 import Link from "next/link";
@@ -9,50 +7,36 @@ import Footer from "@/components/Footer";
 import projectInterface, {
   projectTechInterface,
 } from "@/types/projectInterface";
+import getUrl from "@/lib/getUrl";
+import getPageData from "@/lib/getPageData";
 
 export default async function page({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  // Await the params Promise in Next.js 15+
   const { id: projectId } = await params;
 
   const cookieStore = await cookies();
   const lang = cookieStore.get("lang")?.value || "az";
 
-  const projectResponse = await fetch(
-    `http://localhost:4000/api/projects/${projectId}`,
-    {
-      cache: "no-store",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept-Language": lang,
-      },
-    }
-  );
+  const url = getUrl();
 
-  const pageResponse = await fetch(
-    "http://localhost:4000/api/pages/projectsInner",
-    {
-      cache: "no-store",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept-Language": lang,
-      },
-    }
-  );
+  const projectResponse = await fetch(`${url}/api/projects/${projectId}`, {
+    cache: "no-store",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept-Language": lang,
+    },
+  });
 
-  if (!pageResponse.ok) {
-    throw new Error("Failed to fetch page data");
-  }
+  const pageData = await getPageData("projectsInner", lang as "az" | "en");
 
   if (!projectResponse.ok) {
     throw new Error("Failed to fetch project data");
   }
 
   const projectData: projectInterface = await projectResponse.json();
-  const pageData = await pageResponse.json();
 
   if (!projectData) {
     throw new Error("No project data found");
@@ -107,7 +91,7 @@ export default async function page({
         <div className="mt-8">
           <div className="relative w-full aspect-video">
             <Image
-              src={`http://localhost:4000${projectData.image}`}
+              src={`${url}${projectData.image}`}
               alt={projectData.title}
               fill
               className="object-cover rounded-2xl shadow-lg shadow-black/20"
@@ -166,7 +150,7 @@ export default async function page({
         <div className="w-full">
           <div className="relative w-full aspect-video">
             <Image
-              src={`http://localhost:4000${projectData.image}`}
+              src={`${url}${projectData.image}`}
               alt={projectData.title}
               fill
               className="object-cover rounded-2xl shadow-lg shadow-black/20"

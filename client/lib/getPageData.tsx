@@ -1,5 +1,8 @@
+import getUrl from "./getUrl";
+
 export default async function getPageData(endPoint: string, lang: "az" | "en") {
-  const res = await fetch(`http://localhost:4000/api/pages/${endPoint}`, {
+  const url = getUrl();
+  const res = await fetch(`${url}/api/pages/${endPoint}`, {
     cache: "no-store",
     headers: {
       "Content-Type": "application/json",

@@ -7,6 +7,8 @@ import { FooterSocialIcons } from "@/components/Footer";
 import ImageAnimation from "@/components/animations/ImageAnimation";
 import TextAnimation from "@/components/animations/TextAnimation";
 import { Metadata } from "next";
+import getUrl from "@/lib/getUrl";
+import getPageData from "@/lib/getPageData";
 
 export const metadata: Metadata = {
   title: "Haqqımda",
@@ -35,19 +37,9 @@ export default async function Page() {
   const cookieStore = await cookies();
   const lang = cookieStore.get("lang")?.value || "az";
 
-  // Fetch your “about” text/data
-  const res = await fetch("http://localhost:4000/api/pages/about", {
-    cache: "no-store",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept-Language": lang,
-    },
-  });
-  if (!res.ok) console.error("Failed to fetch /api/pages/about");
+  const url = getUrl();
 
-  const aboutData = await res.json();
-
-  console.log("About Data:", aboutData);
+  const aboutData = await getPageData("about", lang as "az" | "en");
 
   return (
     <div className="mt-24">
@@ -77,7 +69,7 @@ export default async function Page() {
             }}
           >
             <Image
-              src={`http://localhost:4000${aboutData.photos}`}
+              src={`${url}${aboutData.photos}`}
               width={1920}
               height={1920}
               alt="About Image"
@@ -96,7 +88,7 @@ export default async function Page() {
           }}
         >
           <a
-            href="http://localhost:4000/api/cv"
+            href={`${url}/api/cv`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center md:justify-start w-full hover:cursor-pointer"
