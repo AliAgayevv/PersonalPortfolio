@@ -15,10 +15,10 @@ const loginData = [
     type: "email",
     placeHolder: "Email",
     name: "email",
-    required: "Email mütləqdir",
+    required: "Email is required",
     pattern: {
       value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-      message: "Düzgün email daxil edin",
+      message: "Enter a valid email",
     },
   },
   {
