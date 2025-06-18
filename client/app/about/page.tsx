@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import CtaButton from "@/components/CtaButton";
 import Image from "next/image";
 import { FooterSocialIcons } from "@/components/Footer";
+import socialMediaData from "@/data/socialMedia.json";
 
 import ImageAnimation from "@/components/animations/ImageAnimation";
 import TextAnimation from "@/components/animations/TextAnimation";
@@ -40,6 +41,8 @@ export default async function Page() {
   const url = getUrl();
 
   const aboutData = await getPageData("about", lang as "az" | "en");
+
+  console.log("About Data:", aboutData);
 
   return (
     <div className="mt-24">
@@ -105,8 +108,10 @@ export default async function Page() {
             }}
           >
             <FooterSocialIcons
-              linekdinURL={aboutData.content.linkLi}
-              instagramURL={aboutData.content.linkIg}
+              linekdinURL={socialMediaData.linkedin}
+              instagramURL={socialMediaData.instagram}
+              mediumURL={socialMediaData.medium}
+              githubURL={socialMediaData.github}
             />
           </TextAnimation>
         </div>

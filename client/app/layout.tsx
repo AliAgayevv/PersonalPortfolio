@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import localFont from "next/font/local";
-// import { ReactLenis } from "@/utils/smoothScroll";
+import { ReactLenis } from "@/utils/smoothScroll";
 // import Footer from "@/components/Footer";
 
 const interFont = localFont({
@@ -71,10 +71,10 @@ export default function RootLayout({
   return (
     <html lang="az">
       <body className={`w-[90%] mx-auto ${interFont.className}`}>
-        {/* <ReactLenis root> */}
-        <Navbar />
-        {children}
-        {/* </ReactLenis> */}
+        <ReactLenis root>
+          <Navbar />
+          {children}
+        </ReactLenis>
       </body>
     </html>
   );
