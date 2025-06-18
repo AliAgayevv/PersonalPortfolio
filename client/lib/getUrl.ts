@@ -3,7 +3,5 @@ export default function getUrl() {
     | "development"
     | "production";
 
-  return mode === "development"
-    ? process.env.DEVELOPMENT_URL
-    : process.env.PRODUCTION_URL;
+  return "http://localhost:5000";
 }
