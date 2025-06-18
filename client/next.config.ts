@@ -5,7 +5,7 @@ const nextConfig = {
       {
         protocol: "http",
         hostname: "localhost",
-        port: "4000",
+        port: "5000",
         pathname: "/**", // Tüm path'lere izin ver
       },
     ],

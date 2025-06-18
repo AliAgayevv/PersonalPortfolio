@@ -15,7 +15,7 @@ export default async function EndSection() {
   const res = await getPageData("endSection", lang as "az" | "en");
 
   if (!res.ok) {
-    throw new Error("Failed to fetch hero data");
+    console.log("Error fetching EndSection data:", res.statusText);
   }
 
   const data = await res.json();
