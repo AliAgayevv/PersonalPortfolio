@@ -3,33 +3,46 @@ import {
   FaLinkedinIn,
   FaInstagram,
   FaHome,
-  // FaTwitter,
-  // FaTiktok,
-  // FaYoutube,
+  FaMedium,
+  FaGithub,
 } from "react-icons/fa";
 import dotSVG from "@/public/svg/overlay.svg";
 import Image from "next/image";
 import Link from "next/link";
 import getPageData from "@/lib/getPageData";
 
+function createFooterLinkMap(): Map<string, string> {
+  const links: { [key: string]: string } = {
+    "Əsas Səhifə": "/",
+    Haqqında: "/about",
+    Əlaqə: "/contact",
+    Proyektlər: "/projects",
+    Home: "/",
+    About: "/about",
+    Contact: "/contact",
+    Projects: "/projects",
+  };
+
+  return new Map(Object.entries(links));
+}
 export default async function Footer() {
+  const linksMap = createFooterLinkMap();
+
   const cookieStore = await cookies();
   const lang = cookieStore.get("lang")?.value || "az";
 
   const pageData = await getPageData("footer", lang as "az" | "en");
 
-  console.log("Footer data:", pageData);
-
   return (
-    <footer className="md:absolute md:bottom-0  w-full bg-black text-white">
+    <footer className="md:absolute md:bottom-0 w-full bg-black text-white">
       {/* Desktop Footer */}
-      <div className=" hidden md:block h-96">
+      <div className="hidden md:block h-96">
         <div className="w-[90%] mx-auto h-full">
           <FooterSocialIcons
             linekdinURL={pageData.content.linkLi}
             instagramURL={pageData.content.linkIg}
           />
-          <hr className="bg-[#FFFFFF80]"></hr>
+          <hr className="bg-[#FFFFFF80]" />
           <div className="flex justify-between items-center">
             <div className="flex flex-col">
               <div className="flex gap-5 text-16px font-[600] items-center">
@@ -42,7 +55,7 @@ export default async function Footer() {
                 <Image
                   alt="dot icon"
                   className="w-1.5 h-1.5 items-center justify-center flex"
-                  src={dotSVG || "/placeholder.svg"}
+                  src={dotSVG}
                 />
                 <Link
                   className="text-[#FFFFFF80] hover:cursor-pointer"
@@ -56,62 +69,34 @@ export default async function Footer() {
               </h1>
             </div>
             <div className="grid grid-cols-3 gap-10 w-1/2 mt-5 text-16px">
-              <div>
-                <p className="pt-4 pb-2">{pageData.content.grid1Title}</p>
-                <ul className="text-[#FFFFFF80] flex flex-col gap-6 mt-4.5 cursor-pointer">
-                  {pageData.content.grid1List &&
-                    pageData.content.grid1List.map(
-                      (item: string, index: number) => (
-                        <li
-                          className="hover:text-white duration-300 transition-all"
-                          key={index}
-                        >
-                          {item}
-                        </li>
-                      )
-                    )}
-                </ul>
-              </div>
-              <div>
-                <p className="pt-4 pb-2">{pageData.content.grid2Title}</p>
-                <ul className="text-[#FFFFFF80] flex flex-col gap-6 mt-4.5 cursor-pointer">
-                  {pageData.content.grid2List &&
-                    pageData.content.grid2List.map(
-                      (item: string, index: number) => (
-                        <li
-                          className="hover:text-white duration-300 transition-all"
-                          key={index}
-                        >
-                          {item}
-                        </li>
-                      )
-                    )}
-                </ul>
-              </div>
-              <div>
-                <p className="pt-4 pb-2">{pageData.content.grid3Title}</p>
-                <ul className="text-[#FFFFFF80] flex flex-col gap-6 mt-4.5 cursor-pointer">
-                  {pageData.content.grid3List &&
-                    pageData.content.grid3List.map(
-                      (item: string, index: number) => (
-                        <li
-                          className="hover:text-white duration-300 transition-all"
-                          key={index}
-                        >
-                          {item}
-                        </li>
-                      )
-                    )}
-                </ul>
-              </div>
+              {[1, 2, 3].map((gridIndex) => {
+                const title = pageData.content[`grid${gridIndex}Title`];
+                const list = pageData.content[`grid${gridIndex}List`];
+                return (
+                  <div key={gridIndex}>
+                    <p className="pt-4 pb-2">{title}</p>
+                    <ul className="text-[#FFFFFF80] flex flex-col gap-6 mt-4.5 cursor-pointer">
+                      {list &&
+                        list.map((item: string, index: number) => (
+                          <li
+                            key={index}
+                            className="hover:text-white duration-300 transition-all"
+                          >
+                            <Link href={linksMap.get(item) ?? "#"}>{item}</Link>
+                          </li>
+                        ))}
+                    </ul>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
       </div>
 
       {/* Mobile Footer */}
-      <div className="md:hidden flex flex-col  pb-16">
-        <hr className="bg-[#FFFFFF80] opacity-30 "></hr>
+      <div className="md:hidden flex flex-col pb-16">
+        <hr className="bg-[#FFFFFF80] opacity-30" />
         <div className="flex-1 flex flex-col items-center px-6 pt-10">
           <h1 className="text-[#FFFFFF80] text-2xl mb-8">
             {pageData.content.fullName}
@@ -130,38 +115,25 @@ export default async function Footer() {
             </Link>
           </div>
 
-          <div className="w-full text-center mb-6">
-            <h2 className="text-xl mb-4">{pageData.content.grid1Title}</h2>
-            <ul className="text-[#FFFFFF80] flex flex-col gap-4">
-              {pageData.content.grid1List &&
-                pageData.content.grid1List.map(
-                  (item: string, index: number) => <li key={index}>{item}</li>
-                )}
-            </ul>
-          </div>
-
-          <div className="w-full text-center mb-6">
-            <h2 className="text-xl mb-4">{pageData.content.grid2Title}</h2>
-            <ul className="text-[#FFFFFF80] flex flex-col gap-4">
-              {pageData.content.grid2List &&
-                pageData.content.grid2List.map(
-                  (item: string, index: number) => <li key={index}>{item}</li>
-                )}
-            </ul>
-          </div>
-
-          <div className="w-full text-center mb-10">
-            <h2 className="text-xl mb-4">{pageData.content.grid3Title}</h2>
-            <ul className="text-[#FFFFFF80] flex flex-col gap-4">
-              {pageData.content.grid3List &&
-                pageData.content.grid3List.map(
-                  (item: string, index: number) => <li key={index}>{item}</li>
-                )}
-            </ul>
-          </div>
+          {[1, 2, 3].map((gridIndex) => {
+            const title = pageData.content[`grid${gridIndex}Title`];
+            const list = pageData.content[`grid${gridIndex}List`];
+            return (
+              <div className="w-full text-center mb-6" key={gridIndex}>
+                <h2 className="text-xl mb-4">{title}</h2>
+                <ul className="text-[#FFFFFF80] flex flex-col gap-4">
+                  {list &&
+                    list.map((item: string, index: number) => (
+                      <li key={index}>
+                        <Link href={linksMap.get(item) ?? "#"}>{item}</Link>
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            );
+          })}
         </div>
 
-        {/* Mobile Social Icons */}
         <FooterSocialIcons
           linekdinURL={pageData.content.linkLi}
           instagramURL={pageData.content.linkIg}
@@ -175,25 +147,67 @@ interface IFooterSocialIconsProps {
   linekdinURL?: string;
   mediumURL?: string;
   instagramURL?: string;
+  githubURL?: string;
 }
 
 export function FooterSocialIcons({
   linekdinURL,
-  // mediumURL,
   instagramURL,
+  mediumURL,
+  githubURL,
 }: IFooterSocialIconsProps) {
-  console.log("linekdinURL", linekdinURL);
+  console.log("FooterSocialIcons rendered with URLs:", {
+    linekdinURL,
+    instagramURL,
+    mediumURL,
+    githubURL,
+  });
   return (
-    <div className="flex  justify-around md:justify-end items-center py-4 gap-0 md:gap-12 ">
+    <div className="flex justify-around md:justify-end items-center py-4 gap-0 md:gap-12">
       <Link className="w-6 h-6" href="/">
         <FaHome className="w-full h-full" />
       </Link>
-      <Link href={linekdinURL as string} className="w-6 h-6" target="_blank">
-        <FaLinkedinIn className="w-full h-full" />
-      </Link>
-      <Link href={instagramURL as string} target="_blank" className="w-6 h-6">
-        <FaInstagram className="w-full h-full" />
-      </Link>
+      {linekdinURL && (
+        <Link
+          href={linekdinURL}
+          className="w-6 h-6"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FaLinkedinIn className="w-full h-full" />
+        </Link>
+      )}
+      {instagramURL && (
+        <Link
+          href={instagramURL}
+          className="w-6 h-6"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FaInstagram className="w-full h-full" />
+        </Link>
+      )}
+      {mediumURL && (
+        <Link
+          href={mediumURL}
+          className="w-6 h-6"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FaMedium className="w-full h-full" />
+        </Link>
+      )}
+
+      {githubURL && (
+        <Link
+          href={githubURL}
+          className="w-6 h-6"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FaGithub className="w-full h-full" />
+        </Link>
+      )}
     </div>
   );
 }
