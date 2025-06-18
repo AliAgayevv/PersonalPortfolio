@@ -25,7 +25,7 @@ const ProjectCard = ({
         className="w-full h-[clamp(250px,38.3vw,528px)] object-cover"
       /> */}
       <Image
-        src={`http://localhost:5000${projectImage}`}
+        src={`http://45.85.146.73:5000${projectImage}`}
         alt={projectName}
         width={800}
         height={450}

@@ -25,7 +25,7 @@ const TechStackSection = async () => {
   const cookieStore = await cookies();
   const lang = cookieStore.get("lang")?.value || "az";
 
-  const res = await fetch("http://localhost:5000/api/tech", {
+  const res = await fetch("http://45.85.146.73:5000/api/tech", {
     cache: "no-store",
     headers: {
       "Content-Type": "application/json",

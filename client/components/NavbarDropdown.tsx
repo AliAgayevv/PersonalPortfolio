@@ -15,7 +15,7 @@ export default function NavbarDropdown() {
   useEffect(() => {
     const fetchCV = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/cv`, {
+        const res = await fetch(`http://45.85.146.73:5000/api/cv`, {
           method: "GET",
         });
 

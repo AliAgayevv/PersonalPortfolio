@@ -31,7 +31,7 @@ export default async function EndSection() {
           <Image
             width={200}
             height={200}
-            src={`http://localhost:5000${data.photos}`}
+            src={`http://45.85.146.73:5000${data.photos}`}
             alt="End Section Image"
             className="w-full h-full object-cover rounded-full"
           />

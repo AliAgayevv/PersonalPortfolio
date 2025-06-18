@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     description:
       "Bakıda yaşayan Ali-nin frontend developer olmaq səyahəti və texniki bilikləri",
     images: ["/about-ali-developer.jpg"], // TODO: Replace with your actual image path
-    url: "http://localhost:3000/about", // TODO : Replace with your actual URL
+    url: "http://45.85.146.73:3001/about", // TODO : Replace with your actual URL
   },
 };
 
