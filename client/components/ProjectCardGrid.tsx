@@ -20,7 +20,7 @@ const ProjectCardGrid: React.FC<ProjectCardGridProps> = ({
         <div className="w-full h-full relative">
           <div className="hidden md:block w-full h-full">
             <Image
-              src={`http://:5000${image}`}
+              src={`http://45.85.146.73:5000${image}`}
               alt={title}
               width={800}
               height={800}
@@ -30,7 +30,7 @@ const ProjectCardGrid: React.FC<ProjectCardGridProps> = ({
           </div>
           <div className="block md:hidden w-full h-full">
             <Image
-              src={`http://:5000${image}`}
+              src={`http://45.85.146.73:5000${image}`}
               alt={title}
               width={800}
               height={800}

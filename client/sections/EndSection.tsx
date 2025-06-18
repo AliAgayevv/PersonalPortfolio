@@ -12,13 +12,7 @@ export default async function EndSection() {
   const cookieStore = await cookies();
   const lang = cookieStore.get("lang")?.value || "az";
 
-  const res = await getPageData("endSection", lang as "az" | "en");
-
-  if (!res.ok) {
-    console.log("Error fetching EndSection data:", res.statusText);
-  }
-
-  const data = await res.json();
+  const data = await getPageData("endSection", lang as "az" | "en");
 
   console.log("EndSection Data:", data);
   return (
