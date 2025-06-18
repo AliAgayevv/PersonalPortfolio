@@ -6,18 +6,13 @@ import { TfiEmail } from "react-icons/tfi";
 import Link from "next/link";
 import Image from "next/image";
 import socialMediaDatas from "@/data/socialMedia.json";
+import getPageData from "@/lib/getPageData";
 
 export default async function EndSection() {
   const cookieStore = await cookies();
   const lang = cookieStore.get("lang")?.value || "az";
 
-  const res = await fetch("http://localhost:4000/api/pages/endSection", {
-    cache: "no-store",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept-Language": lang,
-    },
-  });
+  const res = await getPageData("endSection", lang as "az" | "en");
 
   if (!res.ok) {
     throw new Error("Failed to fetch hero data");
@@ -36,7 +31,7 @@ export default async function EndSection() {
           <Image
             width={200}
             height={200}
-            src={`http://localhost:4000${data.photos}`}
+            src={`http://localhost:5000${data.photos}`}
             alt="End Section Image"
             className="w-full h-full object-cover rounded-full"
           />

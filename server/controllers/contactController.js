@@ -15,7 +15,6 @@ const deleteOldContacts = async () => {
 exports.getContactInfo = async (req, res) => {
   try {
     const contacts = await Contact.find().sort({ createdAt: -1 });
-    // send the contacts in pretty format
     res.status(200).json(contacts);
   } catch (error) {
     console.error("Error fetching contact info:", error);

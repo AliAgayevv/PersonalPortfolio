@@ -26,7 +26,7 @@ const StackCard: React.FC<StackCardProps> = ({
     >
       <div className="flex-shrink-0 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center">
         <Image
-          src={`http://localhost:4000${stackIcon}`}
+          src={`http://localhost:5000${stackIcon}`}
           alt={stackTitle}
           width={64}
           height={64}
