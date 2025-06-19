@@ -13,10 +13,15 @@ const contactRoutes = require("./routes/contactRoutes");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+
+
+
 const allowedOrigins = [
   process.env.FRONT_SERVER,
   "http://localhost:3001",
 ].filter(Boolean);
+
+console.log(allowedOrigins)
 
 const corsOptions = {
   origin: function (origin, callback) {
