@@ -14,6 +14,7 @@ import ServiceInterface from "@/types/ServiceInterface";
 import getPageData from "@/lib/getPageData";
 import getUrl from "@/lib/getUrl";
 import socialMediaAdress from "@/data/socialMedia.json";
+import Link from "next/link";
 
 export default async function Home() {
   const cookieStore = await cookies();
@@ -101,7 +102,9 @@ export default async function Home() {
           {data.content?.pageDescription}
         </p>
         <div className="flex gap-4 mt-10 ">
-          <CtaButton innerText={data.content?.ctaButton} mode="start" />
+          <Link href={"/contact"}>
+            <CtaButton innerText={data.content?.ctaButton} mode="start" />
+          </Link>
           <a href="/about">
             <button className="px-[clamp(16px,3vw,24px)] py-[clamp(10px,2.5vw,14px)] text-16px border border-neutral-300 text-black bg-white rounded-3xl ">
               {data.content?.contact}
