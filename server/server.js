@@ -13,32 +13,18 @@ const contactRoutes = require("./routes/contactRoutes");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-
-
-
 const allowedOrigins = [
   process.env.FRONT_SERVER,
   "http://localhost:3001",
+  "http://45.85.146.73:3001",
 ].filter(Boolean);
-
-console.log(allowedOrigins)
 
 const corsOptions = {
   origin: function (origin, callback) {
-    if (!origin) {
-      console.log(`Blocked request with no origin header`);
-      return callback(
-        new Error("Not allowed by CORS policy - No origin header"),
-        false
-      );
-    }
-
+    if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) {
-      console.log(`Allowed request from: ${origin}`);
       callback(null, true);
     } else {
-      console.log(`Blocked request from unauthorized origin: ${origin}`);
-      console.log(`Allowed origins: ${allowedOrigins.join(", ")}`);
       callback(new Error("Not allowed by CORS policy"), false);
     }
   },
@@ -49,9 +35,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
 app.use(express.json());
 
 app.use((err, req, res, next) => {
