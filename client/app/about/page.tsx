@@ -93,7 +93,7 @@ export default async function Page() {
           }}
         >
           <a
-            href={`${url}/api/cv`}
+            href={`https://aghayev.dev/api/cv`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center md:justify-start w-full hover:cursor-pointer"

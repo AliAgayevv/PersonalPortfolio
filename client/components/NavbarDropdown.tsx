@@ -32,8 +32,7 @@ export default function NavbarDropdown({ lang }: { lang: "az" | "en" }) {
   useEffect(() => {
     const fetchCV = async () => {
       try {
-        const reqUrl = getUrl();
-        const res = await fetch(`${reqUrl}/api/cv`, {
+        const res = await fetch(`https://aghayev.dev/api/cv`, {
           method: "GET",
         });
 

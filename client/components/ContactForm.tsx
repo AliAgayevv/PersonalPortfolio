@@ -145,7 +145,7 @@ export default function ContactForm() {
       };
 
       // TODO: Replace with your actual API URL
-      const response = await fetch(`http://45.85.146.73:5000/api/contact`, {
+      const response = await fetch(`https://aghayev.dev/api/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
