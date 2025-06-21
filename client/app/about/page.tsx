@@ -38,7 +38,7 @@ export default async function Page() {
   const cookieStore = await cookies();
   const lang = cookieStore.get("lang")?.value || "az";
 
-  const url = getUrl();
+  const url = "http://45.85.146.73:5000";
 
   const aboutData = await getPageData("about", lang as "az" | "en");
 

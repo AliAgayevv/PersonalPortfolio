@@ -52,6 +52,7 @@ export default function NavbarDropdown({ lang }: { lang: "az" | "en" }) {
     fetchCV();
   }, []);
 
+  console.log("CV URL:", cvUrl);
   return (
     <div
       ref={ref}
@@ -90,11 +91,9 @@ export default function NavbarDropdown({ lang }: { lang: "az" | "en" }) {
             <Link href="/blog">
               <LiWithAnimation>{navbarContent[lang].blog}</LiWithAnimation>
             </Link>
-            {cvUrl && (
-              <a href={cvUrl} target="_blank" rel="noopener noreferrer">
-                <LiWithAnimation>{navbarContent[lang].resume}</LiWithAnimation>
-              </a>
-            )}
+            <a href={cvUrl as string} target="_blank" rel="noopener noreferrer">
+              <LiWithAnimation>{navbarContent[lang].resume}</LiWithAnimation>
+            </a>
           </motion.ul>
         </motion.div>
       )}
