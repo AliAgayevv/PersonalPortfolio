@@ -6,13 +6,7 @@ import getUrl from "@/lib/getUrl";
 import socialMediaDatas from "@/data/socialMedia.json";
 import Link from "next/link";
 
-import {
-  FaGithub,
-  FaHome,
-  FaInstagram,
-  FaLinkedinIn,
-  FaMediumM,
-} from "react-icons/fa";
+import { FaGithub, FaInstagram, FaLinkedinIn, FaMediumM } from "react-icons/fa";
 
 const ContactBox = async ({
   title,

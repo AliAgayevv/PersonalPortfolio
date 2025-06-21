@@ -4,7 +4,6 @@ import Link from "next/link";
 import { BsArrowUpRight } from "react-icons/bs";
 import { FaLinkedin } from "react-icons/fa";
 import socialMediaDatas from "@/data/socialMedia.json";
-import { TfiEmail } from "react-icons/tfi";
 import ContactForm from "@/components/ContactForm";
 import ContactBox from "@/components/ContactBox";
 import Footer from "@/components/Footer";
