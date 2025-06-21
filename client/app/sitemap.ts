@@ -1,5 +1,4 @@
 import type { MetadataRoute } from "next";
-import getUrl from "../lib/getUrl";
 import getProjects from "@/lib/getProjects";
 import projectInterface from "../types/projectInterface";
 

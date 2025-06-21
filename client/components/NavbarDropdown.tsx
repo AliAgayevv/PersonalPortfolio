@@ -4,7 +4,6 @@ import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import Link from "next/link";
-import getUrl from "@/lib/getUrl";
 
 export default function NavbarDropdown({ lang }: { lang: "az" | "en" }) {
   const navbarContent = {
