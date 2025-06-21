@@ -8,6 +8,7 @@ import { TfiEmail } from "react-icons/tfi";
 import ContactForm from "@/components/ContactForm";
 import ContactBox from "@/components/ContactBox";
 import Footer from "@/components/Footer";
+import EmailButton from "@/components/EmailButton";
 
 export default async function Page() {
   const cookieStore = await cookies();
@@ -45,7 +46,7 @@ export default async function Page() {
           </button>
         </Link>
 
-        <a
+        {/* <a
           href={`mailto:${socialMediaDatas.gmail}`}
           className="flex-1 h-full min-h-[60px] rounded-2xl text-black bg-white flex justify-center items-center gap-1 sm:gap-2 border p-2 sm:p-4 border-gray-300 shadow-2xl shadow-black/30 hover:shadow-black/50 transition-all duration-300"
         >
@@ -53,7 +54,12 @@ export default async function Page() {
             {pageData.content.email}
           </span>
           <TfiEmail size={14} className="flex-shrink-0" />
-        </a>
+        </a> */}
+        <EmailButton
+          innerText={pageData.content.email}
+          gmail={socialMediaDatas.gmail}
+          lang={lang as "az" | "en"}
+        />
       </div>
       <section
         className="flex md:justify-between md:items-center w-full gap-10 flex-col md:flex-row h-full"

@@ -8,6 +8,7 @@ import Image from "next/image";
 import socialMediaDatas from "@/data/socialMedia.json";
 import getPageData from "@/lib/getPageData";
 import getUrl from "@/lib/getUrl";
+import EmailButton from "@/components/EmailButton";
 
 export default async function EndSection() {
   const cookieStore = await cookies();
@@ -35,13 +36,12 @@ export default async function EndSection() {
         <div className="text-center w-full">
           <h2 className="text-40px font-bold">{data.content.title}</h2>
           <p
-            className="text-[#00000080] text-20px text-center w-full md:w-[50%] mx-auto mt-2 mb-5 px-4"
+            className="text-[#00000080] text-20px text-center w-[90%] md:w-[75%] mx-auto mt-2 mb-5 px-4"
             style={{
               wordBreak: "break-all",
             }}
           >
-            loremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem
-            loremloremloremlorem
+            {data.content.description}
           </p>
         </div>
         <div className="flex justify-center items-center flex-col md:flex-row gap-4 pb-4 ">
@@ -58,13 +58,18 @@ export default async function EndSection() {
               </p>
             </button>
           </Link>
-          <a
+          {/* <a
             href={`mailto:${socialMediaDatas.gmail}`}
             className="w-60 rounded-2xl text-black bg-white flex justify-center items-center gap-1 border p-4 border-gray-300 shadow-2xl shadow-black/30 hover:shadow-black/50 transition-all duration-300"
           >
             {data.content.emailButton}
             <TfiEmail size={14} className="ml-1" />
-          </a>
+          </a> */}
+          <EmailButton
+            innerText={data.content.emailButton}
+            lang={lang as "az" | "en"}
+            gmail={socialMediaDatas.gmail}
+          />
         </div>
       </div>
     </section>

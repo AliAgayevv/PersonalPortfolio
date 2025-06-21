@@ -1,7 +1,7 @@
 import React from "react";
 import rightArrowSVG from "../public/svg/rightArrow.svg";
 import Image from "next/image";
-import getUrl from "@/lib/getUrl";
+// import getUrl from "@/lib/getUrl";
 
 interface StackCardProps {
   stackTitle: string;
@@ -14,7 +14,7 @@ const StackCard: React.FC<StackCardProps> = ({
   stackDescription,
   stackIcon,
 }) => {
-  const url = "http//45.85.146.73:5000";
+  const url = "http://45.85.146.73:5000";
 
   return (
     <div className="group flex items-center gap-2 md:gap-4 w-full p-3 md:p-4 border-2 border-dashed border-gray-300 rounded-lg shadow-md transition-all duration-500 cursor-pointer hover:bg-[#E3E3E3] hover:border-[#C3C4C5]">

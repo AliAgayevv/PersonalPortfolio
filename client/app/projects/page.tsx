@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import getPageData from "@/lib/getPageData";
 import AllProjects from "@/components/AllProjects";
 import LoadingAnimation from "@/components/animations/LoadingAnimation";
+import Link from "next/link";
 
 export default async function page() {
   const cookieStore = await cookies();
@@ -21,7 +22,9 @@ export default async function page() {
         </span>
       </p>
       <div className="mt-6">
-        <CtaButton innerText={pageData.content.buttonInner} mode="email" />
+        <Link href="/contact">
+          <CtaButton innerText={pageData.content.buttonInner} mode="email" />
+        </Link>
       </div>
       <Suspense fallback={<LoadingAnimation />}>
         <AllProjects />

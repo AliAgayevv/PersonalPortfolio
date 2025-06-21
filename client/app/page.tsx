@@ -81,7 +81,7 @@ export default async function Home() {
         }}
       />
       <header className={`flex flex-col  h-screen w-full  justify-center `}>
-        <div className="size-32 rounded-full  border-black border-5 shadow-lg -mt-10 md:-mt-40 mb-10">
+        <div className="size-32 rounded-full  border-black border-5 shadow-lg -mt-10 md:-mt-32 mb-10">
           <Image
             src={`${backendUrl}${data.photos}`}
             width={80}
