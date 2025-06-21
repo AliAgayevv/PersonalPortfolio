@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import localFont from "next/font/local";
 import { ReactLenis } from "@/utils/smoothScroll";
+// import Footer from "@/components/Footer";
 
 const interFont = localFont({
   src: "../public/fonts/Inter.ttf",
@@ -53,17 +54,12 @@ export const metadata: Metadata = {
     siteName: "Ali Aghayev Portfolio",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/og-image.jpg", // TODO: Update with actual image URL
         width: 1200,
         height: 630,
-        alt: "Ali Aghayev - Frontend Developer",
+        alt: "Ali Aghayev  - Frontend Developer",
       },
     ],
-  },
-  // Mixed Content için özel CSP
-  other: {
-    "Content-Security-Policy":
-      "connect-src 'self' http://45.85.146.73:5000; default-src 'self'",
   },
 };
 
@@ -74,12 +70,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="az">
-      <head>
-        <meta
-          httpEquiv="Content-Security-Policy"
-          content="connect-src 'self' http://45.85.146.73:5000; default-src 'self'"
-        />
-      </head>
       <body className={`w-[90%] mx-auto ${interFont.className}`}>
         <ReactLenis root>
           <Navbar />
