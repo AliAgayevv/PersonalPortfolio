@@ -3,14 +3,13 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import localFont from "next/font/local";
 import { ReactLenis } from "@/utils/smoothScroll";
-// import Footer from "@/components/Footer";
 
 const interFont = localFont({
   src: "../public/fonts/Inter.ttf",
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://yourwebsite.com"), // TODO: Replace with your actual domain
+  metadataBase: new URL("https://aghayev.dev"), // Güncellendi
   title: {
     default: "Ali Aghayev - Frontend Developer | Baku, Azerbaijan",
     template: "%s | Ali Aghayev - Developer",
@@ -29,7 +28,7 @@ export const metadata: Metadata = {
     "Next.js portfolio developer",
     "Azerbaijan software engineer",
   ],
-  authors: [{ name: "Ali", url: "https://yourwebsite.com" }], // TODO: Replace with your actual name and URL
+  authors: [{ name: "Ali", url: "https://aghayev.dev" }], // Güncellendi
   creator: "Ali Aghayev",
   publisher: "Ali Aghayev",
   robots: {
@@ -47,19 +46,23 @@ export const metadata: Metadata = {
     type: "website",
     locale: "az_AZ",
     alternateLocale: "en_US",
-    url: "https://yourwebsite.com", // TODO: Replace with your actual URL
+    url: "https://aghayev.dev", // Güncellendi
     title: "Ali - Frontend Developer",
     description:
       "Bakıda fəaliyyət göstərən peşəkar Next.js və React developer — Ali. TypeScript və Node.js üzrə ixtisaslaşmış veb proqramçı. Freelance veb development və modern frontend xidmətləri.",
     siteName: "Ali Aghayev Portfolio",
     images: [
       {
-        url: "/og-image.jpg", // TODO: Replace with your actual image path
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Ali Aghayev  - Frontend Developer",
+        alt: "Ali Aghayev - Frontend Developer",
       },
     ],
+  },
+  // Mixed Content sorununu çözmek için
+  other: {
+    "Content-Security-Policy": "upgrade-insecure-requests",
   },
 };
 
@@ -70,6 +73,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="az">
+      <head>
+        {/* Mixed Content hatası için meta tag */}
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        />
+      </head>
       <body className={`w-[90%] mx-auto ${interFont.className}`}>
         <ReactLenis root>
           <Navbar />
