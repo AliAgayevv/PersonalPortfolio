@@ -7,13 +7,14 @@ import Link from "next/link";
 import Image from "next/image";
 import socialMediaDatas from "@/data/socialMedia.json";
 import getPageData from "@/lib/getPageData";
+import getUrl from "@/lib/getUrl";
 
 export default async function EndSection() {
   const cookieStore = await cookies();
   const lang = cookieStore.get("lang")?.value || "az";
 
   const data = await getPageData("endSection", lang as "az" | "en");
-
+  const url = getUrl();
   console.log("EndSection Data:", data);
   return (
     <section className="w-[90%] mx-auto text-white my-40 pb-0 md:pb-40 h-full ">
@@ -25,7 +26,7 @@ export default async function EndSection() {
           <Image
             width={200}
             height={200}
-            src={`http://45.85.146.73:5000${data.photos}`}
+            src={`${url}${data.photos}`}
             alt="End Section Image"
             className="w-full h-full object-cover rounded-full"
           />

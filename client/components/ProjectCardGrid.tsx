@@ -1,3 +1,4 @@
+import getUrl from "@/lib/getUrl";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -14,13 +15,14 @@ const ProjectCardGrid: React.FC<ProjectCardGridProps> = ({
   image,
   projectId,
 }) => {
+  const url = getUrl();
   return (
     <Link href={`/projects/${projectId}`}>
       <div className="group w-full aspect-square  overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 flex flex-col relative">
         <div className="w-full h-full relative">
           <div className="hidden md:block w-full h-full">
             <Image
-              src={`http://45.85.146.73:5000${image}`}
+              src={`${url}${image}`}
               alt={title}
               width={800}
               height={800}
@@ -30,7 +32,7 @@ const ProjectCardGrid: React.FC<ProjectCardGridProps> = ({
           </div>
           <div className="block md:hidden w-full h-full">
             <Image
-              src={`http://45.85.146.73:5000${image}`}
+              src={`${url}${image}`}
               alt={title}
               width={800}
               height={800}

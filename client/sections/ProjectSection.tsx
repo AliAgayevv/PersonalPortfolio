@@ -4,12 +4,13 @@ import ProjectCard from "../components/ProjectCard";
 import SeeMoreButton from "../components/SeeMoreButton";
 import Link from "next/link";
 import AnimationAllChildren from "@/components/animations/AnimationAllChildren";
+import getUrl from "@/lib/getUrl";
 
 export default async function ProjectSection() {
   const cookieStore = await cookies();
   const lang = cookieStore.get("lang")?.value || "az";
-
-  const res = await fetch("http://45.85.146.73:5000/api/projects", {
+  const url = getUrl();
+  const res = await fetch(`${url}/api/projects`, {
     headers: {
       "Content-Type": "application/json",
       "Accept-Language": lang,

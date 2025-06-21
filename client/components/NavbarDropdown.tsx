@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import Link from "next/link";
+import getUrl from "@/lib/getUrl";
 
 export default function NavbarDropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +16,8 @@ export default function NavbarDropdown() {
   useEffect(() => {
     const fetchCV = async () => {
       try {
-        const res = await fetch(`http://45.85.146.73:5000/api/cv`, {
+        const reqUrl = getUrl();
+        const res = await fetch(`${reqUrl}/api/cv`, {
           method: "GET",
         });
 

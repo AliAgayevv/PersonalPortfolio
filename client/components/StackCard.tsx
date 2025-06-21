@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import rightArrowSVG from "../public/svg/rightArrow.svg";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import getUrl from "@/lib/getUrl";
 
 interface StackCardProps {
   stackTitle: string;
@@ -17,6 +18,7 @@ const StackCard: React.FC<StackCardProps> = ({
   stackIcon,
 }) => {
   const [hovered, setHovered] = useState(false);
+  const url = getUrl();
 
   return (
     <div
@@ -26,7 +28,7 @@ const StackCard: React.FC<StackCardProps> = ({
     >
       <div className="flex-shrink-0 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center">
         <Image
-          src={`http://45.85.146.73:5000${stackIcon}`}
+          src={`${url}${stackIcon}`}
           alt={stackTitle}
           width={64}
           height={64}

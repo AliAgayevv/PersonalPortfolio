@@ -1,3 +1,4 @@
+import getUrl from "@/lib/getUrl";
 import Image from "next/image";
 // import Link from "next/link";
 import React from "react";
@@ -17,6 +18,7 @@ const ProjectCard = ({
   // projectShowenLink: string;
   projectId: string;
 }) => {
+  const url = getUrl();
   return (
     <div className="w-full h-full bg-black overflow-hidden ">
       {/* <img
@@ -25,7 +27,7 @@ const ProjectCard = ({
         className="w-full h-[clamp(250px,38.3vw,528px)] object-cover"
       /> */}
       <Image
-        src={`http://45.85.146.73:5000${projectImage}`}
+        src={`${url}${projectImage}`}
         alt={projectName}
         width={800}
         height={450}
