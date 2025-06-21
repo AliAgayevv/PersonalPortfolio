@@ -9,7 +9,7 @@ const interFont = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://aghayev.dev"), // Güncellendi
+  metadataBase: new URL("https://aghayev.dev"),
   title: {
     default: "Ali Aghayev - Frontend Developer | Baku, Azerbaijan",
     template: "%s | Ali Aghayev - Developer",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     "Next.js portfolio developer",
     "Azerbaijan software engineer",
   ],
-  authors: [{ name: "Ali", url: "https://aghayev.dev" }], // Güncellendi
+  authors: [{ name: "Ali", url: "https://aghayev.dev" }],
   creator: "Ali Aghayev",
   publisher: "Ali Aghayev",
   robots: {
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "az_AZ",
     alternateLocale: "en_US",
-    url: "https://aghayev.dev", // Güncellendi
+    url: "https://aghayev.dev",
     title: "Ali - Frontend Developer",
     description:
       "Bakıda fəaliyyət göstərən peşəkar Next.js və React developer — Ali. TypeScript və Node.js üzrə ixtisaslaşmış veb proqramçı. Freelance veb development və modern frontend xidmətləri.",
@@ -60,9 +60,10 @@ export const metadata: Metadata = {
       },
     ],
   },
-  // Mixed Content sorununu çözmek için
+  // Mixed Content için özel CSP
   other: {
-    "Content-Security-Policy": "upgrade-insecure-requests",
+    "Content-Security-Policy":
+      "connect-src 'self' http://45.85.146.73:5000; default-src 'self'",
   },
 };
 
@@ -74,10 +75,9 @@ export default function RootLayout({
   return (
     <html lang="az">
       <head>
-        {/* Mixed Content hatası için meta tag */}
         <meta
           httpEquiv="Content-Security-Policy"
-          content="upgrade-insecure-requests"
+          content="connect-src 'self' http://45.85.146.73:5000; default-src 'self'"
         />
       </head>
       <body className={`w-[90%] mx-auto ${interFont.className}`}>
