@@ -11,7 +11,6 @@ const serviceRoutes = require("./routes/servicesRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 const allowedOrigins = [
   process.env.FRONT_SERVER,
@@ -70,7 +69,8 @@ app.use((req, res) => {
 
 connectDB();
 // TODO: 4000 et
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+const port = process.env.NODE_ENV === "production" ? 5000 : 4000;
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
   console.log(`Allowed origins: ${allowedOrigins.join(", ")}`);
 });
