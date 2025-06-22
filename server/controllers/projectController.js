@@ -61,38 +61,6 @@ exports.getAllProjects = async (req, res) => {
 };
 
 // Helper function to process tech stack with icons
-const processTechStackWithIcons = (techStackData, files) => {
-  let techStack = [];
-
-  try {
-    // Parse techStack if it's a string
-    const parsedTechStack =
-      typeof techStackData === "string"
-        ? JSON.parse(techStackData)
-        : techStackData;
-
-    if (Array.isArray(parsedTechStack)) {
-      techStack = parsedTechStack.map((tech, index) => {
-        const techStackIcon = files.find(
-          (file) =>
-            file.fieldname === `techStackIcon_${index}` ||
-            file.fieldname === `techStackIcon[${index}]`
-        );
-
-        return {
-          name: tech.name,
-          icon: techStackIcon
-            ? `/uploads/${techStackIcon.filename}`
-            : tech.icon || "",
-        };
-      });
-    }
-  } catch (error) {
-    console.error("Error processing tech stack:", error);
-  }
-
-  return techStack;
-};
 
 // [POST] /api/projects
 exports.createProject = async (req, res) => {
@@ -202,40 +170,58 @@ exports.deleteProject = async (req, res) => {
 };
 
 // [PATCH] /api/projects/:projectId
+// [PATCH] /api/projects/:projectId
 exports.updateProjectPartial = async (req, res) => {
   const { projectId } = req.params;
   const updateFields = { ...req.body };
 
   try {
+    console.log("PATCH Request - Files:", req.files);
+    console.log("PATCH Request - Body:", req.body);
+    console.log("PATCH Request - Project ID:", projectId);
+
     // Handle main project image
-    if (req.files && req.files.find((file) => file.fieldname === "image")) {
-      updateFields.image = `/uploads/${
-        req.files.find((file) => file.fieldname === "image").filename
-      }`;
+    if (req.files && req.files.length > 0) {
+      const imageFile = req.files.find((file) => file.fieldname === "image");
+      if (imageFile) {
+        updateFields.image = `/uploads/${imageFile.filename}`;
+        console.log("New image URL:", updateFields.image);
+      }
     }
 
     // Handle tech stack with icons
-    if (updateFields.techStack && req.files) {
-      updateFields.techStack = processTechStackWithIcons(
-        updateFields.techStack,
-        req.files
-      );
-    } else if (
-      updateFields.techStack &&
-      typeof updateFields.techStack === "string"
-    ) {
-      updateFields.techStack = JSON.parse(updateFields.techStack);
+    if (updateFields.techStack) {
+      if (req.files && req.files.length > 0) {
+        updateFields.techStack = processTechStackWithIcons(
+          updateFields.techStack,
+          req.files
+        );
+      } else if (typeof updateFields.techStack === "string") {
+        try {
+          updateFields.techStack = JSON.parse(updateFields.techStack);
+        } catch (parseError) {
+          console.error("Error parsing techStack:", parseError);
+          return res.status(400).json({
+            message: "Invalid techStack format",
+            error: parseError.message,
+          });
+        }
+      }
     }
+
+    console.log("Update fields before database operation:", updateFields);
 
     const updatedProject = await Project.findOneAndUpdate(
       { projectId: projectId.toLowerCase() },
       { $set: updateFields },
-      { new: true }
+      { new: true, runValidators: true }
     );
 
     if (!updatedProject) {
       return res.status(404).json({ message: "Project not found" });
     }
+
+    console.log("Successfully updated project:", updatedProject);
 
     res.status(200).json({
       message: "Project updated successfully",
@@ -243,6 +229,55 @@ exports.updateProjectPartial = async (req, res) => {
     });
   } catch (err) {
     console.error("Error updating project partially:", err);
-    res.status(500).json({ message: "Server error", error: err.message });
+    res.status(500).json({
+      message: "Server error",
+      error: err.message,
+      stack: process.env.NODE_ENV === "development" ? err.stack : undefined,
+    });
   }
+};
+
+// Improved helper function with better error handling
+const processTechStackWithIcons = (techStackData, files) => {
+  let techStack = [];
+
+  try {
+    console.log("Processing tech stack data:", techStackData);
+    console.log(
+      "Available files:",
+      files.map((f) => ({ fieldname: f.fieldname, filename: f.filename }))
+    );
+
+    // Parse techStack if it's a string
+    const parsedTechStack =
+      typeof techStackData === "string"
+        ? JSON.parse(techStackData)
+        : techStackData;
+
+    if (Array.isArray(parsedTechStack)) {
+      techStack = parsedTechStack.map((tech, index) => {
+        const techStackIcon = files.find(
+          (file) =>
+            file.fieldname === `techStackIcon_${index}` ||
+            file.fieldname === `techStackIcon[${index}]` ||
+            file.fieldname === `techStack[${index}][icon]`
+        );
+
+        const result = {
+          name: tech.name,
+          icon: techStackIcon
+            ? `/uploads/${techStackIcon.filename}`
+            : tech.icon || "",
+        };
+
+        console.log(`Tech stack item ${index}:`, result);
+        return result;
+      });
+    }
+  } catch (error) {
+    console.error("Error processing tech stack:", error);
+    throw new Error(`Tech stack processing failed: ${error.message}`);
+  }
+
+  return techStack;
 };
