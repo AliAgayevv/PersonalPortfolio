@@ -18,10 +18,7 @@ const ProjectCard = ({
   // projectShowenLink: string;
   projectId: string;
 }) => {
-  const url =
-    process.env.MODE === "development"
-      ? "http://localhost:4000"
-      : "http://45:85.146.73:5000";
+  const url = getUrl();
   return (
     <div className="w-full h-full bg-black overflow-hidden ">
       {/* <img
