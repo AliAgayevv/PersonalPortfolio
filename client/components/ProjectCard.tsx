@@ -31,7 +31,7 @@ const ProjectCard = ({
         alt={projectName}
         width={800}
         height={450}
-        className="w-full h-[clamp(250px,38.3vw,528px)] object-contain"
+        className="w-full h-[clamp(250px,38.3vw,528px)] object-cover"
         priority
       />
       <div className="flex flex-col justify-between pt-3 h-[clamp(150px,10vw,86px)] text-white">
