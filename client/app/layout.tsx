@@ -70,7 +70,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="az">
-      <body className={`w-[90%] mx-auto ${interFont.className}`}>
+      <body className={`w-[90%] mx-auto  ${interFont.className}`}>
         <ReactLenis root>
           <Navbar />
           {children}

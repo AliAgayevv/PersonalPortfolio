@@ -8,9 +8,6 @@ const SeeMoreButton = ({ innerText }: { innerText: string }) => {
 
   return (
     <div className="flex items-center justify-center gap-2">
-      <button className="h-5 w-5 rounded-full bg-white text-black flex items-center justify-center ">
-        {">"}
-      </button>
       <button
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}

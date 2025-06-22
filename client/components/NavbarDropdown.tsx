@@ -68,7 +68,7 @@ export default function NavbarDropdown({ lang }: { lang: "az" | "en" }) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.2 }}
-          className="absolute top-12 right-1/2 translate-x-1/2 bg-black shadow-lg rounded-lg p-4"
+          className="absolute top-12 right-1/2 translate-x-1/3 bg-black shadow-lg rounded-lg p-4"
         >
           <motion.ul
             className="flex flex-col gap-2"

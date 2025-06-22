@@ -153,7 +153,7 @@ export default async function Home() {
 
       <TechStackSection />
 
-      <div className=" absolute left-0  w-full bg-black mt-40 pt-20">
+      <div className=" absolute left-0 w-full bg-black mt-40 pt-20 ">
         <ProjectSection />
         <section
           aria-labelledby="services-heading"
