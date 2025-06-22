@@ -44,8 +44,6 @@ export default async function Page() {
 
   const aboutData = await getPageData("about", lang as "az" | "en");
 
-  console.log("About Data:", aboutData);
-
   return (
     <div className="mt-24">
       <div className="flex flex-col md:flex-row justify-between w-full">
@@ -77,6 +75,7 @@ export default async function Page() {
               src={`${url}${aboutData.photos}`}
               width={1920}
               height={1920}
+              priority
               alt="About Image"
               className="w-full h-full object-cover rounded-2xl shadow-2xl shadow-gray-500/90 hover:shadow-gray-500/30 transition-shadow duration-300 ease-in-out"
             />

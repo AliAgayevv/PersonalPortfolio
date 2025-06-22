@@ -2,7 +2,6 @@ import React from "react";
 import { cookies } from "next/headers";
 import { FaLinkedin } from "react-icons/fa";
 import { BsArrowUpRight } from "react-icons/bs";
-import { TfiEmail } from "react-icons/tfi";
 import Link from "next/link";
 import Image from "next/image";
 import socialMediaDatas from "@/data/socialMedia.json";
@@ -16,10 +15,9 @@ export default async function EndSection() {
 
   const data = await getPageData("endSection", lang as "az" | "en");
   const url = getUrl();
-  console.log("EndSection Data:", data);
   return (
     <section className="w-[90%] mx-auto text-white my-40 pb-0 md:pb-40 h-full ">
-      <h1 className="text-center font-bold end-text w-full uppercase">
+      <h1 className="text-center font-bold text-40px w-full uppercase">
         {data.content.sectionText}
       </h1>
       <div className="w-full h-full mb-40 bg-[#f5f5f5] rounded-2xl flex justify-center items-center flex-col text-black gap-3 py-14 mt-4">

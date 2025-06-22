@@ -25,8 +25,6 @@ export default async function ProjectSection() {
 
   const data = await res.json();
 
-  console.log("Fetched projects:", data);
-
   return (
     <section className="text-white w-[90%] mx-auto">
       <div className="flex justify-between items-center mb-10">

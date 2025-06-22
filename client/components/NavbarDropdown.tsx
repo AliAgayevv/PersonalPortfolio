@@ -50,7 +50,6 @@ export default function NavbarDropdown({ lang }: { lang: "az" | "en" }) {
     fetchCV();
   }, []);
 
-  console.log("CV URL:", cvUrl);
   return (
     <div
       ref={ref}

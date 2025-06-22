@@ -7,7 +7,6 @@ const deleteOldContacts = async () => {
     const result = await Contact.deleteMany({
       sentedTime: { $lt: thirtyDaysAgo },
     });
-    console.log(`Deleted ${result.deletedCount} old contact forms.`);
   } catch (error) {
     console.error("Error deleting old contacts:", error);
   }

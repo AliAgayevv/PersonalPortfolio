@@ -24,5 +24,4 @@ const nextConfig = {
   },
 };
 
-console.log(`Next.js Config - Mode: ${mode}, Image Host: ${imageHost}`);
 module.exports = nextConfig;
