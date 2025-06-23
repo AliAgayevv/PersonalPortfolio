@@ -290,5 +290,4 @@ const processTechStackWithIcons = (techStackData, files) => {
     throw new Error(`Tech stack processing failed: ${error.message}`);
   }
 };
-zz;
 // Compare this snippet from server/server.js:
