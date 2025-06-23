@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.16",
+    "@xmldom/xmldom": "^0.9.8",
     "cookies-next": "^6.0.0",
     "formik": "^2.4.6",
     "framer-motion": "^12.9.4",
