@@ -170,7 +170,6 @@ exports.deleteProject = async (req, res) => {
 };
 
 // [PATCH] /api/projects/:projectId
-// [PATCH] /api/projects/:projectId
 exports.updateProjectPartial = async (req, res) => {
   const { projectId } = req.params;
   const updateFields = { ...req.body };

@@ -55,7 +55,7 @@ const upload = multer({
       mimetype: file.mimetype,
     });
 
-    const allowedTypes = [".jpg", ".jpeg", ".png", ".pdf"];
+    const allowedTypes = [".jpg", ".jpeg", ".png", ".pdf", ".svg"];
     const ext = path.extname(file.originalname).toLowerCase();
 
     if (allowedTypes.includes(ext)) {
