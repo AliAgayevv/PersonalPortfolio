@@ -14,11 +14,14 @@ const StackCard: React.FC<StackCardProps> = ({
   stackDescription,
   stackIcon,
 }) => {
-  const url =
+  let url =
     process.env.MODE === "development"
       ? "http://localhost:4000"
       : "https://aghayev.dev";
 
+  if (stackIcon.startsWith("https")) {
+    url = "";
+  }
   return (
     <div className="group flex items-center gap-2 md:gap-4 w-full p-3 md:p-4 border-2 border-dashed border-gray-300 rounded-lg shadow-md transition-all duration-500 cursor-pointer hover:bg-[#E3E3E3] hover:border-[#C3C4C5]">
       <div className="flex-shrink-0 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center">
