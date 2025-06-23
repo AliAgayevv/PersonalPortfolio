@@ -247,7 +247,6 @@ const processTechStackWithIcons = (techStackData, files) => {
   let techStack = [];
 
   try {
-    const BASE_URL = "https://aghayev.dev";
     console.log("=== PROCESSING TECH STACK ===");
     console.log("Tech stack data:", techStackData);
     console.log(
@@ -276,11 +275,7 @@ const processTechStackWithIcons = (techStackData, files) => {
 
         const result = {
           name: tech.name,
-          icon: techStackIcon?.filename
-            ? `${BASE_URL}/uploads/${techStackIcon.filename}`
-            : tech.icon && tech.icon !== "./"
-            ? tech.icon // Köhnə icon'u olduğu kimi qoru
-            : "", // fallback: boş icon gəlməsin
+          icon: `/uploads/${techStackIcon.filename}`,
         };
 
         console.log(`Tech ${index} (${tech.name}):`, result);
@@ -295,3 +290,5 @@ const processTechStackWithIcons = (techStackData, files) => {
     throw new Error(`Tech stack processing failed: ${error.message}`);
   }
 };
+zz;
+// Compare this snippet from server/server.js:
