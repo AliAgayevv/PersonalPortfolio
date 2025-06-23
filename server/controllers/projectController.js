@@ -239,7 +239,7 @@ exports.updateProjectPartial = async (req, res) => {
 // Improved helper function with better error handling
 const processTechStackWithIcons = (techStackData, files) => {
   let techStack = [];
-
+  const BASE_URL = "https://aghayev.dev";
   try {
     console.log("Processing tech stack data:", techStackData);
     console.log(
@@ -265,8 +265,10 @@ const processTechStackWithIcons = (techStackData, files) => {
         const result = {
           name: tech.name,
           icon: techStackIcon
-            ? `/uploads/${techStackIcon.filename}`
-            : tech.icon || "",
+            ? `${BASE_URL}/uploads/${techStackIcon.filename}`
+            : tech.icon?.startsWith("http")
+            ? tech.icon
+            : `${BASE_URL}${tech.icon || ""}`,
         };
 
         console.log(`Tech stack item ${index}:`, result);
