@@ -278,10 +278,8 @@ const processTechStackWithIcons = (techStackData, files) => {
           name: tech.name,
           icon: techStackIcon?.filename
             ? `${BASE_URL}/uploads/${techStackIcon.filename}`
-            : tech.icon?.startsWith("/uploads")
-            ? `${BASE_URL}${tech.icon}`
-            : tech.icon?.startsWith("http")
-            ? tech.icon
+            : tech.icon && tech.icon !== "./"
+            ? tech.icon // Köhnə icon'u olduğu kimi qoru
             : "", // fallback: boş icon gəlməsin
         };
 
