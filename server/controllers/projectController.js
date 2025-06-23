@@ -60,8 +60,6 @@ exports.getAllProjects = async (req, res) => {
   }
 };
 
-// Helper function to process tech stack with icons
-
 // [POST] /api/projects
 exports.createProject = async (req, res) => {
   const {
@@ -175,9 +173,11 @@ exports.updateProjectPartial = async (req, res) => {
   const updateFields = { ...req.body };
 
   try {
-    console.log("PATCH Request - Files:", req.files);
-    console.log("PATCH Request - Body:", req.body);
-    console.log("PATCH Request - Project ID:", projectId);
+    console.log("=== PATCH DEBUG START ===");
+    console.log("Project ID:", projectId);
+    console.log("Request Files:", req.files);
+    console.log("Request Body:", req.body);
+    console.log("Update Fields Initial:", updateFields);
 
     // Handle main project image
     if (req.files && req.files.length > 0) {
@@ -190,14 +190,19 @@ exports.updateProjectPartial = async (req, res) => {
 
     // Handle tech stack with icons
     if (updateFields.techStack) {
+      console.log("Tech Stack Before Processing:", updateFields.techStack);
+
       if (req.files && req.files.length > 0) {
+        console.log("Processing with files...");
         updateFields.techStack = processTechStackWithIcons(
           updateFields.techStack,
           req.files
         );
+        console.log("Tech Stack After Processing:", updateFields.techStack);
       } else if (typeof updateFields.techStack === "string") {
         try {
           updateFields.techStack = JSON.parse(updateFields.techStack);
+          console.log("Tech Stack After JSON Parse:", updateFields.techStack);
         } catch (parseError) {
           console.error("Error parsing techStack:", parseError);
           return res.status(400).json({
@@ -208,7 +213,7 @@ exports.updateProjectPartial = async (req, res) => {
       }
     }
 
-    console.log("Update fields before database operation:", updateFields);
+    console.log("Final Update Fields:", JSON.stringify(updateFields, null, 2));
 
     const updatedProject = await Project.findOneAndUpdate(
       { projectId: projectId.toLowerCase() },
@@ -220,7 +225,8 @@ exports.updateProjectPartial = async (req, res) => {
       return res.status(404).json({ message: "Project not found" });
     }
 
-    console.log("Successfully updated project:", updatedProject);
+    console.log("Updated Project Tech Stack:", updatedProject.techStack);
+    console.log("=== PATCH DEBUG END ===");
 
     res.status(200).json({
       message: "Project updated successfully",
@@ -242,10 +248,15 @@ const processTechStackWithIcons = (techStackData, files) => {
 
   try {
     const BASE_URL = "https://aghayev.dev";
-    console.log("Processing tech stack data:", techStackData);
+    console.log("=== PROCESSING TECH STACK ===");
+    console.log("Tech stack data:", techStackData);
     console.log(
       "Available files:",
-      files.map((f) => ({ fieldname: f.fieldname, filename: f.filename }))
+      files.map((f) => ({
+        fieldname: f.fieldname,
+        filename: f.filename,
+        originalname: f.originalname,
+      }))
     );
 
     // Parse techStack if it's a string
@@ -274,14 +285,15 @@ const processTechStackWithIcons = (techStackData, files) => {
             : "", // fallback: boş icon gəlməsin
         };
 
-        console.log(`Tech stack item ${index}:`, result);
+        console.log(`Tech ${index} (${tech.name}):`, result);
         return result;
       });
     }
+
+    console.log("Final tech stack:", techStack);
+    return techStack;
   } catch (error) {
     console.error("Error processing tech stack:", error);
     throw new Error(`Tech stack processing failed: ${error.message}`);
   }
-
-  return techStack;
 };
