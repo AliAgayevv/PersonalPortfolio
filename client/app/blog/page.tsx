@@ -18,3 +18,8 @@ const page = async () => {
 };
 
 export default page;
+
+// Aksiyon	Açıklama
+// blog branşı üzerinden admin-panel branch’i aç	En temiz ve uyumlu yol
+// Orada admin işlemlerini geliştir	Blog altyapısına uygun
+// Son olarak admin-panel → blog, sonra blog → production merge edilir	Kararlı release olur

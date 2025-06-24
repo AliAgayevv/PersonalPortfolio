@@ -1,13 +1,12 @@
-export default interface projectInterface {
+export default interface Project {
   _id: string;
-  projectId: string;
   title: string;
-  description: string;
+  description: Record<string, any>;
+  githubLink: string;
+  liveLink: string;
+  timeLine: Record<string, string>;
   image: string;
   techStack: projectTechInterface[];
-  liveLink: string;
-  githubLink: string;
-  timeLine: string;
   createdAt: string;
   updatedAt: string;
 }

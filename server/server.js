@@ -9,6 +9,7 @@ const projectRoutes = require("./routes/projectRoutes");
 const cvRoutes = require("./routes/cv");
 const serviceRoutes = require("./routes/servicesRoutes");
 const contactRoutes = require("./routes/contactRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 const app = express();
 
@@ -59,6 +60,7 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api", cvRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.use((req, res) => {
   res.status(404).json({
