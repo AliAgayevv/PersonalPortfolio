@@ -1,6 +1,7 @@
 export default interface Project {
   _id: string;
   title: string;
+  projectId: string;
   description: Record<string, any>;
   githubLink: string;
   liveLink: string;

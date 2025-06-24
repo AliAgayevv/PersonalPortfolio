@@ -1,44 +1,94 @@
+"use client";
 import React, { useState } from "react";
+import axios from "axios";
 import Project from "@/types/projectInterface";
 
 interface EditProjectModalProps {
   project: Project;
   onClose: () => void;
-  onSave: (updatedProject: Project) => void;
+  onRefresh: () => void;
 }
 
 const EditProjectModal: React.FC<EditProjectModalProps> = ({
   project,
   onClose,
-  onSave,
+  onRefresh,
 }) => {
   const [formData, setFormData] = useState<Project>({ ...project });
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (
+  const handleTextChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+
+    if (name.includes(".")) {
+      const [outer, inner] = name.split(".");
+      setFormData((prev) => ({
+        ...prev,
+        [outer]: {
+          ...(prev as any)[outer],
+          [inner]: value,
+        },
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      setLoading(true);
+      const form = new FormData();
+
+      form.append("title", formData.title);
+      form.append("githubLink", formData.githubLink);
+      form.append("liveLink", formData.liveLink);
+      form.append("description", JSON.stringify(formData.description));
+      form.append("timeLine", JSON.stringify(formData.timeLine));
+      if (imageFile) {
+        form.append("image", imageFile);
+      }
+
+      const response = await axios.patch(
+        `http://localhost:4000/api/projects/${formData.projectId}`,
+        form,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("✅ PATCH Success:", response.data);
+      onRefresh();
+      onClose();
+    } catch (err: any) {
+      console.error("❌ PATCH error:", err.response?.data || err.message);
+      alert("Xəta baş verdi: " + (err.response?.data?.message || err.message));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/70 bg-opacity overflow-y-auto ">
-      <div className="relative bg-white w-full max-w-2xl mx-auto my-12 p-6 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-semibold mb-4">Proyekti redaktə et</h2>
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 overflow-y-auto">
+      <div className="relative bg-white max-w-2xl mx-auto my-12 p-6 rounded shadow-lg">
+        <h2 className="text-2xl font-bold mb-4">Proyekti redaktə et</h2>
 
         <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-2">
-          {/* Şəkil */}
           <div>
             <label className="block mb-1 font-medium">Şəkil</label>
-            <div className="flex items-center gap-4 flex-wrap">
+            <div className="flex items-center gap-4">
               <img
                 src={
-                  typeof formData.image === "string"
-                    ? `http://localhost:4000${formData.image}`
-                    : URL.createObjectURL(formData.image)
+                  imageFile
+                    ? URL.createObjectURL(imageFile)
+                    : `http://localhost:4000${formData.image}`
                 }
                 alt="Preview"
                 className="w-32 h-32 object-cover rounded border"
@@ -51,10 +101,7 @@ const EditProjectModal: React.FC<EditProjectModalProps> = ({
                 onChange={(e) => {
                   const file = e.target.files?.[0];
                   if (file) {
-                    setFormData((prev) => ({
-                      ...prev,
-                      image: file as any,
-                    }));
+                    setImageFile(file);
                   }
                 }}
               />
@@ -68,136 +115,91 @@ const EditProjectModal: React.FC<EditProjectModalProps> = ({
             </div>
           </div>
 
-          {/* Başlıq */}
           <div>
-            <label className="block mb-1 font-medium">Başlıq</label>
+            <label className="block mb-1">Başlıq</label>
             <input
               name="title"
               value={formData.title}
-              onChange={handleChange}
+              onChange={handleTextChange}
               className="w-full p-2 border rounded"
-              placeholder="Başlıq"
             />
           </div>
 
-          {/* GitHub Link */}
           <div>
-            <label className="block mb-1 font-medium">GitHub Link</label>
+            <label className="block mb-1">GitHub Link</label>
             <input
               name="githubLink"
               value={formData.githubLink}
-              onChange={handleChange}
+              onChange={handleTextChange}
               className="w-full p-2 border rounded"
-              placeholder="https://github.com/..."
             />
           </div>
 
-          {/* Live Demo Link */}
           <div>
-            <label className="block mb-1 font-medium">Live Demo Link</label>
+            <label className="block mb-1">Live Link</label>
             <input
               name="liveLink"
               value={formData.liveLink}
-              onChange={handleChange}
+              onChange={handleTextChange}
               className="w-full p-2 border rounded"
-              placeholder="https://..."
             />
           </div>
 
-          {/* Açıqlama AZ */}
           <div>
-            <label className="block mb-1 font-medium">Açıqlama (az)</label>
+            <label className="block mb-1">Açıqlama (az)</label>
             <textarea
               name="description.az"
               value={(formData.description as any)?.az || ""}
-              onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  description: {
-                    ...prev.description,
-                    az: e.target.value,
-                  },
-                }))
-              }
+              onChange={handleTextChange}
               className="w-full p-2 border rounded"
-              placeholder="Layihənin Azərbaycan dilində açıqlaması"
             />
           </div>
 
-          {/* Açıqlama EN */}
           <div>
-            <label className="block mb-1 font-medium">Açıqlama (en)</label>
+            <label className="block mb-1">Açıqlama (en)</label>
             <textarea
               name="description.en"
               value={(formData.description as any)?.en || ""}
-              onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  description: {
-                    ...prev.description,
-                    en: e.target.value,
-                  },
-                }))
-              }
+              onChange={handleTextChange}
               className="w-full p-2 border rounded"
-              placeholder="Project description in English"
             />
           </div>
 
-          {/* Timeline AZ */}
           <div>
-            <label className="block mb-1 font-medium">Vaxt aralığı (az)</label>
+            <label className="block mb-1">Vaxt aralığı (az)</label>
             <textarea
               name="timeLine.az"
               value={(formData.timeLine as any)?.az || ""}
-              onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  timeLine: {
-                    ...prev.timeLine,
-                    az: e.target.value,
-                  },
-                }))
-              }
+              onChange={handleTextChange}
               className="w-full p-2 border rounded"
-              placeholder="Layihənin görülmə müddəti (az)"
             />
           </div>
 
-          {/* Timeline EN */}
           <div>
-            <label className="block mb-1 font-medium">Vaxt aralığı (en)</label>
+            <label className="block mb-1">Vaxt aralığı (en)</label>
             <textarea
               name="timeLine.en"
               value={(formData.timeLine as any)?.en || ""}
-              onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  timeLine: {
-                    ...prev.timeLine,
-                    en: e.target.value,
-                  },
-                }))
-              }
+              onChange={handleTextChange}
               className="w-full p-2 border rounded"
-              placeholder="Project duration (en)"
             />
           </div>
         </div>
 
-        {/* Footer buttons */}
         <div className="mt-6 flex justify-end gap-4">
           <button
             onClick={onClose}
             className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+            disabled={loading}
           >
             Bağla
           </button>
           <button
-            onClick={() => onSave(formData)}
+            onClick={handleSave}
             className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            disabled={loading}
           >
-            Yadda saxla
+            {loading ? "Yüklənir..." : "Yadda saxla"}
           </button>
         </div>
       </div>
