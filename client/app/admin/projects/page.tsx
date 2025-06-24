@@ -164,7 +164,6 @@ const ProjectsPage: React.FC = () => {
         })}
       </div>
 
-      {/* Edit Project Modal */}
       {selectedProject && (
         <EditProjectModal
           project={selectedProject}
@@ -175,8 +174,6 @@ const ProjectsPage: React.FC = () => {
           }}
         />
       )}
-
-      {/* Add Project Modal */}
       {isAddModalOpen && (
         <div className="fixed inset-0 bg-black/70 flex justify-center items-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-xl w-full relative h-11/12 overflow-y-auto">
