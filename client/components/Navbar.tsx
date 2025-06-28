@@ -3,12 +3,15 @@ import LanguageSelector from "./LanguageSelector";
 import localFont from "next/font/local";
 import NavbarDropdown from "./NavbarDropdown";
 import Link from "next/link";
+import { cookies } from "next/headers";
 
 const interFont = localFont({
   src: "../public/fonts/Inter.ttf",
 });
 
-const Navbar = () => {
+const Navbar = async () => {
+  const cookieStore = await cookies();
+  const lang = cookieStore.get("lang")?.value || "az";
   return (
     <nav className=" flex justify-between items-center pt-16 max-h-14 mb-5">
       <Link href="/">
@@ -20,7 +23,7 @@ const Navbar = () => {
       </Link>
       <div className="flex gap-2 items-center">
         <LanguageSelector />
-        <NavbarDropdown />
+        <NavbarDropdown lang={lang as "az" | "en"} />
       </div>
     </nav>
   );

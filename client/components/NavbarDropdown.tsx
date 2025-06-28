@@ -5,7 +5,23 @@ import { motion } from "framer-motion";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import Link from "next/link";
 
-export default function NavbarDropdown() {
+export default function NavbarDropdown({ lang }: { lang: "az" | "en" }) {
+  const navbarContent = {
+    az: {
+      about: "Haqqımda",
+      projects: "Layihələr",
+      contact: "Əlaqə",
+      blog: "Bloq ",
+      resume: "CV",
+    },
+    en: {
+      about: "About",
+      projects: "Projects",
+      contact: "Contact",
+      blog: "Blog ",
+      resume: "Resume",
+    },
+  };
   const [isOpen, setIsOpen] = useState(false);
   const [cvUrl, setCvUrl] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement>(null);
@@ -15,7 +31,7 @@ export default function NavbarDropdown() {
   useEffect(() => {
     const fetchCV = async () => {
       try {
-        const res = await fetch(`http://localhost:4000/api/cv`, {
+        const res = await fetch(`https://aghayev.dev/api/cv`, {
           method: "GET",
         });
 
@@ -51,7 +67,7 @@ export default function NavbarDropdown() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.2 }}
-          className="absolute top-12 right-1/2 translate-x-1/2 bg-black shadow-lg rounded-lg p-4"
+          className="absolute top-12 right-1/2 translate-x-1/3 bg-black shadow-lg rounded-lg p-4"
         >
           <motion.ul
             className="flex flex-col gap-2"
@@ -61,18 +77,20 @@ export default function NavbarDropdown() {
             transition={{ duration: 0.2 }}
           >
             <a href="/about" onClick={() => setIsOpen(false)}>
-              <LiWithAnimation>About</LiWithAnimation>
+              <LiWithAnimation>{navbarContent[lang].about}</LiWithAnimation>
             </a>
             <Link href="/projects">
-              <LiWithAnimation>Projects</LiWithAnimation>
+              <LiWithAnimation>{navbarContent[lang].projects}</LiWithAnimation>
             </Link>
-            <LiWithAnimation>Contact</LiWithAnimation>
-            <LiWithAnimation>Blog</LiWithAnimation>
-            {cvUrl && (
-              <a href={cvUrl} target="_blank" rel="noopener noreferrer">
-                <LiWithAnimation>Resume</LiWithAnimation>
-              </a>
-            )}
+            <Link href="/contact">
+              <LiWithAnimation>{navbarContent[lang].contact}</LiWithAnimation>
+            </Link>
+            <Link href="/blog">
+              <LiWithAnimation>{navbarContent[lang].blog}</LiWithAnimation>
+            </Link>
+            <a href={cvUrl as string} target="_blank" rel="noopener noreferrer">
+              <LiWithAnimation>{navbarContent[lang].resume}</LiWithAnimation>
+            </a>
           </motion.ul>
         </motion.div>
       )}

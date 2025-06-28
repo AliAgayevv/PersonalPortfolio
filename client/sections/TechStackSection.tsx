@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import StackCard from "../components/StackCard";
 import AnimationWhenElementOnScreen from "@/components/animations/AnimationWhenElementOnScreen";
 import AnimationAllChildren from "@/components/animations/AnimationAllChildren";
+import getUrl from "@/lib/getUrl";
 
 const parentVariant = {
   hidden: {},
@@ -24,8 +25,9 @@ const childVariant = {
 const TechStackSection = async () => {
   const cookieStore = await cookies();
   const lang = cookieStore.get("lang")?.value || "az";
+  const url = getUrl();
 
-  const res = await fetch("http://localhost:4000/api/tech", {
+  const res = await fetch(`${url}/api/tech`, {
     cache: "no-store",
     headers: {
       "Content-Type": "application/json",

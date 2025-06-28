@@ -1,9 +1,10 @@
 export default function getUrl() {
-  const mode: "development" | "production" = process.env.MODE as
-    | "development"
-    | "production";
+  if (process.env.MODE === "development") {
+    return "http://localhost:4000";
+  }
+  if (typeof window === "undefined") {
+    return "http://localhost:5000";
+  }
 
-  return mode === "development"
-    ? process.env.DEVELOPMENT_URL
-    : process.env.PRODUCTION_URL;
+  return "http://45.85.146.73:5000";
 }

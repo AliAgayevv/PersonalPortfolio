@@ -108,7 +108,6 @@ exports.deletePage = async (req, res) => {
 
 exports.updatePagePartial = async (req, res) => {
   const { componentName } = req.params;
-  console.log("Partial update request for:", componentName);
 
   try {
     const existingPage = await Page.findOne({ componentName });

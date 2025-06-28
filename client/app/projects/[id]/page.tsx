@@ -42,8 +42,6 @@ export default async function page({
     throw new Error("No project data found");
   }
 
-  console.log(projectData);
-
   return (
     <div className="mt-14 md:mt-24 mx-auto h-full">
       {/* Header Section */}
@@ -162,7 +160,7 @@ export default async function page({
       </div>
 
       {/* Footer */}
-      <div className=" absolute w-full left-0 h-full mt-16 md:mt-0">
+      <div className=" absolute w-full left-0 h-1/2 mt-16 md:mt-16">
         <Footer />
       </div>
     </div>

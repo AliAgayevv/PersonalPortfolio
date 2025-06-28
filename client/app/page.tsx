@@ -14,6 +14,7 @@ import ServiceInterface from "@/types/ServiceInterface";
 import getPageData from "@/lib/getPageData";
 import getUrl from "@/lib/getUrl";
 import socialMediaAdress from "@/data/socialMedia.json";
+import Link from "next/link";
 
 export default async function Home() {
   const cookieStore = await cookies();
@@ -80,7 +81,7 @@ export default async function Home() {
         }}
       />
       <header className={`flex flex-col  h-screen w-full  justify-center `}>
-        <div className="size-32 rounded-full  border-black border-5 shadow-lg -mt-10 md:-mt-40 mb-10">
+        <div className="size-32 rounded-full  border-black border-5 shadow-lg -mt-10 md:-mt-32 mb-10">
           <Image
             src={`${backendUrl}${data.photos}`}
             width={80}
@@ -101,7 +102,9 @@ export default async function Home() {
           {data.content?.pageDescription}
         </p>
         <div className="flex gap-4 mt-10 ">
-          <CtaButton innerText={data.content?.ctaButton} mode="start" />
+          <Link href={"/contact"}>
+            <CtaButton innerText={data.content?.ctaButton} mode="start" />
+          </Link>
           <a href="/about">
             <button className="px-[clamp(16px,3vw,24px)] py-[clamp(10px,2.5vw,14px)] text-16px border border-neutral-300 text-black bg-white rounded-3xl ">
               {data.content?.contact}
@@ -150,7 +153,7 @@ export default async function Home() {
 
       <TechStackSection />
 
-      <div className=" absolute left-0  w-full bg-black mt-40 pt-20">
+      <div className=" absolute left-0 w-full bg-black mt-40 pt-20 ">
         <ProjectSection />
         <section
           aria-labelledby="services-heading"

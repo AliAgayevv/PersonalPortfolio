@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/admin", "/api", "/private"],
       },
     ],
-    sitemap: "http://localhost:3000/sitemap.xml", // TODO: Replace with your actual sitemap URL
+    sitemap: "https://aghayev.dev/sitemap.xml", // TODO: Replace with your actual sitemap URL
   };
 }

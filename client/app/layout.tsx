@@ -10,7 +10,7 @@ const interFont = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://yourwebsite.com"), // TODO: Replace with your actual domain
+  metadataBase: new URL("https://aghayev.dev"),
   title: {
     default: "Ali Aghayev - Frontend Developer | Baku, Azerbaijan",
     template: "%s | Ali Aghayev - Developer",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     "Next.js portfolio developer",
     "Azerbaijan software engineer",
   ],
-  authors: [{ name: "Ali", url: "https://yourwebsite.com" }], // TODO: Replace with your actual name and URL
+  authors: [{ name: "Ali", url: "https://aghayev.dev" }],
   creator: "Ali Aghayev",
   publisher: "Ali Aghayev",
   robots: {
@@ -47,14 +47,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "az_AZ",
     alternateLocale: "en_US",
-    url: "https://yourwebsite.com", // TODO: Replace with your actual URL
+    url: "https://aghayev.dev",
     title: "Ali - Frontend Developer",
     description:
       "Bakıda fəaliyyət göstərən peşəkar Next.js və React developer — Ali. TypeScript və Node.js üzrə ixtisaslaşmış veb proqramçı. Freelance veb development və modern frontend xidmətləri.",
     siteName: "Ali Aghayev Portfolio",
     images: [
       {
-        url: "/og-image.jpg", // TODO: Replace with your actual image path
+        url: "/og-image.jpg", // TODO: Update with actual image URL
         width: 1200,
         height: 630,
         alt: "Ali Aghayev  - Frontend Developer",
@@ -70,7 +70,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="az">
-      <body className={`w-[90%] mx-auto ${interFont.className}`}>
+      <body className={`w-[90%] mx-auto  ${interFont.className}`}>
         <ReactLenis root>
           <Navbar />
           {children}

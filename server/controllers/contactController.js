@@ -7,7 +7,6 @@ const deleteOldContacts = async () => {
     const result = await Contact.deleteMany({
       sentedTime: { $lt: thirtyDaysAgo },
     });
-    console.log(`Deleted ${result.deletedCount} old contact forms.`);
   } catch (error) {
     console.error("Error deleting old contacts:", error);
   }
@@ -15,7 +14,6 @@ const deleteOldContacts = async () => {
 exports.getContactInfo = async (req, res) => {
   try {
     const contacts = await Contact.find().sort({ createdAt: -1 });
-    // send the contacts in pretty format
     res.status(200).json(contacts);
   } catch (error) {
     console.error("Error fetching contact info:", error);
