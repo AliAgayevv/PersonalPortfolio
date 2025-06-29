@@ -10,12 +10,25 @@ import ProjectSection from "@/sections/ProjectSection";
 import TechStackSection from "@/sections/TechStackSection";
 import TypewriterEffect from "@/components/TypewriterEffect";
 import AnimationWhenElementOnScreen from "@/components/animations/AnimationWhenElementOnScreen";
-import ServiceInterface from "@/types/ServiceInterface";
+import ServiceInterface from "@/types/serviceInterface";
 import getPageData from "@/lib/getPageData";
 import getUrl from "@/lib/getUrl";
 import socialMediaAdress from "@/data/socialMedia.json";
 import Link from "next/link";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  openGraph: {
+    images: [
+      {
+        url: `https://aghayev.dev/api/og?title=Portfoliyoma%20xo%C5%9F%20g%C9%99lmisiz`,
+        alt: "Ali's Portfolio",
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
+};
 export default async function Home() {
   const cookieStore = await cookies();
   const lang = cookieStore.get("lang")?.value || "az";
