@@ -8,6 +8,101 @@ import ContactForm from "@/components/ContactForm";
 import ContactBox from "@/components/ContactBox";
 import Footer from "@/components/Footer";
 import EmailButton from "@/components/EmailButton";
+import { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const ogTitle = "Əlaqə";
+
+    return {
+      title: "Əlaqə",
+      description:
+        "Ali Ağayev ilə əlaqə saxlayın. Bakıda fəaliyyət göstərən freelance frontend developer. Next.js, React və TypeScript layihələri üçün professional veb development xidmətləri.",
+      keywords: [
+        "Ali Ağayev əlaqə",
+        "frontend developer əlaqə bakı",
+        "freelance developer azərbaycan",
+        "next.js developer əlaqə",
+        "react developer bakı",
+        "typescript developer əlaqə",
+        "veb development xidmətləri",
+        "freelance veb developer",
+        "baku web developer contact",
+        "azerbaijan software developer",
+      ],
+      openGraph: {
+        title: "Əlaqə - Ali Ağayev | Frontend Developer",
+        description:
+          "Ali Ağayev ilə əlaqə saxlayın. Professional frontend development və freelance veb xidmətləri üçün birgə işləyək.",
+        url: "https://aghayev.dev/contact",
+        siteName: "Ali Aghayev Portfolio",
+        locale: "az_AZ",
+        type: "website",
+        images: [
+          {
+            url: `https://aghayev.dev/api/og?title=${encodeURIComponent(
+              ogTitle
+            )}`,
+            alt: "Ali Ağayev ilə Əlaqə - Frontend Developer",
+            width: 1200,
+            height: 630,
+            type: "image/png",
+          },
+        ],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: "Əlaqə - Ali Ağayev | Frontend Developer",
+        description:
+          "Ali Ağayev ilə əlaqə saxlayın. Professional frontend development və freelance veb xidmətləri.",
+        images: [
+          `https://aghayev.dev/api/og?title=${encodeURIComponent(ogTitle)}`,
+        ],
+        creator: "@aliaghayev",
+      },
+      robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          "max-video-preview": -1,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+        },
+      },
+      alternates: {
+        canonical: "https://aghayev.dev/contact",
+        languages: {
+          "az-AZ": "https://aghayev.dev/contact",
+          "en-US": "https://aghayev.dev/en/contact",
+        },
+      },
+    };
+  } catch (error) {
+    console.error("Əlaqə metadata yaratma xətası:", error);
+
+    return {
+      title: "Əlaqə",
+      description:
+        "Ali Ağayev ilə əlaqə saxlayın. Frontend developer və freelancer.",
+      openGraph: {
+        title: "Əlaqə - Ali Ağayev",
+        description: "Ali Ağayev ilə əlaqə saxlayın.",
+        images: [
+          {
+            url: `https://aghayev.dev/api/og?title=${encodeURIComponent(
+              "Əlaqə"
+            )}`,
+            alt: "Əlaqə",
+            width: 1200,
+            height: 630,
+          },
+        ],
+      },
+    };
+  }
+}
 
 export default async function Page() {
   const cookieStore = await cookies();
@@ -44,16 +139,6 @@ export default async function Page() {
             <BsArrowUpRight size={14} className="flex-shrink-0" />
           </button>
         </Link>
-
-        {/* <a
-          href={`mailto:${socialMediaDatas.gmail}`}
-          className="flex-1 h-full min-h-[60px] rounded-2xl text-black bg-white flex justify-center items-center gap-1 sm:gap-2 border p-2 sm:p-4 border-gray-300 shadow-2xl shadow-black/30 hover:shadow-black/50 transition-all duration-300"
-        >
-          <span className="text-xs sm:text-sm md:text-base font-medium whitespace-nowrap">
-            {pageData.content.email}
-          </span>
-          <TfiEmail size={14} className="flex-shrink-0" />
-        </a> */}
         <EmailButton
           innerText={pageData.content.email}
           gmail={socialMediaDatas.gmail}
@@ -72,7 +157,7 @@ export default async function Page() {
           description={pageData.content.alsoInSocailDesc}
         />
       </section>
-      <div className=" absolute left-0 w-full md:mt-96 pt-20">
+      <div className="absolute left-0 w-full md:mt-96 pt-20">
         <Footer />
       </div>
     </section>
