@@ -53,7 +53,9 @@ export default async function Home() {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Ali",
+    alternateName: ["Ali Aghayev", "Əli Ağayev", "Əli Aghayev", "Ali", "Əli"],
     jobTitle: "Front-end Developer",
+    url: "https://aghayev.dev",
     description: data.content?.pageDescription,
     image: `${backendUrl}${data.photos}`,
     sameAs: [
@@ -74,6 +76,9 @@ export default async function Home() {
       "Web Development",
       "JavaScript",
       "NGINX",
+      "Frontend Development",
+      "Veb Development",
+      "Sayt Hazırlanması",
     ],
     hasOccupation: {
       "@type": "Person",
