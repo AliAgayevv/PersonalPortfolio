@@ -6,13 +6,7 @@ import getUrl from "@/lib/getUrl";
 import socialMediaDatas from "@/data/socialMedia.json";
 import Link from "next/link";
 
-import {
-  FaGithub,
-  FaHome,
-  FaInstagram,
-  FaLinkedinIn,
-  FaMediumM,
-} from "react-icons/fa";
+import { FaGithub, FaInstagram, FaLinkedinIn, FaMediumM } from "react-icons/fa";
 
 const ContactBox = async ({
   title,
@@ -45,9 +39,6 @@ const ContactBox = async ({
         {description}
       </p>
       <div className="flex  justify-around  items-center py-4 gap-0 md:gap-12 ">
-        <Link className="w-6 h-6" href="/">
-          <FaHome className="w-full h-full" color="#00000080" />
-        </Link>
         <Link
           href={socialMediaDatas.linkedin}
           className="w-6 h-6"

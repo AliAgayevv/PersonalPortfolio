@@ -6,7 +6,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useState, useEffect } from "react";
 import { getCookie } from "cookies-next";
-import getUrl from "@/lib/getUrl";
+// import getUrl from "@/lib/getUrl";
 
 // Translations object
 const translations = {
@@ -125,7 +125,13 @@ export default function ContactForm() {
 
   const handleSubmit = async (
     values: FormValues,
-    { setSubmitting, resetForm }: any
+    {
+      setSubmitting,
+      resetForm,
+    }: {
+      setSubmitting: (isSubmitting: boolean) => void;
+      resetForm: () => void;
+    }
   ) => {
     setSubmitError(null);
     setSubmitSuccess(false);
@@ -135,11 +141,11 @@ export default function ContactForm() {
         name: values.name.trim(),
         email: values.email.trim().toLowerCase(),
         message: values.message.trim(),
-        phone: values.phone.trim(),
+        phoneNumber: values.phone.trim(),
       };
 
-      const url = getUrl();
-      const response = await fetch(`${url}/api/contact`, {
+      // TODO: Replace with your actual API URL
+      const response = await fetch(`https://aghayev.dev/api/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

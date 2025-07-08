@@ -156,12 +156,6 @@ export function FooterSocialIcons({
   mediumURL,
   githubURL,
 }: IFooterSocialIconsProps) {
-  console.log("FooterSocialIcons rendered with URLs:", {
-    linekdinURL,
-    instagramURL,
-    mediumURL,
-    githubURL,
-  });
   return (
     <div className="flex justify-around md:justify-end items-center py-4 gap-0 md:gap-12">
       <Link className="w-6 h-6" href="/">

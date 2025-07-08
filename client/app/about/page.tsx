@@ -8,7 +8,6 @@ import socialMediaData from "@/data/socialMedia.json";
 import ImageAnimation from "@/components/animations/ImageAnimation";
 import TextAnimation from "@/components/animations/TextAnimation";
 import { Metadata } from "next";
-import getUrl from "@/lib/getUrl";
 import getPageData from "@/lib/getPageData";
 
 export const metadata: Metadata = {
@@ -29,8 +28,15 @@ export const metadata: Metadata = {
     title: "Ali Aghayev Haqqında - Frontend Developer ",
     description:
       "Bakıda yaşayan Ali-nin frontend developer olmaq səyahəti və texniki bilikləri",
-    images: ["/about-ali-developer.jpg"], // TODO: Replace with your actual image path
-    url: "http://localhost:3000/about", // TODO : Replace with your actual URL
+    images: [
+      {
+        url: `https://aghayev.dev/api/og?title=%C6%8Fli%20Kimdir`,
+        alt: "Əli kimdir",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    url: "https://aghayev.dev/about",
   },
 };
 
@@ -38,11 +44,12 @@ export default async function Page() {
   const cookieStore = await cookies();
   const lang = cookieStore.get("lang")?.value || "az";
 
-  const url = getUrl();
+  const url =
+    process.env.MODE === "development"
+      ? "http://localhost:4000"
+      : "http://45.85.146.73:5000";
 
   const aboutData = await getPageData("about", lang as "az" | "en");
-
-  console.log("About Data:", aboutData);
 
   return (
     <div className="mt-24">
@@ -75,6 +82,7 @@ export default async function Page() {
               src={`${url}${aboutData.photos}`}
               width={1920}
               height={1920}
+              priority
               alt="About Image"
               className="w-full h-full object-cover rounded-2xl shadow-2xl shadow-gray-500/90 hover:shadow-gray-500/30 transition-shadow duration-300 ease-in-out"
             />
@@ -91,7 +99,7 @@ export default async function Page() {
           }}
         >
           <a
-            href={`${url}/api/cv`}
+            href={`https://aghayev.dev/api/cv`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center md:justify-start w-full hover:cursor-pointer"

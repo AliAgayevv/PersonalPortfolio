@@ -1,5 +1,4 @@
 import type { MetadataRoute } from "next";
-import getUrl from "../lib/getUrl";
 import getProjects from "@/lib/getProjects";
 import projectInterface from "../types/projectInterface";
 
@@ -7,27 +6,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const projects = await getProjects("az");
 
   const projectUrls = projects.map((project: projectInterface) => ({
-    url: `${getUrl()}/projects/${project.projectId}`,
+    url: `https://aghayev.dev/projects/${project.projectId}`,
     lastModified: new Date(project.updatedAt || project.createdAt),
   }));
 
-  const url = getUrl();
   return [
     {
-      url: `${url}`, // TODO: Replace with your actual domain
+      url: `https://aghayev.dev`,
       lastModified: new Date(),
     },
     {
-      url: `${url}/about`,
+      url: `https://aghayev.dev/about`,
       lastModified: new Date(),
     },
     {
-      url: `${url}/contact`,
+      url: `https://aghayev.dev/contact`,
       lastModified: new Date(),
     },
 
     {
-      url: `${url}/projects`,
+      url: `https://aghayev.dev/projects`,
+      lastModified: new Date(),
+    },
+    {
+      url: `https://aghayev.dev/blog`,
       lastModified: new Date(),
     },
 
