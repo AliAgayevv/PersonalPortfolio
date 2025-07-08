@@ -1,5 +1,5 @@
 import { Article, BlogTranslations } from "@/types/blogInterface";
-import { BlogHeader } from "./BlogHeader";
+import {} from "./BlogHeader";
 import { ArticleCard } from "./ArticleCard";
 import { BlogEmptyState } from "./BlogEmptyState";
 
@@ -19,11 +19,9 @@ export const BlogClient = ({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      <div className="container mx-auto px-4 py-8">
-        <BlogHeader translations={translations} />
-
-        <div className="grid gap-8 max-w-4xl mx-auto">
+    <div className="">
+      <div className="">
+        <div className="grid gap-8 mt-8 mx-auto">
           {articles.map((article, index) => (
             <ArticleCard
               key={index}

@@ -28,7 +28,14 @@ export const metadata: Metadata = {
     title: "Ali Aghayev Haqqında - Frontend Developer ",
     description:
       "Bakıda yaşayan Ali-nin frontend developer olmaq səyahəti və texniki bilikləri",
-    images: ["/about-ali-developer.jpg"], // TODO: Replace with your actual image path
+    images: [
+      {
+        url: `https://aghayev.dev/api/og?title=%C6%8Fli%20Kimdir`,
+        alt: "Əli kimdir",
+        width: 1200,
+        height: 630,
+      },
+    ],
     url: "https://aghayev.dev/about",
   },
 };

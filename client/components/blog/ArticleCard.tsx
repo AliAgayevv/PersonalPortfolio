@@ -1,38 +1,82 @@
-import { Article, BlogTranslations } from "@/types/blogInterface";
+import React from "react";
+import Link from "next/link";
+import {
+  Article,
+  BlogTranslations,
+  BlogWebsiteArticles,
+} from "@/types/blogInterface";
 import { formatDate, cleanHTMLContent } from "@/utils/blog.utils";
+import { MAX_BLOG_LETTER_LENGTH } from "@/constants/blog.constants";
+import {
+  isWebsiteArticle,
+  normalizeArticleData,
+  processArticleContent,
+} from "@/utils/blog.helper";
+import CtaButton from "../CtaButton";
 
 interface ArticleCardProps {
-  article: Article;
+  article: Article | BlogWebsiteArticles;
   translations: BlogTranslations;
   lang: string;
+  isWebsiteArticle?: boolean;
 }
 
-export const ArticleCard = ({
+export const ArticleCard: React.FC<ArticleCardProps> = ({
   article,
   translations,
   lang,
-}: ArticleCardProps) => {
+  isWebsiteArticle: forceWebsiteType = false,
+}) => {
+  // Məqalənin növünü müəyyən edirik
+  const isWebsite = forceWebsiteType || isWebsiteArticle(article);
+
+  // Məlumatları normallaşdırırıq
+  const articleData = normalizeArticleData(article, isWebsite);
+
+  // Məzmunu emal edirik
+  const processedContent = processArticleContent(
+    articleData.content,
+    articleData.isMarkdown,
+    MAX_BLOG_LETTER_LENGTH,
+    cleanHTMLContent
+  );
+
+  // Tarix formatını müəyyən edirik
+  const formattedDate = isWebsite
+    ? articleData.pubDate
+    : formatDate(articleData.pubDate, lang);
+
+  // Badge rəngini müəyyən edirik
+  const badgeColorClass = isWebsite ? "bg-green-500" : "bg-orange-500";
+
+  // Read more button mətnini müəyyən edirik
+  const readMoreText = isWebsite
+    ? (translations as BlogTranslations).websiteReadMore ||
+      translations.readMore
+    : translations.readMore;
+
   return (
-    <article className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+    <article className="bg-transparent">
       {/* Article Header */}
-      <div className="p-6 border-b border-gray-100">
-        <div className="inline-block bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold mb-4">
-          Medium
+      <div className="p-6 border-1 rounded-2xl border-[#00000069]">
+        <div
+          className={`inline-block text-white px-3 py-1 rounded-full text-sm font-semibold mb-4 ${badgeColorClass}`}
+        >
+          {articleData.source}
         </div>
+
         <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 leading-tight">
-          {article.title}
+          {articleData.title}
         </h2>
+
         <div className="flex flex-wrap gap-4 mb-4 text-sm text-gray-600">
-          <span className="font-medium">
-            {formatDate(article.pubDate, lang)}
-          </span>
-          <span>
-            {translations.author} {article.creator}
-          </span>
+          <span className="font-medium">{formattedDate}</span>
+          <span></span>
         </div>
-        {article.categories.length > 0 && (
+
+        {articleData.categories && articleData.categories.length > 0 && (
           <div className="flex flex-wrap gap-2">
-            {article.categories.map((category, catIndex) => (
+            {articleData.categories.map((category, catIndex) => (
               <span
                 key={catIndex}
                 className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium"
@@ -45,7 +89,7 @@ export const ArticleCard = ({
       </div>
 
       {/* Article Content */}
-      <div className="p-6">
+      <div className="py-6">
         <div
           className="prose prose-lg max-w-none
             prose-headings:text-gray-800 prose-headings:font-bold
@@ -62,25 +106,19 @@ export const ArticleCard = ({
             prose-code:py-1 prose-code:rounded prose-code:text-sm
             prose-pre:prose-code:bg-transparent prose-pre:prose-code:text-inherit
             prose-pre:prose-code:p-0
-            prose-img:rounded-lg prose-img:shadow-md prose-img:my-6
+            prose-img:rounded-lg prose-img:my-6
             prose-figure:my-6 prose-figcaption:text-center prose-figcaption:italic
             prose-figcaption:text-gray-600 prose-figcaption:mt-2 prose-figcaption:text-sm
             max-h-96 overflow-y-auto"
           dangerouslySetInnerHTML={{
-            __html: cleanHTMLContent(article.content),
+            __html: processedContent,
           }}
         />
-        <a
-          href={article.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block mt-6 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600
-            text-white font-semibold rounded-full hover:from-blue-700 hover:to-purple-700
-            transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
-        >
-          {translations.readMore}
-        </a>
       </div>
+
+      <Link href={articleData.link}>
+        <CtaButton innerText={readMoreText} mode="start" />
+      </Link>
     </article>
   );
 };
