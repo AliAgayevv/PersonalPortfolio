@@ -9,6 +9,7 @@ const projectRoutes = require("./routes/projectRoutes");
 const cvRoutes = require("./routes/cv");
 const serviceRoutes = require("./routes/servicesRoutes");
 const contactRoutes = require("./routes/contactRoutes");
+const blogsRoutes = require("./routes/blogRoutes");
 
 const app = express();
 
@@ -53,6 +54,7 @@ app.use(express.json());
 //   next(err);
 // });
 
+app.use("/api/blogs", blogsRoutes);
 app.use("/api/pages", pageRoutes);
 app.use("/api/tech", techRoutes);
 app.use("/api/projects", projectRoutes);

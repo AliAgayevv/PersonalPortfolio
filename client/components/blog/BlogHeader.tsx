@@ -1,12 +1,17 @@
+import React from "react";
 import { BlogTranslations } from "@/types/blogInterface";
 
 interface BlogHeaderProps {
   translations: BlogTranslations;
+  className?: string;
 }
 
-export const BlogHeader = ({ translations }: BlogHeaderProps) => {
+export const BlogHeader: React.FC<BlogHeaderProps> = ({
+  translations,
+  className = "",
+}) => {
   return (
-    <header className="text-center mb-12 py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl shadow-xl">
+    <header className={`mt-12 ${className}`}>
       <h1 className="text-4xl md:text-5xl font-bold mb-4">
         {translations.title}
       </h1>

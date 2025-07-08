@@ -28,6 +28,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `https://aghayev.dev/projects`,
       lastModified: new Date(),
     },
+    {
+      url: `https://aghayev.dev/blog`,
+      lastModified: new Date(),
+    },
 
     ...projectUrls,
   ];
