@@ -9,7 +9,11 @@ const projectRoutes = require("./routes/projectRoutes");
 const cvRoutes = require("./routes/cv");
 const serviceRoutes = require("./routes/servicesRoutes");
 const contactRoutes = require("./routes/contactRoutes");
+
+const adminRoutes = require("./routes/adminRoutes");
+
 const blogsRoutes = require("./routes/blogRoutes");
+
 
 const app = express();
 
@@ -34,7 +38,7 @@ const corsOptions = {
   credentials: true,
   optionsSuccessStatus: 200,
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
 };
 
 app.use(cors(corsOptions));
@@ -61,6 +65,7 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api", cvRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.use((req, res) => {
   res.status(404).json({

@@ -44,12 +44,12 @@ exports.getAllProjects = async (req, res) => {
       _id: project._id,
       projectId: project.projectId,
       title: project.title,
-      description: project.description[language] || {},
+      description: project.description[language] || project.description,
       image: project.image,
       techStack: project.techStack || [],
       liveLink: project.liveLink,
       githubLink: project.githubLink,
-      timeLine: project.timeLine[language] || {},
+      timeLine: project.timeLine[language] || project.timeLine,
       createdAt: project.createdAt,
       updatedAt: project.updatedAt,
     }));
@@ -65,13 +65,15 @@ exports.createProject = async (req, res) => {
   const {
     projectId,
     title,
-    description,
-    timeLine,
     liveLink,
     githubLink,
     techStack: techStackData,
   } = req.body;
 
+  const description = JSON.parse(req.body.description || "{}");
+  const timeLine = JSON.parse(req.body.timeLine || "{}");
+
+  console.log(req.body);
   try {
     // Handle main project image
     const image =
@@ -168,69 +170,78 @@ exports.deleteProject = async (req, res) => {
 };
 
 // [PATCH] /api/projects/:projectId
+// [PATCH] /api/projects/:projectId
+// [PATCH] /api/projects/:projectId
 exports.updateProjectPartial = async (req, res) => {
   const { projectId } = req.params;
   const updateFields = { ...req.body };
 
   try {
-    console.log("=== PATCH DEBUG START ===");
-    console.log("Project ID:", projectId);
-    console.log("Request Files:", req.files);
-    console.log("Request Body:", req.body);
-    console.log("Update Fields Initial:", updateFields);
+    // description sahəsini parse et, əgər stringdirsə
+    if (
+      updateFields.description &&
+      typeof updateFields.description === "string"
+    ) {
+      try {
+        updateFields.description = JSON.parse(updateFields.description);
+      } catch (err) {
+        return res
+          .status(400)
+          .json({ message: "Invalid JSON for description" });
+      }
+    }
 
-    // Handle main project image
+    // timeLine sahəsini parse et, əgər stringdirsə
+    if (updateFields.timeLine && typeof updateFields.timeLine === "string") {
+      try {
+        updateFields.timeLine = JSON.parse(updateFields.timeLine);
+      } catch (err) {
+        return res.status(400).json({ message: "Invalid JSON for timeLine" });
+      }
+    }
+
+    // Digər kodlar - image və techStack işləmə hissəsi (əvvəlki kimi)
     if (req.files && req.files.length > 0) {
       const imageFile = req.files.find((file) => file.fieldname === "image");
       if (imageFile) {
         updateFields.image = `/uploads/${imageFile.filename}`;
-        console.log("New image URL:", updateFields.image);
       }
     }
 
-    // Handle tech stack with icons
     if (updateFields.techStack) {
-      console.log("Tech Stack Before Processing:", updateFields.techStack);
-
       if (req.files && req.files.length > 0) {
-        console.log("Processing with files...");
         updateFields.techStack = processTechStackWithIcons(
           updateFields.techStack,
           req.files
         );
-        console.log("Tech Stack After Processing:", updateFields.techStack);
       } else if (typeof updateFields.techStack === "string") {
         try {
           updateFields.techStack = JSON.parse(updateFields.techStack);
-          console.log("Tech Stack After JSON Parse:", updateFields.techStack);
-        } catch (parseError) {
-          console.error("Error parsing techStack:", parseError);
-          return res.status(400).json({
-            message: "Invalid techStack format",
-            error: parseError.message,
-          });
+        } catch (err) {
+          return res
+            .status(400)
+            .json({ message: "Invalid JSON for techStack" });
         }
       }
     }
 
-    console.log("Final Update Fields:", JSON.stringify(updateFields, null, 2));
-
-    const updatedProject = await Project.findOneAndUpdate(
-      { projectId: projectId.toLowerCase() },
-      { $set: updateFields },
-      { new: true, runValidators: true }
-    );
-
-    if (!updatedProject) {
+    // Sənədi tap
+    const project = await Project.findOne({
+      projectId: projectId.toLowerCase(),
+    });
+    if (!project) {
       return res.status(404).json({ message: "Project not found" });
     }
 
-    console.log("Updated Project Tech Stack:", updatedProject.techStack);
-    console.log("=== PATCH DEBUG END ===");
+    // Update
+    Object.assign(project, updateFields);
+
+    // Yadda saxla
+    await project.save();
 
     res.status(200).json({
       message: "Project updated successfully",
-      updatedProject,
+      updatedProject: project,
     });
   } catch (err) {
     console.error("Error updating project partially:", err);
