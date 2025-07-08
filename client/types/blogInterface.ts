@@ -12,7 +12,6 @@ export interface BlogTranslations {
   title: string;
   subtitle: string;
   readMore: string;
-  websiteReadMore: string;
   author: string;
   loading: string;
   error: string;

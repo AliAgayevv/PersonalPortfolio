@@ -51,7 +51,8 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
 
   // Read more button mətnini müəyyən edirik
   const readMoreText = isWebsite
-    ? (translations as any).websiteReadMore || translations.readMore
+    ? (translations as BlogTranslations).websiteReadMore ||
+      translations.readMore
     : translations.readMore;
 
   return (
