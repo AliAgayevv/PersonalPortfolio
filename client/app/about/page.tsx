@@ -47,7 +47,7 @@ export default async function Page() {
   const url =
     process.env.MODE === "development"
       ? "http://localhost:4000"
-      : "http://45.85.146.73:5000";
+      : "https://aghayev.dev";
 
   const aboutData = await getPageData("about", lang as "az" | "en");
 

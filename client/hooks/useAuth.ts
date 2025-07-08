@@ -35,14 +35,11 @@ export const useAuth = () => {
 
   const verifyToken = async (token: string): Promise<boolean> => {
     try {
-      const response = await fetch(
-        "http://localhost:4000/api/admin/protected",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch("https://aghayev.dev/api/admin/protected", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (response.ok) {
         return true;
@@ -60,7 +57,7 @@ export const useAuth = () => {
     password: string
   ): Promise<{ success: boolean; message?: string }> => {
     try {
-      const response = await fetch("http://localhost:4000/api/admin/login", {
+      const response = await fetch("https://aghayev.dev/api/admin/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

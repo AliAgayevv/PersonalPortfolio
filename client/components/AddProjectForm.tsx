@@ -75,7 +75,7 @@ const AddProjectForm: React.FC = () => {
     });
 
     try {
-      const response = await fetch("http://localhost:4000/api/projects", {
+      const response = await fetch("https://aghayev.dev/api/projects", {
         method: "POST",
         body: formData,
       });

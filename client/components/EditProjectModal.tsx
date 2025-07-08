@@ -71,7 +71,7 @@ const EditProjectModal: React.FC<EditProjectModalProps> = ({
       }
 
       const response = await axios.patch(
-        `http://localhost:4000/api/projects/${formData.projectId}`,
+        `https://aghayev.dev/api/projects/${formData.projectId}`,
         form,
         {
           headers: {
@@ -109,7 +109,7 @@ const EditProjectModal: React.FC<EditProjectModalProps> = ({
                 src={
                   imageFile
                     ? URL.createObjectURL(imageFile)
-                    : `http://localhost:4000${formData.image}`
+                    : `https://aghayev.dev${formData.image}`
                 }
                 alt="Preview"
                 className="w-32 h-32 object-cover rounded border"

@@ -1,8 +1,7 @@
 import { BlogWebsiteRes, Article } from "@/types/blogInterface";
 
 export class BlogService {
-  private static readonly BASE_URL =
-    process.env.BLOG_API_URL || "http://localhost:4000";
+  private static readonly BASE_URL = "https://aghayev.dev";
 
   /**
    * Auth header-larını əldə edir

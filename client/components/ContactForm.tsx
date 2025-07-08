@@ -139,7 +139,6 @@ export default function ContactForm() {
         phoneNumber: values.phone.trim(),
       };
 
-      // TODO: Replace with your actual API URL
       const response = await fetch(`https://aghayev.dev/api/contact`, {
         method: "POST",
         headers: {

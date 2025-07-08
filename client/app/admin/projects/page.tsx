@@ -14,7 +14,7 @@ const ProjectsPage: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  const url = "http://localhost:4000";
+  const url = "https://aghayev.dev";
 
   const fetchProjects = async () => {
     try {

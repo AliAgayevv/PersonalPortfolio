@@ -14,27 +14,26 @@ const adminRoutes = require("./routes/adminRoutes");
 
 const blogsRoutes = require("./routes/blogRoutes");
 
-
 const app = express();
 
 const allowedOrigins = [
   process.env.FRONT_SERVER,
   "http://localhost:3000", //TODO: BUNU SIL
   "http://localhost:3001",
+  "https://aghayev.dev",
   "http://45.85.146.73:3001",
 ].filter(Boolean);
 
 const corsOptions = {
   // TODO: Uncomment this
-  // origin: function (origin, callback) {
-  //   if (!origin) return callback(null, true);
-  //   if (allowedOrigins.includes(origin)) {
-  //     callback(null, true);
-  //   } else {
-  //     callback(new Error("Not allowed by CORS policy"), false);
-  //   }
-  // },
-  origin: "*",
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS policy"), false);
+    }
+  },
   credentials: true,
   optionsSuccessStatus: 200,
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
@@ -46,17 +45,17 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.json());
 
 // TODO: uncomment this
-// app.use((err, req, res, next) => {
-//   if (err && err.message.includes("Not allowed by CORS policy")) {
-//     return res.status(403).json({
-//       error: "Forbidden",
-//       message: "Access denied: Unauthorized origin",
-//       origin: req.headers.origin || "No origin header",
-//       allowedOrigins: allowedOrigins,
-//     });
-//   }
-//   next(err);
-// });
+app.use((err, req, res, next) => {
+  if (err && err.message.includes("Not allowed by CORS policy")) {
+    return res.status(403).json({
+      error: "Forbidden",
+      message: "Access denied: Unauthorized origin",
+      origin: req.headers.origin || "No origin header",
+      allowedOrigins: allowedOrigins,
+    });
+  }
+  next(err);
+});
 
 app.use("/api/blogs", blogsRoutes);
 app.use("/api/pages", pageRoutes);

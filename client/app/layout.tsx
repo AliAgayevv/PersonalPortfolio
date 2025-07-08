@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     siteName: "Ali Aghayev Portfolio",
     images: [
       {
-        url: "/og-image.jpg", // TODO: Update with actual image URL
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Ali Aghayev  - Frontend Developer",

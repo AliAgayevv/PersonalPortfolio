@@ -1,12 +1,10 @@
-import getUrl from "@/lib/getUrl";
 import { LoginRequest, LoginResponse } from "@/types/authInterface";
 
 export const loginAdmin = async (
   username: string,
   password: string
 ): Promise<LoginResponse> => {
-  // TODO: Change URL
-  const url = "http://localhost:4000";
+  const url = "https://aghayev.dev";
   const response = await fetch(`${url}/api/admin/login`, {
     method: "POST",
     headers: {

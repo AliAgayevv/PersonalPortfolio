@@ -1,7 +1,7 @@
 export default async function getProjects(lang: "az" | "en", endpoint = " ") {
   const url =
-    (endpoint && `http://45.85.146.73:5000/api/projects/${endpoint}`) ||
-    "http://45.85.146.73:5000/api/projects";
+    (endpoint && `https://aghayev.dev/api/projects/${endpoint}`) ||
+    "https://aghayev.dev/api/projects";
   const res = await fetch(url, {
     cache: "no-store",
     headers: {
