@@ -37,34 +37,30 @@ export interface BlogWebsiteRes {
   data: BlogWebsiteArticles[];
   count: number;
 }
-// Mövcud interface-lərə əlavə edilməlidir
 
 export interface BlogTranslations {
   title: string;
   subtitle: string;
   readMore: string;
-  websiteReadMore?: string; // Yeni əlavə
+  websiteReadMore?: string;
   author: string;
   loading: string;
   error: string;
   noArticles: string;
 }
 
-// Yeni error handling üçün
 export interface BlogAPIError {
   success: false;
   message: string;
   statusCode?: number;
 }
 
-// Service response üçün
 export interface BlogServiceResponse<T> {
   success: boolean;
   data: T;
   error?: string;
 }
 
-// Metadata üçün
 export interface BlogMetadata {
   title: string;
   description: string;

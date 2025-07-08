@@ -18,7 +18,7 @@ interface TimeLine {
 }
 
 const AddProjectForm: React.FC = () => {
-  const [projectId, setProjectId] = useState(""); // optional
+  const [projectId, setProjectId] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState<Description>({
     az: "",
@@ -82,10 +82,8 @@ const AddProjectForm: React.FC = () => {
 
       if (!response.ok) throw new Error("Network response was not ok");
 
-      const data = await response.json();
       alert("Project added successfully!");
 
-      // Reset fields
       setProjectId("");
       setTitle("");
       setDescription({ az: "", en: "" });

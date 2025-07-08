@@ -11,11 +11,12 @@ import {
 } from "@/constants/blog.constants";
 
 export class MediumService {
-  // fetchArticles metodu Medium RSS feed-dən məqalələri yükləyir
-  // və XML formatından Article tipinə çevirir.
-  // Əgər yükləmə zamanı xəta baş verərsə, boş array qaytarır.
-  // Bu metod Next.js-in revalidate xüsusiyyətindən istifadə edir.
-  // PROXY_URL ilə Medium RSS URL-i birləşdirilir ki, CORS problemləri yaranmasın.
+  // The fetchArticles method fetches articles from the Medium RSS feed
+  // and converts them from XML format to the Article type.
+  // If an error occurs during the fetch, it returns an empty array.
+  // This method uses the revalidate feature of Next.js.
+  // The Medium RSS URL is combined with the PROXY_URL to avoid CORS issues.
+
   static async fetchArticles(): Promise<Article[]> {
     try {
       const response = await fetch(
@@ -30,7 +31,7 @@ export class MediumService {
       }
 
       const xmlText = await response.text();
-      // Private metodu çağıraraq XML mətnini Article tipinə çeviririk
+      // XML -> Article type
       return this.parseXMLToArticles(xmlText);
     } catch (error) {
       console.error("Medium articles fetch error:", error);
@@ -43,10 +44,8 @@ export class MediumService {
       const { DOMParser } = await import("@xmldom/xmldom");
       const parser = new DOMParser();
 
-      // Add error handling for XML parsing
       const xmlDoc = parser.parseFromString(xmlText, "text/xml");
 
-      // Check if parsing was successful
       const parseError = xmlDoc.getElementsByTagName("parsererror")[0];
       if (parseError) {
         console.warn("XML parsing failed:", parseError.textContent);
@@ -64,7 +63,6 @@ export class MediumService {
 
       return articles;
     } catch (error) {
-      // Catch XML parsing errors
       console.warn("XML parsing error:", error);
       return [];
     }

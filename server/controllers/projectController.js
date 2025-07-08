@@ -75,7 +75,6 @@ exports.createProject = async (req, res) => {
 
   console.log(req.body);
   try {
-    // Handle main project image
     const image =
       req.files && req.files.find((file) => file.fieldname === "image")
         ? `/uploads/${

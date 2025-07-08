@@ -10,7 +10,7 @@ import ProjectSection from "@/sections/ProjectSection";
 import TechStackSection from "@/sections/TechStackSection";
 import TypewriterEffect from "@/components/TypewriterEffect";
 import AnimationWhenElementOnScreen from "@/components/animations/AnimationWhenElementOnScreen";
-import ServiceInterface from "@/types/serviceInterface";
+import ServiceInterface from "@/types/ServiceInterface";
 import getPageData from "@/lib/getPageData";
 import getUrl from "@/lib/getUrl";
 import socialMediaAdress from "@/data/socialMedia.json";

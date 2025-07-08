@@ -27,13 +27,11 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
   lang,
   isWebsiteArticle: forceWebsiteType = false,
 }) => {
-  // Məqalənin növünü müəyyən edirik
+  // Type of article is determined based on the forceWebsiteType prop or the article type
   const isWebsite = forceWebsiteType || isWebsiteArticle(article);
 
-  // Məlumatları normallaşdırırıq
   const articleData = normalizeArticleData(article, isWebsite);
 
-  // Məzmunu emal edirik
   const processedContent = processArticleContent(
     articleData.content,
     articleData.isMarkdown,
@@ -41,15 +39,12 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
     cleanHTMLContent
   );
 
-  // Tarix formatını müəyyən edirik
   const formattedDate = isWebsite
     ? articleData.pubDate
     : formatDate(articleData.pubDate, lang);
 
-  // Badge rəngini müəyyən edirik
   const badgeColorClass = isWebsite ? "bg-green-500" : "bg-orange-500";
 
-  // Read more button mətnini müəyyən edirik
   const readMoreText = isWebsite
     ? (translations as BlogTranslations).websiteReadMore ||
       translations.readMore
@@ -116,7 +111,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
         />
       </div>
 
-      <Link href={articleData.link}>
+      <Link href={articleData.link} target="_blank" rel="noopener noreferrer">
         <CtaButton innerText={readMoreText} mode="start" />
       </Link>
     </article>

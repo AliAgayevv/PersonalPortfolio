@@ -1,14 +1,10 @@
-// First install: npm install formik yup
-
 "use client";
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useState, useEffect } from "react";
 import { getCookie } from "cookies-next";
-// import getUrl from "@/lib/getUrl";
 
-// Translations object
 const translations = {
   az: {
     namePlaceholder: "Ad",
@@ -92,7 +88,6 @@ export default function ContactForm() {
 
   const t = translations[currentLang];
 
-  // Create validation schema based on current language
   const getValidationSchema = (lang: "az" | "en") => {
     const t = translations[lang];
 

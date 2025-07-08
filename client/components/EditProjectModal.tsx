@@ -2,12 +2,28 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Project from "@/types/projectInterface";
+import Image from "next/image";
 
 interface EditProjectModalProps {
   project: Project;
   onClose: () => void;
   onRefresh: () => void;
 }
+
+// Type guard funksiyaları
+const isRecordWithKey = (
+  obj: unknown,
+  key: string
+): obj is Record<string, unknown> => {
+  return typeof obj === "object" && obj !== null && key in obj;
+};
+
+const getNestedStringValue = (obj: unknown, key: string): string => {
+  if (isRecordWithKey(obj, key) && typeof obj[key] === "string") {
+    return obj[key] as string;
+  }
+  return "";
+};
 
 const EditProjectModal: React.FC<EditProjectModalProps> = ({
   project,
@@ -28,7 +44,7 @@ const EditProjectModal: React.FC<EditProjectModalProps> = ({
       setFormData((prev) => ({
         ...prev,
         [outer]: {
-          ...(prev as any)[outer],
+          ...(prev[outer as keyof Project] as Record<string, unknown>),
           [inner]: value,
         },
       }));
@@ -44,12 +60,12 @@ const EditProjectModal: React.FC<EditProjectModalProps> = ({
     try {
       setLoading(true);
       const form = new FormData();
-
       form.append("title", formData.title);
       form.append("githubLink", formData.githubLink);
       form.append("liveLink", formData.liveLink);
       form.append("description", JSON.stringify(formData.description));
       form.append("timeLine", JSON.stringify(formData.timeLine));
+
       if (imageFile) {
         form.append("image", imageFile);
       }
@@ -67,9 +83,13 @@ const EditProjectModal: React.FC<EditProjectModalProps> = ({
       console.log("✅ PATCH Success:", response.data);
       onRefresh();
       onClose();
-    } catch (err: any) {
-      console.error("❌ PATCH error:", err.response?.data || err.message);
-      alert("Xəta baş verdi: " + (err.response?.data?.message || err.message));
+    } catch (err: unknown) {
+      const errorMessage = axios.isAxiosError(err)
+        ? err.response?.data?.message || err.message
+        : "Naməlum xəta baş verdi";
+
+      console.error("❌ PATCH error:", err);
+      alert("Xəta baş verdi: " + errorMessage);
     } finally {
       setLoading(false);
     }
@@ -79,12 +99,13 @@ const EditProjectModal: React.FC<EditProjectModalProps> = ({
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 overflow-y-auto">
       <div className="relative bg-white max-w-2xl mx-auto my-12 p-6 rounded shadow-lg">
         <h2 className="text-2xl font-bold mb-4">Proyekti redaktə et</h2>
-
         <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-2">
           <div>
             <label className="block mb-1 font-medium">Şəkil</label>
             <div className="flex items-center gap-4">
-              <img
+              <Image
+                width={128}
+                height={128}
                 src={
                   imageFile
                     ? URL.createObjectURL(imageFile)
@@ -149,7 +170,7 @@ const EditProjectModal: React.FC<EditProjectModalProps> = ({
             <label className="block mb-1">Açıqlama (az)</label>
             <textarea
               name="description.az"
-              value={(formData.description as any)?.az || ""}
+              value={getNestedStringValue(formData.description, "az")}
               onChange={handleTextChange}
               className="w-full p-2 border rounded"
             />
@@ -159,7 +180,7 @@ const EditProjectModal: React.FC<EditProjectModalProps> = ({
             <label className="block mb-1">Açıqlama (en)</label>
             <textarea
               name="description.en"
-              value={(formData.description as any)?.en || ""}
+              value={getNestedStringValue(formData.description, "en")}
               onChange={handleTextChange}
               className="w-full p-2 border rounded"
             />
@@ -169,7 +190,7 @@ const EditProjectModal: React.FC<EditProjectModalProps> = ({
             <label className="block mb-1">Vaxt aralığı (az)</label>
             <textarea
               name="timeLine.az"
-              value={(formData.timeLine as any)?.az || ""}
+              value={getNestedStringValue(formData.timeLine, "az")}
               onChange={handleTextChange}
               className="w-full p-2 border rounded"
             />
@@ -179,7 +200,7 @@ const EditProjectModal: React.FC<EditProjectModalProps> = ({
             <label className="block mb-1">Vaxt aralığı (en)</label>
             <textarea
               name="timeLine.en"
-              value={(formData.timeLine as any)?.en || ""}
+              value={getNestedStringValue(formData.timeLine, "en")}
               onChange={handleTextChange}
               className="w-full p-2 border rounded"
             />

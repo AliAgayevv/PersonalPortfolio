@@ -61,8 +61,6 @@ export default async function ProjectSection() {
               projectName={project.title}
               projectDescription={project.description}
               projectImage={project.image}
-              // projectLink={project.link}
-              // projectShowenLink={project.showenLink}
               projectId={project.projectId}
             />
           </Link>

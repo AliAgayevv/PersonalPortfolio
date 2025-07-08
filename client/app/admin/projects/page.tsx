@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import Project from "@/types/projectInterface";
 import EditProjectModal from "@/components/EditProjectModal";
 import AddProjectForm from "@/components/AddProjectForm";
+import { useAuth } from "@/hooks/useAuth";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const ProjectsPage: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -24,6 +27,14 @@ const ProjectsPage: React.FC = () => {
     }
   };
 
+  const { loading, isAuthenticated } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !isAuthenticated()) {
+      router.push("/admin");
+    }
+  }, [loading, isAuthenticated, router]);
   useEffect(() => {
     fetchProjects();
   }, []);
@@ -42,7 +53,7 @@ const ProjectsPage: React.FC = () => {
       });
       if (!response.ok) throw new Error("Silinmə uğursuz oldu");
 
-      await fetchProjects(); // Silmədən sonra listi yenilə
+      await fetchProjects(); // Refresh the project list after deletion
     } catch (error) {
       console.error("Layihə silinərkən xəta baş verdi:", error);
       alert("Layihəni silmək mümkün olmadı.");
@@ -111,13 +122,15 @@ const ProjectsPage: React.FC = () => {
                       key={lang}
                       className="text-gray-600 mb-2 whitespace-pre-line"
                     >
-                      {desc}
+                      {String(desc)}
                     </p>
                   ))}
 
                 <div className="flex flex-wrap gap-2 mb-4 mt-auto">
                   {project.techStack.map((tech) => (
-                    <img
+                    <Image
+                      width={24}
+                      height={24}
                       key={tech._id}
                       src={`${url}${tech.icon}`}
                       alt={tech.name}

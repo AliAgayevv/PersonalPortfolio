@@ -13,9 +13,7 @@ const TypewriterEffect = ({
         strings: stringsFromBackend,
         autoStart: true,
         loop: true,
-        // Cursor nece gorunecek
         cursor: "_",
-        // deleteSpeed asagi olanda tez silir, yuxari olanda yavas silir
       }}
     />
   );

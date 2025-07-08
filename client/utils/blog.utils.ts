@@ -17,13 +17,13 @@ export const formatDate = (dateString: string, lang: string): string => {
 export const cleanHTMLContent = (htmlContent: string): string => {
   if (!htmlContent) return "";
 
-  // CDATA təmizlə
+  // clear CDATA
   let cleanContent = htmlContent.replace(/^\s*<!\[CDATA\[|\]\]>\s*$/g, "");
 
-  // Medium statistika img tag-ini sil
+  // Delete Medium statistics img tag
   cleanContent = cleanContent.replace(/<img[^>]*stat\?event[^>]*>/g, "");
 
-  // Lazımsız boşluqları təmizlə
+  // Remove all unnecessary spaces and newlines
   cleanContent = cleanContent.replace(/\s+/g, " ").trim();
 
   return cleanContent;

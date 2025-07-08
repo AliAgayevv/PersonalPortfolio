@@ -2,7 +2,7 @@ export default interface Project {
   _id: string;
   title: string;
   projectId: string;
-  description: Record<string, any>;
+  description: Record<string, unknown>;
   githubLink: string;
   liveLink: string;
   timeLine: Record<string, string>;

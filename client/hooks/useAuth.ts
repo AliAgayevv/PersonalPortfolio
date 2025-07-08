@@ -1,38 +1,118 @@
-import { useEffect, useState } from "react";
-import { getItem, removeItem } from "@/utils/localStorage";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { parseJwt } from "@/utils/parseJwt";
+
+interface AuthUser {
+  username: string;
+  token: string;
+}
 
 export const useAuth = () => {
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    const token = getItem<string>("adminToken");
+    const token = localStorage.getItem("adminToken");
+    const username = localStorage.getItem("adminUsername");
 
-    if (!token) {
-      router.push("/admin");
-      return;
+    if (token && username) {
+      // Check token is still valid
+      verifyToken(token)
+        .then(() => {
+          setUser({ username, token });
+        })
+        .catch(() => {
+          // if not valid, remove token and redirect to login
+          logout();
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
     }
+  }, []);
 
-    const decoded = parseJwt(token);
+  const verifyToken = async (token: string): Promise<boolean> => {
+    try {
+      const response = await fetch(
+        "http://localhost:4000/api/admin/protected",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    if (!decoded || !decoded.exp) {
-      removeItem("adminToken");
-      router.push("/admin");
-      return;
+      if (response.ok) {
+        return true;
+      } else {
+        throw new Error("Token invalid");
+      }
+    } catch (error) {
+      console.error("Token verification failed:", error);
+      return false;
     }
+  };
 
-    const currentTime = Math.floor(Date.now() / 1000);
+  const login = async (
+    username: string,
+    password: string
+  ): Promise<{ success: boolean; message?: string }> => {
+    try {
+      const response = await fetch("http://localhost:4000/api/admin/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
 
-    if (decoded.exp < currentTime) {
-      removeItem("adminToken");
-      router.push("/admin");
-      return;
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem("adminToken", data.token);
+        localStorage.setItem("adminUsername", username);
+        setUser({ username, token: data.token });
+        return { success: true };
+      } else {
+        return { success: false, message: data.message || "Login failed" };
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      return { success: false, message: "Network error" };
     }
+  };
 
-    setLoading(false);
-  }, [router]);
+  const logout = () => {
+    localStorage.removeItem("adminToken");
+    localStorage.removeItem("adminUsername");
+    setUser(null);
+    router.push("/admin");
+  };
 
-  return { loading };
+  const isAuthenticated = (): boolean => {
+    return user !== null;
+  };
+
+  const getAuthHeaders = () => {
+    if (user?.token) {
+      return {
+        Authorization: `Bearer ${user.token}`,
+        "Content-Type": "application/json",
+      };
+    }
+    return {
+      "Content-Type": "application/json",
+    };
+  };
+
+  return {
+    user,
+    loading,
+    login,
+    logout,
+    isAuthenticated,
+    getAuthHeaders,
+  };
 };

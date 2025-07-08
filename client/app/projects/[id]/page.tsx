@@ -234,7 +234,7 @@ export default async function page({
       <div className="block lg:hidden">
         <div className="mt-8">
           <p className="text-sm text-[#4B4949] font-[500] leading-relaxed break-words">
-            {projectData.description}
+            {String(projectData.description)}
           </p>
         </div>
         {/* Image */}
@@ -274,7 +274,7 @@ export default async function page({
         <div className="space-y-8">
           {/* Description */}
           <p className="text-base text-[#4B4949] font-[500] leading-relaxed break-words">
-            {projectData.description}
+            {String(projectData.description)}
           </p>
           {/* Tech Stack */}
           <div>
